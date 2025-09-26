@@ -1,0 +1,107 @@
+﻿<Page x:Class="LIB0000.OrderLoadView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      DataContext = "{Binding RelativeSource={RelativeSource Self}}"
+      xmlns:local="clr-namespace:LIB0000"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"  IsVisibleChanged="Page_IsVisibleChanged"
+      Title="OrderLoad">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Left side Of screen-->
+        <Grid Grid.Column="0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+
+            <!--Order NR-->
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="0">
+
+                    <TextBlock Text="Order Nr: " VerticalAlignment="Center" Foreground="white"/>
+                    <TextBox x:Name="txtScan" Focusable="True" Text="{Binding GlobalService.OrderService.Edit.OrderNr,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0" VerticalAlignment="Center" Width="250"/>
+
+                    <Button Width="125" Content="Autogenerate" Command="{Binding cmAutogenerateOrderNumberCommand}" Margin="20"/>
+
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="1">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Command="{Binding cmdNavigateToPorductListViewCommand}">
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Grid.Column="0" Source="{Binding BasicService.RecipesService.Recipe.Loaded.PathPicture}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="150" Height="150" Margin="20"/>
+
+                        <StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Center">
+
+                            <Label Content="Kies recept" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+
+                            <Label Content="{Binding BasicService.RecipesService.Recipe.Loaded.Name}" Foreground="White" Margin="10" VerticalAlignment="Center" Width="250" IsEnabled="False"/>
+
+                            <Label Content="{Binding BasicService.RecipesService.Recipe.Loaded.Description }" Foreground="White" Margin="10" VerticalAlignment="Center" Width="250" IsEnabled="False"/>
+
+                        </StackPanel>
+
+                    </Grid>
+
+                </Button>
+
+                <!--Amount-->
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" >
+
+                    <TextBlock Text="Aantal : " VerticalAlignment="Center" Foreground="white"/>
+                    <TextBox Text="{Binding GlobalService.OrderService.Edit.Amount}" Margin="10,0,0,0" VerticalAlignment="Center" Width="250"/>
+
+                </StackPanel>
+
+            </Grid>
+
+        </Grid>
+
+        <!--Right side Of screen-->
+        <Grid Grid.Column="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Button Grid.Row="0" Width="200" Height="75" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Order starten" Command="{Binding cmdOrderLoadCommand}"/>
+
+        </Grid>
+
+    </Grid>
+</Page>

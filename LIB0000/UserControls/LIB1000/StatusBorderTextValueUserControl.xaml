@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="LIB0000.StatusBorderTextValueUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LIB0000"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" MaxHeight="200"
+             VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+    <Grid VerticalAlignment="Stretch">
+        <Border CornerRadius="20" Background="{Binding Color,RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="10" 
+                ClipToBounds="True" VerticalAlignment="Stretch">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="6*"/>
+                </Grid.RowDefinitions>
+                <TextBlock  Text="{Binding TextTop,RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                            Foreground="{Binding ColorText,RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                            FontSize="{DynamicResource LargeFontSize}"
+                            VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <!--<Viewbox Grid.Row="1" MaxHeight="{Binding ActualHeight,RelativeSource={RelativeSource AncestorType=Grid}}">-->
+                <Grid Grid.Row="1">
+                    <TextBlock Text="{Binding TextBottom,RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                               Foreground="{Binding ColorText,RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                               VerticalAlignment="Center" HorizontalAlignment="Center"   
+                               FontWeight="Bold" FontSize="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Grid}, Converter={StaticResource ConverterActualHeightToFontSize}}"/>
+                </Grid>
+                <!--</Viewbox>-->
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

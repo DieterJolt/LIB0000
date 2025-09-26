@@ -1,0 +1,119 @@
+﻿<Page x:Class="LIB0000.UserPagesView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:local="clr-namespace:LIB0000"
+      mc:Ignorable="d" 
+      DataContext = "{Binding RelativeSource={RelativeSource Self}}"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="UserPagesView">
+
+
+    <Grid x:Name="gridMain" Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="0*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Single Row -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+
+            <!--Level-->
+            <StackPanel Grid.Row="2" Grid.Column="1" 
+    VerticalAlignment="Center">
+
+                <TextBlock Text="{DynamicResource Niveau}" FontSize="{DynamicResource MediumFontSize}"
+       Foreground="White"/>
+
+                <ComboBox Grid.Column="3" HorizontalAlignment="Stretch" 
+      ItemsSource="{Binding BasicService.UsersService.Levels}" 
+      SelectedItem="{Binding BasicService.UsersService.Pages.Edit.Level}"
+      FontSize="{DynamicResource MediumFontSize}">
+
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock FontSize="{DynamicResource MediumFontSize}" Text="{Binding}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+
+                </ComboBox>
+            </StackPanel>
+
+        </Grid>
+
+        <Grid x:Name="gridDatagrid" Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0*"/>
+                <ColumnDefinition Width="11*"/>
+                <ColumnDefinition Width="0*"/>
+            </Grid.ColumnDefinitions>
+
+            <DataGrid Grid.Column="1" HeadersVisibility="Column" ItemsSource="{Binding BasicService.UsersService.Pages.List,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                      SelectedValue="{Binding BasicService.UsersService.Pages.Selected}" SelectionChanged="DataGrid_SelectionChanged" AutoGenerateColumns="False" 
+                             IsReadOnly="True" VerticalAlignment="Top" MaxHeight="{Binding ActualHeight, ElementName=gridDatagrid}">
+
+                <!-- Define columns -->
+                <DataGrid.Columns>
+                    <DataGridTextColumn Visibility="Hidden" Binding="{Binding Id }">
+                        <DataGridTextColumn.Header>
+                            <TextBlock FontSize="{DynamicResource MediumFontSize}" Text="Id"/>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding PageName }">
+                        <DataGridTextColumn.Header>
+                            <TextBlock FontSize="{DynamicResource MediumFontSize}" Text="{DynamicResource TabelHoofdPagina}"/>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding SubPageName }">
+                        <DataGridTextColumn.Header>
+                            <TextBlock FontSize="{DynamicResource MediumFontSize}" Text="{DynamicResource TabelSubPagina}"/>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Level }">
+                        <DataGridTextColumn.Header>
+                            <TextBlock FontSize="{DynamicResource MediumFontSize}" Text="{DynamicResource TabelNiveau}"/>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+        </Grid>
+
+        <Grid x:Name="Buttons" Grid.Row="2">
+
+            <local:Footer10ButtonsUserControl VerticalAlignment="Center"
+
+                Button1Text="{DynamicResource Bewaren}"
+                Button1Image="pack://application:,,,/Assets/Images/SaveAs.png"
+                Button1Visibility="{Binding BasicService.UsersService.Pages.Selected.Id}"
+                Button1Command="{Binding cmdSaveUserpageToUsersPagesListCommand}"
+                                            
+                />
+
+        </Grid>
+
+    </Grid>
+
+</Page>

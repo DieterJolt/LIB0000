@@ -1,0 +1,113 @@
+﻿<Page x:Class="LIB0000.UserLijstView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+      xmlns:local="clr-namespace:LIB0000"
+      mc:Ignorable="d" 
+      DataContext = "{Binding RelativeSource={RelativeSource Self}}"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="UserLijstView" Unloaded="Page_Unloaded">
+    <Page.Resources>
+        <!-- Hiermee wordt de schaal ingesteld op basis van de systeeminstellingen -->
+        <ResourceDictionary>
+            <Style TargetType="Window">
+                <Setter Property="LayoutTransform">
+                    <Setter.Value>
+                        <ScaleTransform ScaleX="{Binding RelativeSource={RelativeSource Self}, Path=SystemParameters.PrimaryScreenWidth}"
+                                        ScaleY="{Binding RelativeSource={RelativeSource Self}, Path=SystemParameters.PrimaryScreenHeight}" />
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Page.Resources>
+
+
+    <Grid>
+        <Grid x:Name="gridMain" Grid.Row="1" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <ui:AutoSuggestBox  x:Name="AutoSuggestBox" TextChanged="AutoSuggestBox_TextChanged" Grid.Row="0"/>
+            <Grid x:Name="gridDatagrid" Grid.Row="1">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+
+                <DataGrid Grid.Column="0" HeadersVisibility="Column" ItemsSource="{Binding BasicService.UsersService.User.List,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"  MaxHeight="{Binding ActualHeight, ElementName=gridDatagrid}"
+                      SelectedValue="{Binding BasicService.UsersService.User.Selected}" SelectionChanged="DataGrid_SelectionChanged" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
+
+                    <!-- Define columns -->
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Visibility="Hidden" Binding="{Binding Id }" >
+                            <DataGridTextColumn.Header>
+                                <TextBlock FontSize="{DynamicResource MediumFontSize}" Text="Id"/>
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding User }">
+                            <DataGridTextColumn.Header>
+                                <TextBlock FontSize="{DynamicResource MediumFontSize}" Text="{DynamicResource TabelGebruiker}"/>
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Level }" >
+                            <DataGridTextColumn.Header>
+                                <TextBlock FontSize="{DynamicResource MediumFontSize}" Text="{DynamicResource TabelNiveau}"/>
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Password }" FontFamily="Segoe Fluent Icons" >
+                            <DataGridTextColumn.Header>
+                                <TextBlock FontSize="{DynamicResource MediumFontSize}"  Text="{DynamicResource TabelWachtwoord}" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        <DataGridCheckBoxColumn Binding="{Binding PasswordRequired }" >
+                            <DataGridCheckBoxColumn.Header>
+                                <TextBlock FontSize="{DynamicResource MediumFontSize}"  Text="{DynamicResource TabelWachtwoordNodig}" />
+                            </DataGridCheckBoxColumn.Header>
+                        </DataGridCheckBoxColumn>
+                        <DataGridTextColumn Binding="{Binding Group }" >
+                            <DataGridTextColumn.Header>
+                                <TextBlock FontSize="{DynamicResource MediumFontSize}"  Text="Security Group" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+
+
+                <!--<Image VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                    Grid.Column="1"  Source="{Binding }"  />-->
+
+            </Grid>
+
+            <Grid x:Name="gridButtons" Grid.Row="2">
+
+                <local:Footer5ButtonsUserControl VerticalAlignment="Center"
+                 
+                 Button1Text="{DynamicResource Toevoegen}"
+                 Button1Image="pack://application:,,,/Assets/Images/Plus.png"
+                 Button1Visibility="True"
+                 Button1Command="{Binding cmdAddRowCommand}"
+                 
+                 Button2Text="{DynamicResource Verwijderen}"
+                 Button2Image="pack://application:,,,/Assets/Images/Delete.png"
+                 Button2Visibility="True"
+                 Button2Command="{Binding cmdDeleteRowCommand}"
+                 
+                 Button3Text="{DynamicResource Bewerken}"
+                 Button3Image="pack://application:,,,/Assets/Images/Edit.png"
+                 Button3Visibility="True"
+                 Button3Command="{Binding cmdEditRowCommand}"                                                                                            
+                 />
+
+            </Grid>
+        </Grid>
+    </Grid>
+
+</Page>

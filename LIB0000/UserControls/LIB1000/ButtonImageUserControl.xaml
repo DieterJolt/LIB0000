@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="LIB0000.ButtonImageUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LIB0000"
+             mc:Ignorable="d"
+             d:DesignWidth="800">
+    <Grid>
+
+
+        <Button x:Name="Button_1" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch"
+                Visibility="{Binding Button1Visibility,Converter={StaticResource ConverterBoolToVisibility1Visible0Hidden},RelativeSource={RelativeSource AncestorType=UserControl}}"
+                Command="{Binding Button1Command,RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <StackPanel Orientation="Horizontal">
+                <Image   Source="{Binding Button1Image,RelativeSource={RelativeSource AncestorType=UserControl}}"  
+                       MaxWidth="{DynamicResource MediumIconFontSize}"  />
+                <TextBlock Margin="10" Text="{Binding Button1Text,RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                           Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                           FontSize="{DynamicResource LargeFontSize}"/>
+            </StackPanel>
+        </Button>
+
+
+
+    </Grid>
+</UserControl>

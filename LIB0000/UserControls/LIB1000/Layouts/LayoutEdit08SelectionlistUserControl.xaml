@@ -1,0 +1,184 @@
+﻿<UserControl x:Class="LIB0000.LayoutEdit08SelectionlistUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LIB0000"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid x:Name="GridMain" Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="TextBlock_Image">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+
+            <Grid x:Name="Inputfield">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="15"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="{Binding InstructionModel.Text1,RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding EditVisibilityMode, Converter={StaticResource ConverterVisibilityToInverseVisibility}, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                <Label Content="{Binding InstructionModel.Text1,RelativeSource={RelativeSource AncestorType=UserControl}}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding EditVisibilityMode,RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+
+            </Grid>
+
+            <Grid x:Name="Checkboxes" Grid.Row="1">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="15"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="160"/>
+                </Grid.ColumnDefinitions>
+
+                <CheckBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding InstructionModel.InputBool1,RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding EditEnabledMode, Converter={StaticResource ConverterBoolToInverseBool}, RelativeSource={RelativeSource AncestorType=UserControl}}" >
+                    <CheckBox.Visibility>
+                        <MultiBinding Converter="{StaticResource CheckboxMultiVisibilityConverter}">
+                            <Binding Path="InstructionModel.Text2"
+                            RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                            <Binding Path="EditEnabledMode"
+                            RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                        </MultiBinding>
+                    </CheckBox.Visibility>
+                </CheckBox>
+                <TextBox Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Text="{Binding InstructionModel.Text2,RelativeSource={RelativeSource AncestorType=UserControl}}"  Visibility="{Binding EditVisibilityMode, Converter={StaticResource ConverterVisibilityToInverseVisibility}, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                <Label Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Content="{Binding InstructionModel.Text2,RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding EditVisibilityMode,RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+
+                <CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding InstructionModel.InputBool3,RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding EditEnabledMode, Converter={StaticResource ConverterBoolToInverseBool}, RelativeSource={RelativeSource AncestorType=UserControl}}" >
+                    <CheckBox.Visibility>
+                        <MultiBinding Converter="{StaticResource CheckboxMultiVisibilityConverter}">
+                            <Binding Path="InstructionModel.Text3"
+                            RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                            <Binding Path="EditEnabledMode"
+                            RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                        </MultiBinding>
+                    </CheckBox.Visibility>
+                </CheckBox>
+                <TextBox Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Text="{Binding InstructionModel.Text3,RelativeSource={RelativeSource AncestorType=UserControl}}"  Visibility="{Binding EditVisibilityMode, Converter={StaticResource ConverterVisibilityToInverseVisibility}, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                <Label Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Content="{Binding InstructionModel.Text3,RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding EditVisibilityMode,RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+
+                <CheckBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding InstructionModel.InputBool4,RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding EditEnabledMode, Converter={StaticResource ConverterBoolToInverseBool}, RelativeSource={RelativeSource AncestorType=UserControl}}" >
+                    <CheckBox.Visibility>
+                        <MultiBinding Converter="{StaticResource CheckboxMultiVisibilityConverter}">
+                            <Binding Path="InstructionModel.Text4"
+                            RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                            <Binding Path="EditEnabledMode"
+                            RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                        </MultiBinding>
+                    </CheckBox.Visibility>
+                </CheckBox>
+                <TextBox Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Text="{Binding InstructionModel.Text4,RelativeSource={RelativeSource AncestorType=UserControl}}"  Visibility="{Binding EditVisibilityMode, Converter={StaticResource ConverterVisibilityToInverseVisibility}, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                <Label Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Content="{Binding InstructionModel.Text4,RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding EditVisibilityMode,RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+
+                <CheckBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding InstructionModel.InputBool5,RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding EditEnabledMode, Converter={StaticResource ConverterBoolToInverseBool}, RelativeSource={RelativeSource AncestorType=UserControl}}" >
+                    <CheckBox.Visibility>
+                        <MultiBinding Converter="{StaticResource CheckboxMultiVisibilityConverter}">
+                            <Binding Path="InstructionModel.Text5"
+                            RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                            <Binding Path="EditEnabledMode"
+                            RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                        </MultiBinding>
+                    </CheckBox.Visibility>
+                </CheckBox>
+                <TextBox Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Text="{Binding InstructionModel.Text5,RelativeSource={RelativeSource AncestorType=UserControl}}"  Visibility="{Binding EditVisibilityMode, Converter={StaticResource ConverterVisibilityToInverseVisibility}, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                <Label Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Content="{Binding InstructionModel.Text5,RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding EditVisibilityMode,RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+
+                <CheckBox Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding InstructionModel.InputBool6,RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding EditEnabledMode, Converter={StaticResource ConverterBoolToInverseBool}, RelativeSource={RelativeSource AncestorType=UserControl}}" >
+                    <CheckBox.Visibility>
+                        <MultiBinding Converter="{StaticResource CheckboxMultiVisibilityConverter}">
+                            <Binding Path="InstructionModel.Text6"
+                            RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                            <Binding Path="EditEnabledMode"
+                            RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                        </MultiBinding>
+                    </CheckBox.Visibility>
+                </CheckBox>
+                <TextBox Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" Text="{Binding InstructionModel.Text6,RelativeSource={RelativeSource AncestorType=UserControl}}"  Visibility="{Binding EditVisibilityMode, Converter={StaticResource ConverterVisibilityToInverseVisibility}, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                <Label Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" Content="{Binding InstructionModel.Text6,RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding EditVisibilityMode,RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+
+                <CheckBox Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding InstructionModel.InputBool7,RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding EditEnabledMode, Converter={StaticResource ConverterBoolToInverseBool}, RelativeSource={RelativeSource AncestorType=UserControl}}" >
+                    <CheckBox.Visibility>
+                        <MultiBinding Converter="{StaticResource CheckboxMultiVisibilityConverter}">
+                            <Binding Path="InstructionModel.Text7"
+                            RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                            <Binding Path="EditEnabledMode"
+                            RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                        </MultiBinding>
+                    </CheckBox.Visibility>
+                </CheckBox>
+                <TextBox Grid.Row="1" Grid.Column="4" VerticalAlignment="Center" Text="{Binding InstructionModel.Text7,RelativeSource={RelativeSource AncestorType=UserControl}}"  Visibility="{Binding EditVisibilityMode, Converter={StaticResource ConverterVisibilityToInverseVisibility}, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                <Label Grid.Row="1" Grid.Column="4" VerticalAlignment="Center" Content="{Binding InstructionModel.Text7,RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding EditVisibilityMode,RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+
+                <CheckBox Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding InstructionModel.InputBool8,RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding EditEnabledMode, Converter={StaticResource ConverterBoolToInverseBool}, RelativeSource={RelativeSource AncestorType=UserControl}}" >
+                    <CheckBox.Visibility>
+                        <MultiBinding Converter="{StaticResource CheckboxMultiVisibilityConverter}">
+                            <Binding Path="InstructionModel.Text8"
+                            RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                            <Binding Path="EditEnabledMode"
+                            RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                        </MultiBinding>
+                    </CheckBox.Visibility>
+                </CheckBox>
+                <TextBox Grid.Row="2" Grid.Column="4" VerticalAlignment="Center" Text="{Binding InstructionModel.Text8,RelativeSource={RelativeSource AncestorType=UserControl}}"  Visibility="{Binding EditVisibilityMode, Converter={StaticResource ConverterVisibilityToInverseVisibility}, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                <Label Grid.Row="2" Grid.Column="4" VerticalAlignment="Center" Content="{Binding InstructionModel.Text8,RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding EditVisibilityMode,RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+
+                <CheckBox Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding InstructionModel.InputBool9,RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding EditEnabledMode, Converter={StaticResource ConverterBoolToInverseBool}, RelativeSource={RelativeSource AncestorType=UserControl}}" >
+                    <CheckBox.Visibility>
+                        <MultiBinding Converter="{StaticResource CheckboxMultiVisibilityConverter}">
+                            <Binding Path="InstructionModel.Text9"
+                            RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                            <Binding Path="EditEnabledMode"
+                            RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                        </MultiBinding>
+                    </CheckBox.Visibility>
+                </CheckBox>
+                <TextBox Grid.Row="3" Grid.Column="4" VerticalAlignment="Center" Text="{Binding InstructionModel.Text9,RelativeSource={RelativeSource AncestorType=UserControl}}"  Visibility="{Binding EditVisibilityMode, Converter={StaticResource ConverterVisibilityToInverseVisibility}, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                <Label Grid.Row="3" Grid.Column="4" VerticalAlignment="Center" Content="{Binding InstructionModel.Text9,RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding EditVisibilityMode,RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+
+            </Grid>
+        </Grid>
+
+
+        <Grid x:Name="Buttons" Grid.Row="2" Visibility="{Binding NextButtonVisibilityMode, RelativeSource={RelativeSource AncestorType=UserControl}}">
+
+            <local:Footer5ButtonsUserControl VerticalAlignment="Center" IsEnabled="{Binding EditEnabledMode, Converter={StaticResource ConverterBoolToInverseBool}, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                
+    Button5Text="{DynamicResource Volgende}"
+    Button5Image="pack://application:,,,/Assets/Images/SaveAs.png"
+    Button5Visibility="True"
+    Button5Command="{Binding cmdInstructionOk, RelativeSource={RelativeSource AncestorType=UserControl}}"
+
+    />
+
+        </Grid>
+
+    </Grid>
+</UserControl>

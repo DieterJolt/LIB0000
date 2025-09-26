@@ -1,0 +1,82 @@
+﻿<Page x:Class="LIB0000.SettingsHistoryView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      DataContext = "{Binding RelativeSource={RelativeSource Self}}"
+      xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:local="clr-namespace:LIB0000"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="SettingsHistoryView">
+
+    <StackPanel Grid.Row="0" CanVerticallyScroll="False">
+
+        <StackPanel Orientation="Horizontal">
+
+            <ComboBox Margin="10" Width="125" ItemsSource="{Binding SettingService.GroupList}"           
+                      SelectedItem="{Binding SettingService.SelectedGroupFilter,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      SelectionChanged="ComboBox_SelectionChanged"
+                      SelectedIndex="0"/>
+
+            <ui:AutoSuggestBox HorizontalAlignment="Right" Width="200"
+                           Margin="10" Height="40" TextChanged="AutoSuggestBox_TextChanged"
+                           Text="{Binding SettingService.FilterHistory,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
+            </ui:AutoSuggestBox>
+            <Button Content="back" Width="125" Click="Button_Click"/>
+
+        </StackPanel>
+        <!--Visibility="{Binding SettingService.DatePickersVisible,Converter={StaticResource ConverterBoolToVisibility1Visible0Collapsed},UpdateSourceTrigger=PropertyChanged}"-->
+        <WrapPanel Orientation="Horizontal" >
+            <Label Content="Start :" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <DatePicker 
+           SelectedDate="{Binding SettingService.FilterStartDate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"                
+           Margin="10" SelectedDateChanged="DatePicker_SelectedDateChanged">
+            </DatePicker>
+            <Label Content="Einde :" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <DatePicker
+           SelectedDate="{Binding SettingService.FilterEndDate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"                 
+           Margin="10" SelectedDateChanged="DatePicker_SelectedDateChanged">
+            </DatePicker>
+        </WrapPanel>
+
+        <ui:DataGrid ItemsSource="{Binding SettingService.ListHistorySettings,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+              Height="400" Margin="10,0,15,0"
+              IsReadOnly="True"
+                     AutoGenerateColumns="False"
+                     >
+            <!--Define columns-->
+            <ui:DataGrid.Columns>
+                <DataGridTextColumn Visibility="Hidden" Header="Id" Binding="{Binding Id}" />
+                <DataGridTextColumn Header="Groep" Binding="{Binding Group}" />
+                <DataGridTextColumn Header="Settings Naam" Binding="{Binding SettingName}" />
+                <DataGridTextColumn Header="Vorige waarde" Binding="{Binding PreviousValue}" />
+                <DataGridTextColumn Header="Actuele waarde" Binding="{Binding ActualValue}" />
+                <DataGridTextColumn Header="Gebruiker" Binding="{Binding User}" />
+                <DataGridTextColumn Header="Extra info" Binding="{Binding ExtraInfo}" />
+                <DataGridTextColumn Header="Datum" Binding="{Binding TimeStamp}" />
+            </ui:DataGrid.Columns>
+
+
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Type}" Value="Error">
+                            <Setter Property="Background" Value="#F44336" />
+                            <Setter Property="Foreground" Value="White" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Type}" Value="Warning">
+                            <Setter Property="Background" Value="#FF9800" />
+                            <Setter Property="Foreground" Value="White" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Type}" Value="Info">
+                            <Setter Property="Background" Value="#80B9EE" />
+                            <Setter Property="Foreground" Value="Black" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+        </ui:DataGrid>
+    </StackPanel>
+</Page>

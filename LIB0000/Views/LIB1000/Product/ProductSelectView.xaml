@@ -1,0 +1,80 @@
+﻿<Page x:Class="LIB0000.ProductSelectView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      DataContext = "{Binding RelativeSource={RelativeSource Self}}"
+      xmlns:local="clr-namespace:LIB0000"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ProductSelectView" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
+
+
+
+    <Grid x:Name="gridMain" Grid.Row="1" Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="gridSearch" Grid.Row="0">
+            <ui:AutoSuggestBox Grid.Column="1" x:Name="AutoSuggestBox" TextChanged="AutoSuggestBox_TextChanged" />
+        </Grid>
+        <Grid x:Name="gridDatagrid" Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+
+            <DataGrid Grid.Column="0" MaxHeight="{Binding ActualHeight, ElementName=gridDatagrid}" ItemsSource="{Binding BasicService.ProductsService.Product.List ,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                        SelectedValue="{Binding BasicService.ProductsService.Product.Selected}" SelectionChanged="DataGrid_SelectionChanged" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Visibility="Hidden" Binding="{Binding Id }">
+                        <DataGridTextColumn.Header>
+                            <TextBlock FontSize="{DynamicResource LargeFontSize}" Text="Id"/>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Name}">
+                        <DataGridTextColumn.Header>
+                            <TextBlock FontSize="{DynamicResource LargeFontSize}" Text="{DynamicResource TabelNaam}"/>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Description}">
+                        <DataGridTextColumn.Header>
+                            <TextBlock FontSize="{DynamicResource LargeFontSize}" Text="{DynamicResource TabelBeschrijving}"/>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+            <Image Grid.Column="1" Source="{Binding BasicService.ProductsService.Product.Selected.Image}" />
+
+        </Grid>
+        <Grid x:Name="gridButtons" Grid.Row="2">
+
+            <local:Footer5ButtonsUserControl VerticalAlignment="Center"
+
+                    Button1Text="{DynamicResource Ok}"
+                    Button1Image="pack://application:,,,/Assets/Images/Yes.png"
+                    Button1Visibility="True"
+                    Button1Command="{Binding cmdOkCommand}"
+
+                    Button2Text="{DynamicResource Annuleer}"
+                    Button2Image="pack://application:,,,/Assets/Images/Delete.png"
+                    Button2Visibility="True"
+                    Button2Command="{Binding cmdCancelCommand}"                            
+
+                    />
+
+        </Grid>
+
+    </Grid>
+
+
+</Page>

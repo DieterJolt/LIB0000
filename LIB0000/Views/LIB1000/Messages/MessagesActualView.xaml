@@ -1,0 +1,151 @@
+﻿<Page
+    x:Class="LIB0000.MessagesActualView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:local="clr-namespace:LIB0000"
+    
+    xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+    DataContext = "{Binding RelativeSource={RelativeSource Self}}"
+    Language="NL-BE">
+
+    <Grid x:Name="gridMain" Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="InputFieldsAndButtons" Grid.Row="0">
+
+            <StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+
+                    <ComboBox Margin="10" ItemsSource="{Binding BasicService.MessagesService.SelectionOfGroupOfMessages}"
+                  SelectedIndex="{Binding BasicService.MessagesService.SelectionOfGroupIndex}"
+                  FontSize="{DynamicResource MediumFontSize}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock FontSize="{DynamicResource MediumFontSize}" Text="{Binding}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <Button Command="{Binding ToggleErrorsVisibleCommand}"
+                Background="{Binding BasicService.MessagesService.FilterErrorsVisible, Converter={StaticResource ConverterBoolToColor0Transparent1Red}}"
+                Margin="10"  Height="40">
+                        <fa:IconImage Icon="TimesCircle" Foreground="White" Width="{DynamicResource LargeIconFontSize}"/>
+                    </Button>
+
+                    <Button Command="{Binding ToggleWarningsVisibleCommand}"
+                Background="{Binding BasicService.MessagesService.FilterWarningsVisible, Converter={StaticResource ConverterBoolToColor0Transparent1Orange}}"
+                Height="40" >
+                        <fa:IconImage Icon="Warning" Foreground="White" Width="{DynamicResource LargeIconFontSize}"/>
+                    </Button>
+                    <Button Command="{Binding ToggleInfosVisibleCommand}"
+                Background="{Binding BasicService.MessagesService.FilterInfosVisible, Converter={StaticResource ConverterBoolToColor0Transparent1Blue}}"
+                Margin="10" Height="40">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="InfoCircle" Foreground="Black" Width="{DynamicResource LargeIconFontSize}"/>
+                        </StackPanel>
+                    </Button>
+                    <ui:AutoSuggestBox HorizontalAlignment="Right" Width="200"
+                           Margin="10" Height="40" 
+                           Text="{Binding BasicService.MessagesService.FilterText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                    </ui:AutoSuggestBox>
+                </StackPanel>
+                <WrapPanel Orientation="Horizontal" Visibility="{Binding BasicService.MessagesService.DatePickersVisible,Converter={StaticResource ConverterBoolToVisibility1Visible0Collapsed},UpdateSourceTrigger=PropertyChanged}">
+                    <Label Content="Start :" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <DatePicker 
+           SelectedDate="{Binding BasicService.MessagesService.FilterStartDate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"                
+           Margin="10">
+                    </DatePicker>
+                    <Label Content="{DynamicResource Einde}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <DatePicker
+           SelectedDate="{Binding BasicService.MessagesService.FilterEndDate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"                 
+           Margin="10">
+                    </DatePicker>
+                </WrapPanel>
+
+            </StackPanel>
+
+        </Grid>
+
+        <Grid x:Name="Datagrid" Grid.Row="1">
+
+            <DataGrid  HeadersVisibility="Column"  MaxHeight="{Binding ActualHeight, ElementName=gridDatagrid}" ItemsSource="{Binding BasicService.MessagesService.ActualMessage.ListFiltered,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+   Margin="10,0,15,0" FontSize="{DynamicResource MediumFontSize}" 
+   AutoGenerateColumns="False" IsReadOnly="True" SelectionUnit="Cell" IsHitTestVisible="False" >
+
+                <!-- Define columns -->
+                <DataGrid.Columns>
+                    <DataGridTextColumn Visibility="Hidden" Binding="{Binding Id }">
+                        <DataGridTextColumn.Header>
+                            <TextBlock FontSize="{DynamicResource MediumFontSize}" Text="Id"/>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Group }">
+                        <DataGridTextColumn.Header>
+                            <TextBlock FontSize="{DynamicResource MediumFontSize}" Text="{DynamicResource TabelGroep}"/>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Nr }">
+                        <DataGridTextColumn.Header>
+                            <TextBlock FontSize="{DynamicResource MediumFontSize}" Text="Nr"/>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding MessageText }">
+                        <DataGridTextColumn.Header>
+                            <TextBlock FontSize="{DynamicResource MediumFontSize}" Text="{DynamicResource TabelTekstbericht}"/>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Help }">
+                        <DataGridTextColumn.Header>
+                            <TextBlock FontSize="{DynamicResource MediumFontSize}" Text="Help"/>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Type }">
+                        <DataGridTextColumn.Header>
+                            <TextBlock FontSize="{DynamicResource MediumFontSize}" Text="Type"/>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding TimeStamp }">
+                        <DataGridTextColumn.Header>
+                            <TextBlock FontSize="{DynamicResource MediumFontSize}" Text="{DynamicResource TabelDatum}"/>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Type}" Value="Error">
+                                <Setter Property="Background" Value="#F44336" />
+                                <Setter Property="Foreground" Value="White" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Type}" Value="Warning">
+                                <Setter Property="Background" Value="#FF9800" />
+                                <Setter Property="Foreground" Value="White" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Type}" Value="Info">
+                                <Setter Property="Background" Value="#80B9EE" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+            </DataGrid>
+
+
+        </Grid>
+
+        <Grid Grid.Row="2">
+
+            <!--Empty Row-->
+
+        </Grid>
+    </Grid>
+
+</Page>

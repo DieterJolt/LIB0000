@@ -1,0 +1,39 @@
+﻿<Window x:Class="LIB0000.CustomMessageBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LIB0000"
+        mc:Ignorable="d"
+            Height="190" Width="450"
+    WindowStartupLocation="CenterOwner"
+    WindowStyle="ThreeDBorderWindow"
+    ResizeMode="NoResize"
+    BorderThickness="1"
+    BorderBrush="Gray"
+    Title="CustomMessageBox">
+
+    <Grid  Background="DimGray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <!-- Bericht + Icoon -->
+        <Grid Grid.Row="0" Margin="10,0,10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Image Name="MessageIcon" Grid.Column="0" Width="32" Height="32" Margin="5" />
+                <TextBlock Name="MessageText" Grid.Column="1" TextWrapping="Wrap"
+                   VerticalAlignment="Center" FontSize="14" Foreground="White"/>
+        </Grid>
+
+        <!-- Knoppen -->
+        <Grid Grid.Row="1" Margin="0,10,10,0" >
+            <Button Content="OK" Width="80" Margin="5" Click="OkButton_Click" HorizontalAlignment="Right"/>
+        </Grid>
+    </Grid>
+</Window>

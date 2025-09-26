@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="LIB0000.LayoutEdit03SnapshotUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LIB0000"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid x:Name="gridMain" Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="TextBlock_Image">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+
+            <Grid x:Name="Inputfield">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Column="1" VerticalAlignment="Center" Text="{Binding InstructionModel.Text1,RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding EditVisibilityMode, Converter={StaticResource ConverterVisibilityToInverseVisibility}, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                <Label Content="{Binding InstructionModel.Text1,RelativeSource={RelativeSource AncestorType=UserControl}}" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding EditVisibilityMode,RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+            </Grid>
+
+            <Grid x:Name="Image" Grid.Row="1" Margin="10">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Image x:Name="Image1" Source="{Binding InstructionModel.Image1,RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding EditEnabledMode,RelativeSource={RelativeSource AncestorType=UserControl}}" Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center"  Grid.Column="1" MouseDown="Change_Image"/>
+                <Image x:Name="Image2" Source="{Binding InstructionModel.InputImage1,RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding EditEnabledMode, Converter={StaticResource ConverterBoolToInverseBool}, RelativeSource={RelativeSource AncestorType=UserControl}}" Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center"  Grid.Column="3" MouseDown="Change_Image"/>
+            </Grid>
+        </Grid>
+
+
+        <Grid x:Name="Buttons" Grid.Row="2" Visibility="{Binding NextButtonVisibilityMode, RelativeSource={RelativeSource AncestorType=UserControl}}">
+
+            <local:Footer5ButtonsUserControl VerticalAlignment="Center" IsEnabled="{Binding EditEnabledMode, Converter={StaticResource ConverterBoolToInverseBool}, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                
+    Button5Text="{DynamicResource Volgende}"
+    Button5Image="pack://application:,,,/Assets/Images/SaveAs.png"
+    Button5Visibility="True"
+   Button5Command="{Binding cmdInstructionOk, RelativeSource={RelativeSource AncestorType=UserControl}}"
+
+    />
+
+        </Grid>
+
+    </Grid>
+</UserControl>

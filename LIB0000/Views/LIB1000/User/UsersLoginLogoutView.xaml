@@ -1,0 +1,112 @@
+﻿<Page x:Class="LIB0000.UsersLoginLogoutView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LIB0000" 
+      xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      mc:Ignorable="d" 
+      DataContext = "{Binding RelativeSource={RelativeSource Self}}"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="UsersLoginLogoutView">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Login/Logout grid in row 1 column 1 -->
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!--Username input/combobox-->
+                <Grid Grid.Row="1" VerticalAlignment="Bottom" Width="{Binding ActualWidth, ElementName=PasswordBox}" Visibility="{Binding BasicService.UsersService.Login.IsLoggedIn, Converter={StaticResource ConverterBoolToVisibility0Visible1Hidden}}" >
+
+                    <local:TextInputClearButtonUserControl
+                  TextLeft="User :"
+                  Input="{Binding BasicService.UsersService.Login.InputUser.User,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                  VisibilityRight="true"
+                  Visibility="{Binding GlobalService.Machine.Par.LoginViaActiveDirectory, Converter={StaticResource ConverterBoolToVisibility0Visible1Hidden}}"
+                  CommandRight="{Binding cmdNavigateCommand}"
+                  ImageRight="pack://application:,,,/Assets/Images/User.png"
+                  />
+
+                    <local:TextInputClearTextUserControl
+                  TextLeft="User :"
+                  Input="{Binding BasicService.UsersService.Login.InputUser.User,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                  Visibility="{Binding GlobalService.Machine.Par.LoginViaActiveDirectory, Converter={StaticResource ConverterBoolToVisibility1Visible0Hidden}}"
+                  />
+
+                </Grid>
+
+                <!--Password input-->
+                <Grid  Grid.Row="2" VerticalAlignment="Center" 
+                 Visibility="{Binding BasicService.UsersService.Login.IsLoggedIn, Converter={StaticResource ConverterBoolToVisibility0Visible1Hidden}}" >
+
+                    <local:TextInputClearTextUserControl
+                  TextLeft="Password :"
+                  FontFamilyInput="Segoe MDL2 Assets"
+                  Input="{Binding BasicService.UsersService.Login.InputUser.Password,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                  KeyDown="PasswordBox_KeyDown" 
+                  >
+                        <local:TextInputClearTextUserControl.Visibility>
+                            <MultiBinding Converter="{StaticResource CanvasRatioMultiBoolToVisibilityConverterConverter}">
+                                <Binding Path="BasicService.UsersService.Login.InputUser.PasswordRequired" />
+                                <Binding Path="GlobalService.Machine.Par.LoginViaActiveDirectory" />
+                            </MultiBinding>
+                        </local:TextInputClearTextUserControl.Visibility>
+                    </local:TextInputClearTextUserControl>
+
+                </Grid>
+
+                <!--Login Button-->
+                <Button Grid.Row="3" 
+             VerticalAlignment="Top" 
+             HorizontalAlignment="Center" 
+             Background="{StaticResource ColorGreen}" 
+             Content="Login"
+             Height="50"  
+             Width="150"
+             Margin="10"
+             Visibility="{Binding BasicService.UsersService.Login.IsLoggedIn, Converter={StaticResource ConverterBoolToVisibility0Visible1Hidden}}"  
+             Command="{Binding cmdInloggenCommand}">
+
+                </Button>
+
+                <!--Logout Button-->
+                <Button Grid.Row="1" 
+             VerticalAlignment="Center" 
+             HorizontalAlignment="Center" 
+             Background="{StaticResource ColorRed}" 
+             Content="Logout"  
+             Height="50"  
+             Width="150"
+             Visibility="{Binding BasicService.UsersService.Login.IsLoggedIn, Converter={StaticResource ConverterBoolToVisibility1Visible0Hidden}}" 
+             Command="{Binding cmdUitloggenCommand}">
+                </Button>
+
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+</Page>

@@ -1,0 +1,180 @@
+﻿<Application
+    x:Class="LIB0000.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:local="clr-namespace:LIB0000"
+    DispatcherUnhandledException="OnDispatcherUnhandledException"
+    Exit="OnExit"
+    Startup="OnStartup">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!--Converters Bool-->
+            <local:ConverterScreenValueModeToColor x:Key="ConverterScreenValueModeToColor"/>
+            <local:ConverterBoolToColor0Transparent1Orange x:Key="ConverterBoolToColor0Transparent1Orange" />
+            <local:ConverterBoolToColor0Transparent1Blue x:Key="ConverterBoolToColor0Transparent1Blue" />
+            <local:ConverterBoolToColor0Transparent1Red x:Key="ConverterBoolToColor0Transparent1Red" />
+            <local:ConverterBoolToColor1Transparent0Red x:Key="ConverterBoolToColor1Transparent0Red"/>
+            <local:ConverterBoolToVisibility1Visible0Hidden x:Key="ConverterBoolToVisibility1Visible0Hidden"/>
+            <local:ConverterBoolToVisibility1Visible0Collapsed x:Key="ConverterBoolToVisibility1Visible0Collapsed"/>
+            <local:ConverterBoolToVisibility0Visible1Hidden x:Key="ConverterBoolToVisibility0Visible1Hidden"/>
+            <local:ConverterBoolToColor0Red1Green x:Key="ConverterBoolToColor0Red1Green"/>
+            <local:ConverterBoolToColor0Transparent1Green x:Key="ConverterBoolToColor0Transparent1Green"/>
+            <local:ConverterBoolToColor0Transparent1Yellow x:Key="ConverterBoolToColor0Transparent1Yellow"/>
+            <local:CanvasRatioMultiBoolToVisibilityConverterConverter x:Key="CanvasRatioMultiBoolToVisibilityConverterConverter"/>
+            <!--Converters Enum-->
+            <local:ConverterEnumToBoolean x:Key="ConverterEnumToBoolean" />
+            <local:ConverterEnumToVisibilityConverter x:Key="ConverterEnumToVisibilityConverter" />
+            <!--Converters Null-->
+            <local:ConverterNullOr0VisibilityNullHiddenNotnullVisible x:Key="ConverterNullOr0VisibilityNullHiddenNotnullVisible"/>
+            <!--Converters MessageType-->
+            <local:ConverterMessageTypeToBackgroundColor x:Key="ConverterMessageTypeToBackgroundColor"/>
+            <local:ConverterMessageTypeToForegroundColor x:Key="ConverterMessageTypeToForegroundColor"/>
+            <local:ConverterMessageTypeToIcon x:Key="ConverterMessageTypeToIcon"/>
+            <local:ConverterMessageTypeToString x:Key="ConverterMessageTypeToString"/>
+            <!--Converters String-->
+            <local:ConverterStringToString1Aan x:Key="ConverterStringToString1Aan"/>
+            <local:ConverterStringToBool1True x:Key="ConverterStringToBool1True"/>
+            <local:ConverterStringToVisibilityEmptyStringCollapsed x:Key="ConverterStringToVisibilityEmptyStringCollapsed"/>
+            <local:ConverterStringToComboBoxItemsConverter x:Key="ConverterStringToComboBoxItemsConverter"/>
+            <local:ConverterScreenValueModeString x:Key="ConverterScreenValueModeString"/>
+            <local:ConverterStringToVisibilityEmptyStringHidden x:Key="ConverterStringToVisibilityEmptyStringHidden"/>
+            <local:ConverterIntToGridVisibility0NotVisible1Visible x:Key="ConverterIntToGridVisibility0NotVisible1Visible"/>
+            <!--Converters Value-->
+            <local:ConverterValueDivideBy2 x:Key="ConverterValueDivideBy2"/>
+            <!--Converters List-->
+            <local:ConverterObservableCollectionHardwareFunctionCountGreaterThenParameterVisble x:Key="ConverterObservableCollectionHardwareFunctionCountGreaterThenParameterVisble"/>
+            <!--MultiConverters-->
+            <local:MultiConverterEqualToTrue x:Key="MultiConverterEqualToTrue"/>
+            <local:MultiConverterStringToVisibilityEmptyStringHidden x:Key="MultiConverterStringToVisibilityEmptyStringHidden"/>
+            <!--int to visible-->
+            <local:IntToVisibilityConverter x:Key="IntToVisibilityConverter"/>
+            <local:ConverterBoolToInverseBool x:Key="ConverterBoolToInverseBool"/>
+            <!--orderhistorytype to visible-->
+            <local:ConverterOrderHistoryTypeInstructionVisibilityVisible x:Key="ConverterOrderHistoryTypeInstructionVisibilityVisible"/>
+            <local:ConverterOrderHistoryTypeInstructionVisibilityHidden x:Key="ConverterOrderHistoryTypeInstructionVisibilityHidden"/>
+
+            <!--hardwarefunction to visible-->
+            <local:ConverterHardWareFunctionToVisibilityFhv7ShapeSearchVisible x:Key="ConverterHardWareFunctionToVisibilityFhv7ShapeSearchVisible"/>
+            <local:ConverterHardWareFunctionToVisibilityFhv7BarcodeVisible x:Key="ConverterHardWareFunctionToVisibilityFhv7BarcodeVisible"/>
+
+            <!--actual height to fontsize-->
+            <local:ConverterActualHeightToFontSize x:Key="ConverterActualHeightToFontSize"/>
+            
+            <!--JoinId-->
+            <local:ConverterJoinId x:Key="ConverterJoinId"/>
+            
+            <local:InstructionTypeToBitmapConverter x:Key="InstructionTypeToBitmapConverter"/>
+            <local:OrderTypeDetailToImageStringConverter x:Key="OrderTypeDetailToImageStringConverter"/>
+            <local:OrderTypeDetailToStringConverter x:Key="OrderTypeDetailToStringConverter"/>
+            <local:ConverterVisibilityToInverseVisibility x:Key="ConverterVisibilityToInverseVisibility"/>
+            <local:ByteArrayToVisibilityConverter x:Key="ByteArrayToVisibilityConverter"/>
+            <local:StringMultiVisibilityConverter x:Key="StringMultiVisibilityConverter"/>
+            <local:CheckboxMultiVisibilityConverter x:Key="CheckboxMultiVisibilityConverter"/>
+            <local:UserNameAndLevelMultiConverter x:Key="UserNameAndLevelMultiConverter"/>
+            <local:InstructionTypeToStringConverter x:Key="InstructionTypeToStringConverter"/>
+            <local:OddEvenIntToColorConverter x:Key="OddEvenIntToColorConverter"/>
+            <local:InstructionListIdToNameMultiConverter x:Key="InstructionListIdToNameMultiConverter"/>
+            <local:ProductGroupIdToNameMultiConverter x:Key="ProductGroupIdToNameMultiConverter"/>
+            <local:ProductIdToNameMultiConverter x:Key="ProductIdToNameMultiConverter"/>
+            <local:ApprovedOnTextConverter x:Key="ApprovedOnTextConverter"/>
+            <local:ConverterCheckOrderdetailTypeToVisibility x:Key="ConverterCheckOrderdetailTypeToVisibility"/>
+
+
+            <SolidColorBrush x:Key="ColorGreen" Color="#4CAF50"/>
+            <SolidColorBrush x:Key="ColorRed" Color="#F44336"/>
+            <SolidColorBrush x:Key="ColorOrange" Color="#FF9800"/>
+            <SolidColorBrush x:Key="ColorBlue" Color="#80B9EE"/>
+            <SolidColorBrush x:Key="ColorWhite" Color="#FFFFFF"/>
+            <SolidColorBrush x:Key="ColorBlack" Color="#000000"/>
+            <SolidColorBrush x:Key="ColorYellow" Color="#FF9800"/>
+            <SolidColorBrush x:Key="ColorGray" Color="#343434"/>
+            <SolidColorBrush x:Key="ColorDarkGray" Color="#272727"/>
+
+            <!--<Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                <Setter Property="FontSize" Value="5"/>
+                <Setter Property="Foreground" Value="Yellow"/>
+                <Setter Property="MaxHeight" Value="10"/>
+            </Style>-->
+            <!--<Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+                <Setter Property="FontSize" Value="10"/>
+                <Setter Property="Foreground" Value="Yellow"/>
+                -->
+            <!--<Setter Property="MaxHeight" Value="10"/>-->
+            <!--
+            </Style>-->
+
+            <Style TargetType="DataGrid" BasedOn="{StaticResource {x:Type DataGrid}}">
+
+                <Setter Property="SelectionMode" Value="Single"/>
+                <Setter Property="AutoGenerateColumns" Value="False"/>
+                <Setter Property="IsEnabled" Value="True"/>
+                <Setter Property="IsReadOnly" Value="True"/>
+                <Setter Property="IsManipulationEnabled" Value="True"/>
+                <Setter Property="AlternatingRowBackground" Value="#343434"/>
+                <Setter Property="RowBackground" Value="#343434"/>
+                <Setter Property="HorizontalGridLinesBrush" Value="DimGray"/>
+                <Setter Property="VerticalGridLinesBrush" Value="DimGray"/>
+                <Setter Property="SelectionUnit" Value="FullRow"/>
+                <Setter Property="BorderBrush" Value="#343434"/>
+                <Setter Property="Background" Value="#343434"/>
+                <Setter Property="UseLayoutRounding" Value="True"/>
+                <Setter Property="FontSize" Value="{DynamicResource LargeFontSize}"/>
+                <Style.Resources>
+
+
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#272727"/>
+                        <Setter Property="Height" Value="40"/>
+                        <Setter Property="Padding" Value="10"/>
+                        <Setter Property="Foreground" Value="White"/>
+
+                    </Style>
+
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Height" Value="40"/>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                            </Trigger>
+                        </Style.Triggers>
+
+                    </Style>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="Height" Value="40"/>
+
+
+                    </Style>
+                    <Style TargetType="ScrollBar">
+                        <Setter Property="Width" Value="40" />
+                    </Style>
+
+                </Style.Resources>
+            </Style>
+
+            <Style TargetType="ScrollBar">
+                <Setter Property="Width" Value="40"/>
+            </Style>
+
+            <Style TargetType="Image">
+
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="MaxHeight" Value="580"/>
+
+            </Style>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ui:ThemesDictionary Theme="Dark" />
+                <ui:ControlsDictionary />
+                <ResourceDictionary Source="Dictionaries/FontsDictionary.xaml"/>
+                <ResourceDictionary Source="Dictionaries/NederlandsResource.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+
+    </Application.Resources>
+</Application>

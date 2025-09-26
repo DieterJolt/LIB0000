@@ -1,0 +1,130 @@
+﻿<Page x:Class="LIB0000.OrderSelectView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      DataContext = "{Binding RelativeSource={RelativeSource Self}}"
+      xmlns:local="clr-namespace:LIB0000"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="OrderSelectView" Loaded="Page_Loaded">
+
+    <Grid>
+
+        <Grid x:Name="gridMain" Grid.Row="1" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+
+            <ui:AutoSuggestBox  VerticalAlignment="Top" Width="200" Margin="10" Height="40" TextChanged="AutoSuggestBox_TextChanged" PlaceholderText="Zoek order"/>
+
+            <WrapPanel Orientation="Horizontal" >
+                <Label Content="  Eerste Startdatum :" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <DatePicker  CalendarClosed="DatePicker_CalendarClosed"
+                     SelectedDate="{Binding GlobalService.OrderService.FilterStartDate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"                
+                     Margin="10"
+                     Width="200">
+                </DatePicker>
+                <Label Content="  Laatste Startdatum :" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <DatePicker CalendarClosed="DatePicker_CalendarClosed"
+                     SelectedDate="{Binding GlobalService.OrderService.FilterEndDate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"                 
+                     Margin="10"
+                     Width="200">
+                </DatePicker>
+            </WrapPanel>
+
+            <Button Content="Verwijder" Width="125" VerticalAlignment="Top" Margin="10" Command="{Binding cmdDeleteCommand}"/>
+
+            </StackPanel>
+
+
+            <DataGrid x:Name="gridDatagrid" Grid.Row="1" ItemsSource="{Binding BasicService.OrdersService.Order.List,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" 
+                      SelectedItem="{Binding BasicService.OrdersService.Order.Selected,UpdateSourceTrigger=PropertyChanged}"
+                         IsReadOnly="True" SelectionMode="Single">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Order" Binding="{Binding OrderNr}" />
+                    <DataGridTemplateColumn x:Name="ColumnWorkstation">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="5">
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{StaticResource ConverterJoinId}" ConverterParameter="Id,Name">
+                                            <Binding Path="WorkstationId"/>
+                                            <Binding Path="DataContext.BasicService.WorkstationsService.Workstations.List" RelativeSource="{RelativeSource AncestorType=Page}"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.Header>
+                            <TextBlock FontSize="{DynamicResource LargeFontSize}" Text="Workstation"/>
+                        </DataGridTemplateColumn.Header>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn x:Name="ColumnProduct">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="5">
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{StaticResource ConverterJoinId}" ConverterParameter="Id,Name">
+                                            <Binding Path="ProductId"/>
+                                            <Binding Path="DataContext.BasicService.ProductsService.Product.List" RelativeSource="{RelativeSource AncestorType=Page}"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.Header>
+                            <TextBlock FontSize="{DynamicResource LargeFontSize}" Text="Product"/>
+                        </DataGridTemplateColumn.Header>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn x:Name="ColumnProductGroup">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="5">
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{StaticResource ConverterJoinId}" ConverterParameter="Id,Name">
+                                            <Binding Path="ProductGroupId"/>
+                                            <Binding Path="DataContext.BasicService.ProductGroupService.ProductGroup.List" RelativeSource="{RelativeSource AncestorType=Page}"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.Header>
+                            <TextBlock FontSize="{DynamicResource LargeFontSize}" Text="Productgroep"/>
+                        </DataGridTemplateColumn.Header>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn  Header="Start" Binding="{Binding DateTimeStart }" />
+                    <DataGridTextColumn Header="Stop" Binding="{Binding DateTimeStop}" />
+                    <DataGridTextColumn Header="Aantal OK" Binding="{Binding GoodProduct}" />
+                    <DataGridTextColumn Header="Aantal NOK" Binding="{Binding BadProduct}" />
+                    <DataGridTextColumn Header="Aantal klaar" Binding="{Binding TotalProduct}" />
+                    <DataGridTextColumn Header="Aantal order" Binding="{Binding Amount}" />
+
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Grid x:Name="gridButtons" Grid.Row="2">
+
+                <local:Footer5ButtonsUserControl VerticalAlignment="Center"    
+                    Button1Text="{DynamicResource Terug}"
+                    Button1Image="/Assets/Images/Return.png"
+                    Button1Visibility="True"
+                    Button1Command="{Binding cmdBackCommand}"                                                                                    
+                                                 
+                    Button2Text="{DynamicResource Detail}"
+                    Button2Image="pack://application:,,,/Assets/Images/Detail.png"
+                    Button2Visibility="True"
+                    Button2Command="{Binding cmdDetailCommand}"     
+                    />
+            </Grid>
+            
+        </Grid>
+    </Grid>
+</Page>

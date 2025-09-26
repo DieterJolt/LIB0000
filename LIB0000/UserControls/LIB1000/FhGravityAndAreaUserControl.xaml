@@ -1,0 +1,105 @@
+﻿<UserControl x:Class="LIB0000.FhGravityAndAreaUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LIB0000"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Viewbox Stretch="Uniform" StretchDirection="DownOnly">
+            <Grid x:Name="gridImageCanvas">
+                
+                <Grid.LayoutTransform>
+                    <RotateTransform Angle="270"/>
+                </Grid.LayoutTransform>
+                <Image x:Name="Image"
+                   Source="{Binding ImageSource, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                   Stretch="Fill"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   >
+                </Image>
+                
+
+                <Canvas x:Name="cnv" Grid.Row="1" Width="{Binding ActualWidth, ElementName=Image}" Height="{Binding ActualHeight,ElementName=Image}">
+
+                    <!--<Rectangle Stroke="Green" StrokeThickness="2" Canvas.Top="{Binding Rect1RegionUpperLeftY, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                               Canvas.Left="{Binding Rect1RegionUpperLeftX, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                     Width="{Binding Rect1RegionWidth, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                     Height="{Binding Rect1RegionHeight,RelativeSource={RelativeSource AncestorType=UserControl}}">
+                        
+                    </Rectangle>-->
+                    <Rectangle x:Name="Rectangle1" Stroke="{Binding Rect1Color, RelativeSource={RelativeSource AncestorType=UserControl}}" StrokeThickness="2" >
+                        <Rectangle.Height>
+                            <MultiBinding Converter="{StaticResource CameraCoordsMmToPixelConverter}">
+                                <Binding Path="CameraResolutionY" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                                <Binding Path="Rect1RegionHeight" RelativeSource="{RelativeSource AncestorType=UserControl}"/> 
+                                <Binding Path="ActualHeight" ElementName="Image" />
+                            </MultiBinding>
+                        </Rectangle.Height>
+
+                        <Rectangle.Width>
+                            <MultiBinding Converter="{StaticResource CameraCoordsMmToPixelConverter}">
+                                <Binding Path="CameraResolutionX" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                                <Binding Path="Rect1RegionWidth" RelativeSource="{RelativeSource AncestorType=UserControl}"/> 
+                                <Binding Path="ActualWidth" ElementName="Image"/>
+                            </MultiBinding>
+                        </Rectangle.Width>
+
+                        <Canvas.Left>
+                            <MultiBinding Converter="{StaticResource CameraCoordsMmToPixelConverter}">
+                                <Binding Path="CameraResolutionX" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                                <Binding Path="Rect1RegionUpperLeftX" RelativeSource="{RelativeSource AncestorType=UserControl}"/> 
+                                <Binding Path="ActualWidth" ElementName="Image"/>
+                            </MultiBinding>
+                        </Canvas.Left>
+
+                        <Canvas.Top>
+                            <MultiBinding Converter="{StaticResource CameraCoordsMmToPixelConverter}">
+                                <Binding Path="CameraResolutionY" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                                <Binding Path="Rect1RegionUpperLeftY" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                                <Binding Path="ActualHeight" ElementName="Image" />
+                            </MultiBinding>
+                        </Canvas.Top>
+                    </Rectangle>
+
+                    <Rectangle x:Name="Rectangle2" Stroke="{Binding Rect2Color, RelativeSource={RelativeSource AncestorType=UserControl}}" StrokeThickness="2" >
+                        <Rectangle.Height>
+                            <MultiBinding Converter="{StaticResource CameraCoordsMmToPixelConverter}">
+                                <Binding Path="CameraResolutionY" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                                <Binding Path="Rect2RegionHeight" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                                <Binding Path="ActualHeight" ElementName="Image" />
+                            </MultiBinding>
+                        </Rectangle.Height>
+
+                        <Rectangle.Width>
+                            <MultiBinding Converter="{StaticResource CameraCoordsMmToPixelConverter}">
+                                <Binding Path="CameraResolutionX" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                                <Binding Path="Rect2RegionWidth" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                                <Binding Path="ActualWidth" ElementName="Image"/>
+                            </MultiBinding>
+                        </Rectangle.Width>
+
+                        <Canvas.Left>
+                            <MultiBinding Converter="{StaticResource CameraCoordsMmToPixelConverter}">
+                                <Binding Path="CameraResolutionX" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                                <Binding Path="Rect2RegionUpperLeftX" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                                <Binding Path="ActualWidth" ElementName="Image"/>
+                            </MultiBinding>
+                        </Canvas.Left>
+
+                        <Canvas.Top>
+                            <MultiBinding Converter="{StaticResource CameraCoordsMmToPixelConverter}">
+                                <Binding Path="CameraResolutionY" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                                <Binding Path="Rect2RegionUpperLeftY" RelativeSource="{RelativeSource AncestorType=UserControl}"/>
+                                <Binding Path="ActualHeight" ElementName="Image" />
+                            </MultiBinding>
+                        </Canvas.Top>
+                    </Rectangle>
+
+                </Canvas>
+            </Grid>
+        </Viewbox>
+    </Grid>
+</UserControl>

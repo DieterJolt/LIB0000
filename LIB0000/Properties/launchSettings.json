@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "LIB0000": {
+      "commandName": "Project",
+      "workingDirectory": "\\bin"
+    },
+    "Remote": {
+      "commandName": "Project",
+      "workingDirectory": "\\\\Msi\\fh",
+      "remoteDebugEnabled": true,
+      "remoteDebugMachine": "PC:4026",
+      "authenticationMode": "None"
+    }
+  }
+}

@@ -1,0 +1,129 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Localized strings -->
+    <sys:String x:Key="Hello">Hello</sys:String>
+    <sys:String x:Key="Goodbye">Goodbye</sys:String>
+    <sys:String x:Key="WelcomeMessage">Welcome to the application!</sys:String>
+    <sys:String x:Key="Manuals">Handleidingen</sys:String>
+    <sys:String x:Key="UitlegSetting1">Uitleg setting 1 qdfs</sys:String>
+
+    <sys:String x:Key="Aan">On</sys:String>
+    <sys:String x:Key="Aantal">Amount :</sys:String>
+    <sys:String x:Key="Actie">Action :</sys:String>
+    <sys:String x:Key="AfbeeldingSelectielijstInstrucie">Instruction selectionlist</sys:String>
+    <sys:String x:Key="AfbeeldingSelectielijstInstrucieAanpassen">Edit instruction selectionlist</sys:String>
+    <sys:String x:Key="Annuleer">Cancel</sys:String>
+    <sys:String x:Key="Beschrijving">Description :</sys:String>
+    <sys:String x:Key="Bewaren">Save</sys:String>
+    <sys:String x:Key="Bewerken">Edit</sys:String>
+    <sys:String x:Key="ChecklistInstructie">Instruction checklist</sys:String>
+    <sys:String x:Key="ChecklistInstructieAanpassen">Edit instruction checklist</sys:String>
+    <sys:String x:Key="Clickinstructie">Clickinstructie</sys:String>
+    <sys:String x:Key="ClickinstructieAanpassen">Edit Clickinstructie</sys:String>
+    <sys:String x:Key="Datum">Date</sys:String>
+    <sys:String x:Key="DefaultWaarde">Default value : </sys:String>
+    <sys:String x:Key="Detail">Detail</sys:String>
+    <sys:String x:Key="Einde">End :</sys:String>
+    <sys:String x:Key="Frequentie">Frequency :</sys:String>
+    <sys:String x:Key="Gebruiker">User :</sys:String>
+    <sys:String x:Key="Goedgekeurd">Approved</sys:String>
+    <sys:String x:Key="GoedgekeurdOp">Approved on</sys:String>
+    <sys:String x:Key="HotspotId">Hotspot id</sys:String>
+    <sys:String x:Key="Hotspotinstructie">hotspotinstruction</sys:String>
+    <sys:String x:Key="HotspotinstructieAanpassen">Edit hotspotinstruction</sys:String>
+    <sys:String x:Key="Inloggen">Login</sys:String>
+    <sys:String x:Key="Instructies">Instructions :</sys:String>
+    <sys:String x:Key="Instructielijst">Instructionlist</sys:String>
+    <sys:String x:Key="InstructielijstenToevoegen">Add instructionlist</sys:String>
+    <sys:String x:Key="InstructielijstVoorOrder">Instructionlist before order :</sys:String>
+    <sys:String x:Key="InstructielijstTijdensOrder">Instructionlist during order :</sys:String>
+    <sys:String x:Key="InstructielijstNaOrder">Instructionlist after order :</sys:String>
+    <sys:String x:Key="InstructieToevoegen">Add instruction</sys:String>
+    <sys:String x:Key="JaNeeInstructie">Yes No instruction</sys:String>
+    <sys:String x:Key="JaNeeInstructieAanpassen">Edit Yes No instruction</sys:String>
+    <sys:String x:Key="LadenVanDefault">Load default</sys:String>
+    <sys:String x:Key="MaxWaarde">Max. value</sys:String>
+    <sys:String x:Key="MinWaarde">Min. value</sys:String>
+    <sys:String x:Key="Naam">Name :</sys:String>
+    <sys:String x:Key="NaamInstructie">Name instruction :</sys:String>
+    <sys:String x:Key="Niveau">Level :</sys:String>
+    <sys:String x:Key="Ok">OK</sys:String>
+    <sys:String x:Key="Omhoog">Up</sys:String>
+    <sys:String x:Key="Omlaag">Down</sys:String>
+    <sys:String x:Key="Opslaan">Save</sys:String>
+    <sys:String x:Key="OpslaanAlsDefault">Save as default</sys:String>
+    <sys:String x:Key="OrderNr">Order number:</sys:String>
+    <sys:String x:Key="Product">Product:</sys:String>
+    <sys:String x:Key="ProductGroep">Product group :</sys:String>
+    <sys:String x:Key="RemoteInputInstructie">Remote input instruction</sys:String>
+    <sys:String x:Key="RemoteInputInstructieAanpassen">Edit remote input instruction</sys:String>
+    <sys:String x:Key="ScanBevat">Scan contains :</sys:String>
+    <sys:String x:Key="ScanInstructie">Scan instruction</sys:String>
+    <sys:String x:Key="ScanInstructieAanpassen">Edit scan instruction</sys:String>
+    <sys:String x:Key="SelectielijstInstructie">Instruction Selectionlist</sys:String>
+    <sys:String x:Key="SelectielijstInstructieAanpassen">Edit instruction selectionlist</sys:String>
+    <sys:String x:Key="Snapshotinstructie">SnapshotInstruction</sys:String>
+    <sys:String x:Key="SnapshotinstructieAanpassen">Edit snapshotInstruction</sys:String>
+    <sys:String x:Key="Taal">Language</sys:String>
+    <sys:String x:Key="TabelActie">Action</sys:String>
+    <sys:String x:Key="TabelBeschrijving">Description</sys:String>
+    <sys:String x:Key="TabelDatum">Date</sys:String>
+    <sys:String x:Key="TabelGebruiker">User</sys:String>
+    <sys:String x:Key="TabelGoedgekeurd">Approved</sys:String>
+    <sys:String x:Key="TabelGroep">Group</sys:String>
+    <sys:String x:Key="TabelHoofdPagina">HeadPage</sys:String>
+    <sys:String x:Key="TabelHuidigeVersie">Current version</sys:String>
+    <sys:String x:Key="TabelIcoon">Icon</sys:String>
+    <sys:String x:Key="TabelNaam">Name</sys:String>
+    <sys:String x:Key="TabelNiveau">Level</sys:String>
+    <sys:String x:Key="TabelSubPagina">SubPage</sys:String>
+    <sys:String x:Key="TabelTekstbericht">MessageText</sys:String>
+    <sys:String x:Key="TabelVersie">Version</sys:String>
+    <sys:String x:Key="TabelVolgorde">Sequence</sys:String>
+    <sys:String x:Key="TabelWachtwoord">Password</sys:String>
+    <sys:String x:Key="Toevoegen">Add</sys:String>
+    <sys:String x:Key="Uit">Off</sys:String>
+    <sys:String x:Key="Uitloggen">Logout</sys:String>
+    <sys:String x:Key="Versie">Version :</sys:String>
+    <sys:String x:Key="Verwijderen">Delete</sys:String>
+    <sys:String x:Key="Volgende">Next</sys:String>
+    <sys:String x:Key="Voorbeeld">Example</sys:String>
+    <sys:String x:Key="Wachtwoord">Password :</sys:String>
+    <sys:String x:Key="WerkstationNaam">Workstation Name</sys:String>
+    <sys:String x:Key="HuidigMaken">Make current</sys:String>
+    <sys:String x:Key="Nieuw">New</sys:String>
+    <sys:String x:Key="Terug">Back</sys:String>
+    <sys:String x:Key="TabelWachtwoordNodig">Password Required</sys:String>
+    <sys:String x:Key="WachtwoordNodig">Password Required :</sys:String>
+    <sys:String x:Key="TabelGoedgekeurdop">Approved on</sys:String>
+
+
+
+    <sys:String x:Key="MaximumAantalProductenTotMachineTimeout">Max products until MachineTimeout</sys:String>
+
+
+
+    <!--Pagina Namen-->
+    <sys:String x:Key="Overzicht">Dashboard</sys:String>
+    <sys:String x:Key="Meldingen">Notifications</sys:String>
+    <sys:String x:Key="ActueleMeldingen">Actual notifications</sys:String>
+    <!--<sys:String x:Key="Historiek">History</sys:String>
+    <sys:String x:Key="LijstMeldingen">Notifications list</sys:String>
+    <sys:String x:Key="Actueel">Actual</sys:String>
+    <sys:String x:Key="Configuratie">Configuration</sys:String>
+    <sys:String x:Key="Gebruikers">Users</sys:String>
+    <sys:String x:Key="InUitloggen">Login/out</sys:String>
+    <sys:String x:Key="GebruikersLijst">Users list</sys:String>
+    <sys:String x:Key="GebruikersHistoriek">Users History</sys:String>
+    <sys:String x:Key="GebruikersPagins">Users pages</sys:String>
+    <sys:String x:Key="Toestellen">Devices</sys:String>
+    <sys:String x:Key="Werkstations">Workstations</sys:String>
+    <sys:String x:Key="ProductenGroepen">Product groups</sys:String>
+    <sys:String x:Key="Producten">Products</sys:String>
+    <sys:String x:Key="Instructies">Instructions</sys:String>-->
+    <sys:String x:Key="Instellingen">Settings</sys:String>
+    <sys:String x:Key="OverDezeApp">About app</sys:String>
+
+</ResourceDictionary>

@@ -1,0 +1,403 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\Images\LogoJoltIcon.ico</ApplicationIcon>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>True</UseWPF>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <Version>$(ApplicationVersion)</Version>
+    <Platforms>AnyCPU;x64</Platforms>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+    <PackageIcon>LogoJoltIcon.png</PackageIcon>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <BaseOutputPath>/bin</BaseOutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Assets\Videos\**" />
+    <Compile Remove="Dictionaries\LIB1000\**" />
+    <Compile Remove="ViewModels\LIB1000\**" />
+    <EmbeddedResource Remove="Assets\Videos\**" />
+    <EmbeddedResource Remove="Dictionaries\LIB1000\**" />
+    <EmbeddedResource Remove="ViewModels\LIB1000\**" />
+    <None Remove="Assets\Videos\**" />
+    <None Remove="Dictionaries\LIB1000\**" />
+    <None Remove="ViewModels\LIB1000\**" />
+    <Page Remove="Assets\Videos\**" />
+    <Page Remove="Dictionaries\LIB1000\**" />
+    <Page Remove="ViewModels\LIB1000\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\louis\.nuget\packages\LIB1000\1.1.23\contentFiles\any\net8.0-windows10.0.17763\pdfium.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Devices\FHV7.jpg" />
+    <None Remove="Assets\Devices\FHV7.png" />
+    <None Remove="Assets\Devices\PLC.jpg" />
+    <None Remove="Assets\Devices\PLC.png" />
+    <None Remove="Assets\Devices\V430.jpg" />
+    <None Remove="Assets\Devices\V430.png" />
+    <None Remove="Assets\Images\ArrowDown.png" />
+    <None Remove="Assets\Images\ArrowUp.png" />
+    <None Remove="Assets\Images\Clock.png" />
+    <None Remove="Assets\Images\Copy.png" />
+    <None Remove="Assets\Images\Delete.png" />
+    <None Remove="Assets\Images\Detail.png" />
+    <None Remove="Assets\Images\Edit.png" />
+    <None Remove="Assets\Images\Ethernet.png" />
+    <None Remove="Assets\Images\GoBack.jpg" />
+    <None Remove="Assets\Images\Hardware.png" />
+    <None Remove="Assets\Images\Info.png" />
+    <None Remove="Assets\Images\InstructionList.png" />
+    <None Remove="Assets\Images\Instructions.png" />
+    <None Remove="Assets\Images\InstructionTypeCheckBarcode.png" />
+    <None Remove="Assets\Images\InstructionTypeChecklist.png" />
+    <None Remove="Assets\Images\InstructionTypeClick.png" />
+    <None Remove="Assets\Images\InstructionTypeHotspot.png" />
+    <None Remove="Assets\Images\InstructionTypeRemoteInput.png" />
+    <None Remove="Assets\Images\InstructionTypeSelectionlist.png" />
+    <None Remove="Assets\Images\InstructionTypeSnapshot.png" />
+    <None Remove="Assets\Images\InstructionTypeYesNo.png" />
+    <None Remove="Assets\Images\LogoJolt.png" />
+    <None Remove="Assets\Images\LogoJoltIcon.ico" />
+    <None Remove="Assets\Images\LogoJoltQM.png" />
+    <None Remove="Assets\Images\Messages.png" />
+    <None Remove="Assets\Images\Minus.png" />
+    <None Remove="Assets\Images\Open.png" />
+    <None Remove="Assets\Images\Orders.png" />
+    <None Remove="Assets\Images\Overviews.png" />
+    <None Remove="Assets\Images\Pdf.png" />
+    <None Remove="Assets\Images\Playbutton.png" />
+    <None Remove="Assets\Images\Plus.png" />
+    <None Remove="Assets\Images\ProductGroups.png" />
+    <None Remove="Assets\Images\Products.png" />
+    <None Remove="Assets\Images\Recipes.png" />
+    <None Remove="Assets\Images\Return.png" />
+    <None Remove="Assets\Images\SaveAs.png" />
+    <None Remove="Assets\Images\Search.png" />
+    <None Remove="Assets\Images\Settings.png" />
+    <None Remove="Assets\Images\StopButton.png" />
+    <None Remove="Assets\Images\timeout.png" />
+    <None Remove="Assets\Images\Trends.png" />
+    <None Remove="Assets\Images\Uitroepteken.png" />
+    <None Remove="Assets\Images\UploadPicture.png" />
+    <None Remove="Assets\Images\User.png" />
+    <None Remove="Assets\Images\Version.png" />
+    <None Remove="Assets\Images\VoorbeeldAfbeelding.png" />
+    <None Remove="Assets\Images\Web.png" />
+    <None Remove="Assets\Images\Workstations.png" />
+    <None Remove="Assets\Images\Yes.png" />
+    <None Remove="Assets\Manuals\LIB1000EL.pdf" />
+    <None Remove="Assets\Manuals\LIB1000MANUAL.pdf" />
+    <None Remove="Assets\Manuals\LIB1000_MANUAL.pdf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
+    <PackageReference Include="MVTec.HalconDotNet-Windows" Version="24111.0.0" />
+    <PackageReference Include="Syncfusion.Pdf.Net.Core" Version="26.2.11" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1 " />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1 " />
+    <PackageReference Include="Syncfusion.PdfViewer.WPF" Version="28.2.11" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="9.0.9" />
+    <PackageReference Include="WPF-UI-JOLT" Version="3.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="UserControls\HalconSettingsUsercontrol.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\FhBasicSettingsUsercontrol.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\LIB1000\ButtonImageUserControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\LIB1000\TextInputClearButtonUserControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\LIB1000\TextInputButtonUserControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\LIB1000\TextToggleUserControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\LIB1000\TextNumberTextUserControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\LIB1000\Order\OrderHistoryView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\LIB1000\Workstations\WorkstationView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pdfium\arm64\" />
+    <Folder Include="Pdfium\x86\" />
+    <Folder Include="Pdfium\x64\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Images\ArrowDown.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\ArrowUp.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Copy.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Detail.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\InstructionList.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Version.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\VoorbeeldAfbeelding.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Clock.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Delete.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Edit.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Hardware.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Info.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Instructions.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\InstructionTypeCheckBarcode.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\InstructionTypeChecklist.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\InstructionTypeClick.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\InstructionTypeHotspot.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\InstructionTypeRemoteInput.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\InstructionTypeSelectionlist.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\InstructionTypeSnapshot.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\InstructionTypeYesNo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\LogoJolt.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\LogoJolt.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\LogoJoltIcon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\LogoJoltIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\LogoJoltQM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Messages.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Minus.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Open.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Orders.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Overviews.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Pdf.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Plus.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\ProductGroups.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Products.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Recipes.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\SaveAs.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Search.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Settings.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Trends.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\UploadPicture.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\User.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Web.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Workstations.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Yes.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Manuals\LIB1000EL.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Manuals\LIB1000MANUAL.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Assets\Images\LogoJoltIcon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="Readme\#ReadmeClasses.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Readme\#ReadmeSettings.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\joltm\.nuget\packages\intel.realsensewithnativedll\2.51.1.1\build\\realsense2.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\joltm\.nuget\packages\intel.realsensewithnativedll\2.51.1.1\build\\realsense2.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\joltm\.nuget\packages\intel.realsensewithnativedll\2.51.1.1\build\\realsense2.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\joltm\.nuget\packages\intel.realsensewithnativedll\2.51.1.1\build\\realsense2.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\Devices\FHV7.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Devices\PLC.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Devices\V430.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\Ethernet.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\GoBack.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\Playbutton.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\Return.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\StopButton.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\timeout.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\Uitroepteken.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\louis\.nuget\packages\syncfusion.pdftoimageconverter.wpf\28.2.11\build\net8.0-windows7.0\..\..\Pdfium\win-arm64\native\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\louis\.nuget\packages\syncfusion.pdftoimageconverter.wpf\28.2.11\build\net8.0-windows7.0\..\..\Pdfium\win-x64\native\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\louis\.nuget\packages\syncfusion.pdftoimageconverter.wpf\28.2.11\build\net8.0-windows7.0\..\..\Pdfium\win-x86\native\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\louis\.nuget\packages\syncfusion.pdftoimageconverter.wpf\28.2.11\build\net8.0-windows7.0\..\..\Pdfium\win-arm64\native\pdfium.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\louis\.nuget\packages\syncfusion.pdftoimageconverter.wpf\28.2.11\build\net8.0-windows7.0\..\..\Pdfium\win-x86\native\pdfium.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\louis\.nuget\packages\syncfusion.pdftoimageconverter.wpf\28.2.11\build\net8.0-windows7.0\..\..\Pdfium\win-x64\native\pdfium.dll" />
+  </ItemGroup>
+
+</Project>

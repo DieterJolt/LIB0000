@@ -1,0 +1,143 @@
+﻿<Page x:Class="LIB0000.VideoInfoView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      DataContext = "{Binding RelativeSource={RelativeSource Self}}"
+      xmlns:local="clr-namespace:LIB0000"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="VideoInfoView" Loaded="Page_Loaded">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="75"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="Maingrid">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="8*"/>
+            </Grid.RowDefinitions>
+
+            <Grid x:Name="Title" Grid.Row="0">
+
+                <TextBlock Text="{Binding VideoInfoService.Selected.VideoTitle}" FontSize="30" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+            </Grid>
+
+            <Grid x:Name="Videos" Grid.Row="1">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="{Binding VideoInfoService.Selected.SplitScreen,Converter={StaticResource ConverterIntToGridVisibility0NotVisible1Visible} }"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid x:Name="VideoLinks" Grid.Column="0">
+
+                    <Border x:Name="Image1Border" BorderBrush="Gray" BorderThickness="2" Width="820" Height="700" Margin="10">
+                        <Image x:Name="Image1" Source="{Binding VideoInfoService.Selected.ImageSource}" MaxWidth="850" MaxHeight="380">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="{Binding VideoInfoService.Selected.ImageRotation}"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                    </Border>
+
+                    <Border x:Name="Video1Border" BorderBrush="Gray" BorderThickness="2" Margin="10">
+                        <MediaElement x:Name="Video1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                      LoadedBehavior="Manual"
+                                      UnloadedBehavior="Stop"
+                                      Stretch="Uniform"
+                                      MaxHeight="375"             
+                                      Source="{Binding VideoInfoService.Selected.VideoSource}" RenderTransformOrigin="0.5,0.5" >
+                            <MediaElement.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="{Binding VideoInfoService.Selected.VideoRotation}"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </MediaElement.RenderTransform>
+                        </MediaElement>
+                    </Border>
+
+                </Grid>
+
+                <Grid x:Name="VideoRechts" Grid.Column="1">
+
+                    <Border x:Name="Image2Border" BorderBrush="Gray" BorderThickness="2" Width="820" Height="700" Margin="10">
+                        <Image x:Name="Image2" Source="{Binding VideoInfoService.Selected.ImageSource2}" MaxWidth="850" MaxHeight="380">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform CenterX="{Binding ActualWidth,ElementName=Image2,Converter={StaticResource ConverterValueDivideBy2}}" CenterY="{Binding ActualHeight,ElementName=Image2,Converter={StaticResource ConverterValueDivideBy2}}" Angle="90"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                    </Border>
+
+                    <Border x:Name="Video2Border" BorderBrush="Gray" BorderThickness="2" Margin="10">
+                        <MediaElement x:Name="Video2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                      LoadedBehavior="Manual"
+                      UnloadedBehavior="Stop"
+                      Stretch="Uniform"
+                      Source="{Binding VideoInfoService.Selected.VideoSource2}" RenderTransformOrigin="0.5,0.5" >
+                            <MediaElement.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="{Binding VideoInfoService.Selected.VideoRotation2}"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </MediaElement.RenderTransform>
+                        </MediaElement>
+                    </Border>
+
+                </Grid>
+
+            </Grid>
+
+        </Grid>
+
+        <Grid x:Name="footer" Grid.Row="1">
+
+            <local:VideoButtonsUserControl 
+                  
+                  Button1Text="Terug" Button1TextColor="White"
+                  Button1Icon="ArrowLeft" Button1IconColor="White"
+                  Button1Command="{Binding cmdBackCommand }"
+     
+                  Button2Text="Play" Button2TextColor="White"
+                  Button2Icon="Play" Button2IconColor="Green"
+                  Button2Command="{Binding cmdPlayCommand }"
+                
+                  Button3Text="Pause" Button3TextColor="White"
+                  Button3Icon="Pause" Button3IconColor="Yellow"
+                  Button3Command="{Binding cmdPauseCommand}"
+                
+                  Button4Text="Stop" Button4TextColor="White"
+                  Button4Icon="Stop" Button4IconColor="Red"
+                  Button4Command="{Binding cmdStopCommand}"
+ 
+                  Button5Text="Replay" Button5TextColor="White"
+                  Button5Icon="Repeat" Button5IconColor="LightSkyBlue"
+                  Button5Command="{Binding cmdReplayCommand}"
+                
+                  Button6Visibility="True"
+ 
+                />
+
+        </Grid>
+
+    </Grid>
+</Page>

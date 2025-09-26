@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="LIB0000.OrderUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:local="clr-namespace:LIB0000"
+             mc:Ignorable="d" 
+             d:DesignHeight="50">
+    <Grid>
+
+
+
+
+        <Grid Margin="1"  Background="{Binding Id, Converter={StaticResource OddEvenIntToColorConverter}}">
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0" Background="Transparent" >
+
+
+                    <TextBlock Text="{Binding TimeStamp}" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" />
+
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <Image Source="{Binding OrderHistoryType, Converter={StaticResource OrderTypeDetailToImageStringConverter}}" Width="40" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10"/>
+                </Grid>
+
+                <Grid Grid.Column="2" >
+
+                    <TextBlock Text="{Binding OrderHistoryType, Converter={StaticResource OrderTypeDetailToStringConverter}}" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+
+                </Grid>
+
+                <Grid Grid.Column="3">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding Counter}" Foreground="White"/>
+                        <TextBlock Text=" / " Foreground="White" />
+                        <TextBlock Text="{Binding OrderAmount}" Foreground="White"/>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Grid.Column="4">
+                    <TextBlock Padding="10" Text="{Binding LoginId}" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                </Grid>
+
+                <Grid Grid.Column="6">
+                    <Button Command="{Binding cmdNavigateToInstructionHistory, RelativeSource={RelativeSource AncestorType=UserControl}}" Background="Transparent" BorderBrush="Transparent" >
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Visibility" Value="Hidden" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding OrderHistoryType}" Value="InstructionOk">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding OrderHistoryType}" Value="InstructionNok">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}" Value="False">
+                                        <Setter Property="Visibility" Value="Hidden" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+
+                        <fa:IconImage Width="25" ToolTip="Test" Icon="InfoCircle" Foreground="White"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+
+
+                    </Button>
+                    <!--<Button Command="{Binding cmdNavigateToInstructionHistory, RelativeSource={RelativeSource AncestorType=UserControl}}" Background="Transparent" BorderBrush="Transparent" >
+                        <fa:IconImage Width="25" ToolTip="Test" Icon="InfoCircle" Foreground="White"  HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding Info,Converter={StaticResource ConverterStringToVisibilityEmptyStringHidden}}"/>
+                        <Button.Visibility>
+                            <MultiBinding Converter="{StaticResource ConverterCheckOrderdetailTypeToVisibility}">
+                                <Binding RelativeSource="{RelativeSource AncestorType=ListBoxItem}" Path="IsSelected" />
+                                <Binding Path="OrderHistory"/>
+                            </MultiBinding>
+                        </Button.Visibility>
+                    </Button>-->
+
+
+
+
+
+                </Grid>
+
+            </Grid>
+        </Grid>
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,86 @@
+﻿<Page x:Class="LIB0000.HardwareView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      DataContext = "{Binding RelativeSource={RelativeSource Self}}"
+      xmlns:local="clr-namespace:LIB0000"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="HardwareView" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
+
+
+    <Grid x:Name="gridMain" Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="gridSearch" Grid.Row="0">
+            <ui:AutoSuggestBox Margin="0,0,0,20" x:Name="AutoSuggestBox" TextChanged="AutoSuggestBox_TextChanged" />
+        </Grid>
+        <Grid x:Name="gridDatagrid" Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <DataGrid HeadersVisibility="Column" Grid.Column="0" MaxHeight="{Binding ActualHeight, ElementName=gridDatagrid}"
+                             ItemsSource="{Binding BasicService.HardwareService.Hardware.JoinList ,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                             SelectedValue="{Binding BasicService.HardwareService.Hardware.SelectedJoin}" 
+                             AutoGenerateColumns="False" 
+                             SelectionChanged="DataGrid_SelectionChanged" >
+
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Visibility="Hidden" Binding="{Binding Id }" Width="Auto">
+                        <DataGridTextColumn.Header>
+                            <TextBlock FontSize="{DynamicResource LargeFontSize}" Text="Id"/>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding HardwareName}" Width="250">
+                        <DataGridTextColumn.Header>
+                            <TextBlock FontSize="{DynamicResource LargeFontSize}" Text="{DynamicResource TabelNaam}"/>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding HardwareTypeName}" Width="375">
+                        <DataGridTextColumn.Header>
+                            <TextBlock FontSize="{DynamicResource LargeFontSize}" Text="Type"/>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+
+
+            </DataGrid>
+
+            <Image VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10"
+                       Grid.Column="1"  Source="{Binding BasicService.HardwareService.Hardware.SelectedJoin.HardwareTypeImage}"  />
+
+        </Grid>
+        <Grid x:Name="gridButtons" Grid.Row="2">
+
+            <local:Footer5ButtonsUserControl VerticalAlignment="Center"
+                    
+                    Button1Text="{DynamicResource Toevoegen}"
+                    Button1Image="pack://application:,,,/Assets/Images/Plus.png"
+                    Button1Visibility="True"
+                    Button1Command="{Binding cmdAddRowCommand}"
+                    
+                    Button2Text="{DynamicResource Verwijderen}"
+                    Button2Image="pack://application:,,,/Assets/Images/Delete.png"
+                    Button2Visibility="True"
+                    Button2Command="{Binding cmdDeleteRowCommand}"
+                    
+                    Button3Text="{DynamicResource Bewerken}"
+                    Button3Image="pack://application:,,,/Assets/Images/Edit.png"
+                    Button3Visibility="True"
+                    Button3Command="{Binding cmdEditRowCommand}"                                                                                            
+                    />
+
+        </Grid>
+    </Grid>
+
+</Page>
