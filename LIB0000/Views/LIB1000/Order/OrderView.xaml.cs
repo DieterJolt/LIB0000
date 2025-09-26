@@ -31,7 +31,7 @@ namespace LIB0000
 
                 GlobalService.Machine.Cmd.StartOrder = true;
 
-                NavigationService.Navigate(typeof(InstructionView));
+                NavigationService.Navigate(typeof(OrderActualView));
             }
             else
             {
@@ -58,6 +58,12 @@ namespace LIB0000
         {
             BasicService.InstructionsService.InstructionLists.ObjectToWriteSelected = new PropertyReferenceModel(BasicService.OrdersService.Order.Edit, nameof(BasicService.OrdersService.Order.Edit.ProductId));
             NavigationService.Navigate(typeof(ProductSelectView));
+        }
+
+        [RelayCommand]
+        public void cmdStartStopMachine()
+        {
+            GlobalService.Machine.Stat.Started = !GlobalService.Machine.Stat.Started;
         }
 
         #endregion

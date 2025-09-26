@@ -106,16 +106,8 @@ namespace LIB0000
             if (Machine.Cmd.EndOrder)
             {
                 Machine.Cmd.EndOrder = false;
+                BasicService.OrdersService.Order.IsOrderBusy = false;
                 BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForMachineInstructionsAfterOrder;
-                BasicService.InstructionsService.Instructions.Selected = BasicService.InstructionsService.Instructions.GetInstructionFromSequence(Machine.Par.Workstation.InstructionListIdAfter, 1);
-
-                if (BasicService.InstructionsService.Instructions.Selected != null)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        NavigationService.Navigate(typeof(InstructionView));
-                    });
-                }
             }
 
             if (Machine.Cmd.CloseOrder)
@@ -217,12 +209,6 @@ namespace LIB0000
                         BasicService.ProductGroupsService.ProductGroup.LoadProductGroup(BasicService.OrdersService.Order.Loaded.ProductGroupId);
                         BasicService.ProductDetailService.LoadProductDetails(BasicService.ProductsService.Product.Loaded.Id);
 
-                        Machine.Stat.NextPeriodicControlWorkstation = Machine.Par.Workstation.InstructionListPeriodicFrequency;
-                        Machine.Stat.NextPeriodicControlProductgroup = BasicService.ProductGroupsService.ProductGroup.Loaded.InstructionListPeriodicFrequency;
-                        Machine.Stat.NextPeriodicControlProduct = BasicService.ProductsService.Product.Loaded.InstructionListPeriodicFrequency;
-                        BasicService.OrdersService.Order.Loaded.InstructionSequence = 1;
-                        BasicService.InstructionsService.Instructions.Selected = BasicService.InstructionsService.Instructions.GetInstructionFromSequence(Machine.Par.Workstation.InstructionListIdBefore, 1);
-
                         Machine.StepCase = MachineTyp.MachineStepEnum.WaitOrder;
                         Application.Current.Dispatcher.Invoke(() =>
                         {
@@ -249,97 +235,16 @@ namespace LIB0000
                                 Machine.Cmd.StartOrder = false;
                                 if (BasicService.OrdersService.Order.Edit.OrderNr != null && BasicService.OrdersService.Order.Loaded.OrderNr != "")
                                 {
-                                    BasicService.OrdersService.Order.Loaded.WorkstationId = Machine.Par.Workstation.Id;
-                                    BasicService.OrdersService.Order.AddRow();
-                                    Machine.Stat.NextPeriodicControlWorkstation = Machine.Par.Workstation.InstructionListPeriodicFrequency;
-                                    Machine.Stat.NextPeriodicControlProductgroup = BasicService.ProductGroupsService.ProductGroup.Loaded.InstructionListPeriodicFrequency;
-                                    Machine.Stat.NextPeriodicControlProduct = BasicService.ProductsService.Product.Loaded.InstructionListPeriodicFrequency;
-                                    BasicService.OrdersService.Order.Loaded.InstructionSequence = 1;
-                                    BasicService.InstructionsService.Instructions.Selected = BasicService.InstructionsService.Instructions.GetInstructionFromSequence(Machine.Par.Workstation.InstructionListIdBefore, 1);
-
-                                    BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForMachineInstructionsBeforeOrder;
-                                }
-                            }
-                            break;
-                        case OrderStepEnum.WaitForMachineInstructionsBeforeOrder:
-                            BasicService.MessagesService.StepMessage.StepStatus = MessageType.Wait;
-                            BasicService.MessagesService.StepMessage.ActiveStep.Group = "Algemeen";
-                            BasicService.MessagesService.StepMessage.ActiveStep.Status = "Wachten tot machine instructies voor order uitgevoerd";
-
-                            if (Machine.Par.Workstation.InstructionListOn && BasicService.InstructionsService.Instructions.Selected != null)
-                            {
-                                bool allWorkstationInstructionsDone = WaitForNextInstruction();
-
-                                if (allWorkstationInstructionsDone)
-                                {
-
-                                    BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForProductGroupInstructionsBeforeOrder;
-
-                                    BasicService.InstructionsService.Instructions.Selected = BasicService.InstructionsService.Instructions.GetInstructionFromSequence(BasicService.ProductGroupsService.ProductGroup.Loaded.InstructionListIdBefore, 1);
-                                }
-                            }
-                            else
-                            {
-                                BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForProductGroupInstructionsBeforeOrder;
-                                BasicService.InstructionsService.Instructions.Selected = BasicService.InstructionsService.Instructions.GetInstructionFromSequence(BasicService.ProductGroupsService.ProductGroup.Loaded.InstructionListIdBefore, 1);
-                            }
-
-                            break;
-                        case OrderStepEnum.WaitForProductGroupInstructionsBeforeOrder:
-                            BasicService.MessagesService.StepMessage.StepStatus = MessageType.Wait;
-                            BasicService.MessagesService.StepMessage.ActiveStep.Group = "Algemeen";
-                            BasicService.MessagesService.StepMessage.ActiveStep.Status = "Wachten tot productgroup instructies voor order uitgevoerd";
-
-                            if (BasicService.ProductGroupsService.ProductGroup.Loaded.InstructionListOn && BasicService.InstructionsService.Instructions.Selected != null)
-                            {
-                                bool allProductGroupInstructionsDone = WaitForNextInstruction();
-
-                                if (allProductGroupInstructionsDone)
-                                {
-
-                                    BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForProductInstructionsBeforeOrder;
-
-                                    BasicService.InstructionsService.Instructions.Selected = BasicService.InstructionsService.Instructions.GetInstructionFromSequence(BasicService.ProductsService.Product.Loaded.InstructionListIdBefore, 1);
-                                }
-                            }
-                            else
-                            {
-                                BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForProductInstructionsBeforeOrder;
-                                BasicService.InstructionsService.Instructions.Selected = BasicService.InstructionsService.Instructions.GetInstructionFromSequence(BasicService.ProductsService.Product.Loaded.InstructionListIdBefore, 1);
-                            }
-
-                            break;
-                        case OrderStepEnum.WaitForProductInstructionsBeforeOrder:
-                            BasicService.MessagesService.StepMessage.StepStatus = MessageType.Wait;
-                            BasicService.MessagesService.StepMessage.ActiveStep.Group = "Algemeen";
-                            BasicService.MessagesService.StepMessage.ActiveStep.Status = "Wachten tot product instructies voor order uitgevoerd";
-
-                            if (BasicService.ProductsService.Product.Loaded.InstructionListOn && BasicService.InstructionsService.Instructions.Selected != null)
-                            {
-                                bool allProductInstructionsDone = WaitForNextInstruction();
-
-                                if (allProductInstructionsDone)
-                                {
-
+                                    BasicService.OrdersService.Order.IsOrderBusy = true;
                                     BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForStart;
                                     Application.Current.Dispatcher.Invoke(() =>
                                     {
                                         NavigationService.Navigate(typeof(OrderActualView));
                                     });
-                                    BasicService.OrdersService.Order.IsOrderBusy = true;
                                 }
                             }
-                            else
-                            {
-                                BasicService.OrdersService.Order.IsOrderBusy = true;
-                                BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForStart;
-                                Application.Current.Dispatcher.Invoke(() =>
-                                {
-                                    NavigationService.Navigate(typeof(OrderActualView));
-                                });
-                            }
-
                             break;
+
                         case OrderStepEnum.WaitForStart:
                             BasicService.MessagesService.StepMessage.StepStatus = MessageType.Wait;
                             BasicService.MessagesService.StepMessage.ActiveStep.Group = "Algemeen";
@@ -364,154 +269,6 @@ namespace LIB0000
                             BasicService.MessagesService.StepMessage.StepStatus = MessageType.Running;
                             BasicService.MessagesService.StepMessage.ActiveStep.Group = "Algemeen";
                             BasicService.MessagesService.StepMessage.ActiveStep.Status = "Machine draait, wachten op stop";
-                            break;
-                        case OrderStepEnum.WaitForMachineInstructionsDuringOrder:
-                            BasicService.MessagesService.StepMessage.StepStatus = MessageType.Warning;
-                            BasicService.MessagesService.StepMessage.ActiveStep.Group = "Algemeen";
-                            BasicService.MessagesService.StepMessage.ActiveStep.Status = "Voer periodische instructies uit voor workstation";
-
-                            if (Machine.Par.Workstation.InstructionListOn && BasicService.InstructionsService.Instructions.Selected != null)
-                            {
-                                bool allWorkstationInstructionsDuringDone = WaitForNextInstruction();
-                                if (allWorkstationInstructionsDuringDone)
-                                {
-                                    BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForStop;
-                                    Application.Current.Dispatcher.Invoke(() =>
-                                    {
-                                        NavigationService.Navigate(typeof(OrderActualView));
-                                    });
-                                    BasicService.OrdersService.Order.Loaded.TotalProduct++; //LLtest
-                                    BasicService.OrdersService.Order.Loaded.GoodProduct++; //LLtest
-                                }
-                            }
-                            else
-                            {
-                                BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForStop;
-                            }
-
-                            break;
-                        case OrderStepEnum.WaitForProductGroupInstructionsDuringOrder:
-                            BasicService.MessagesService.StepMessage.StepStatus = MessageType.Warning;
-                            BasicService.MessagesService.StepMessage.ActiveStep.Group = "Algemeen";
-                            BasicService.MessagesService.StepMessage.ActiveStep.Status = "Voer periodische instructies uit voor productgroup";
-
-                            if (BasicService.ProductGroupsService.ProductGroup.Loaded.InstructionListOn && BasicService.InstructionsService.Instructions.Selected != null)
-                            {
-                                bool allProductGroupInstructionsDuringDone = WaitForNextInstruction();
-                                if (allProductGroupInstructionsDuringDone)
-                                {
-                                    BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForStop;
-                                    Application.Current.Dispatcher.Invoke(() =>
-                                    {
-                                        NavigationService.Navigate(typeof(OrderActualView));
-                                    });
-                                    BasicService.OrdersService.Order.Loaded.TotalProduct++; //LLtest
-                                    BasicService.OrdersService.Order.Loaded.GoodProduct++; //LLtest
-                                }
-                            }
-                            else
-                            {
-                                BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForStop;
-                            }
-
-
-                            break;
-                        case OrderStepEnum.WaitForProductInstructionsDuringOrder:
-                            BasicService.MessagesService.StepMessage.StepStatus = MessageType.Warning;
-                            BasicService.MessagesService.StepMessage.ActiveStep.Group = "Algemeen";
-                            BasicService.MessagesService.StepMessage.ActiveStep.Status = "Voer periodische instructies uit voor product";
-
-                            if (BasicService.ProductsService.Product.Loaded.InstructionListOn && BasicService.InstructionsService.Instructions.Selected != null)
-                            {
-                                bool allProductInstructionsDuringDone = WaitForNextInstruction();
-                                if (allProductInstructionsDuringDone)
-                                {
-                                    BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForStop;
-                                    Application.Current.Dispatcher.Invoke(() =>
-                                    {
-                                        NavigationService.Navigate(typeof(OrderActualView));
-                                    });
-                                    BasicService.OrdersService.Order.Loaded.TotalProduct++; //LLtest
-                                    BasicService.OrdersService.Order.Loaded.GoodProduct++; //LLtest
-                                }
-                            }
-                            else
-                            {
-                                BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForStop;
-                            }
-
-                            break;
-                        case OrderStepEnum.WaitForMachineInstructionsAfterOrder:
-                            BasicService.MessagesService.StepMessage.StepStatus = MessageType.Wait;
-                            BasicService.MessagesService.StepMessage.ActiveStep.Group = "Algemeen";
-                            BasicService.MessagesService.StepMessage.ActiveStep.Status = "Wachten tot workstation instructies na order uitgevoerd";
-
-                            if (Machine.Par.Workstation.InstructionListOn && BasicService.InstructionsService.Instructions.Selected != null)
-                            {
-                                bool allWorkstationInstructionsAfterDone = WaitForNextInstruction();
-                                if (allWorkstationInstructionsAfterDone)
-                                {
-                                    BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForProductGroupInstructionsAfterOrder;
-
-                                    BasicService.InstructionsService.Instructions.Selected = BasicService.InstructionsService.Instructions.GetInstructionFromSequence(BasicService.ProductGroupsService.ProductGroup.Loaded.InstructionListIdAfter, 1);
-                                }
-                            }
-                            else
-                            {
-                                BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForProductGroupInstructionsAfterOrder;
-                                BasicService.InstructionsService.Instructions.Selected = BasicService.InstructionsService.Instructions.GetInstructionFromSequence(BasicService.ProductGroupsService.ProductGroup.Loaded.InstructionListIdAfter, 1);
-                            }
-
-
-                            break;
-                        case OrderStepEnum.WaitForProductGroupInstructionsAfterOrder:
-                            BasicService.MessagesService.StepMessage.StepStatus = MessageType.Wait;
-                            BasicService.MessagesService.StepMessage.ActiveStep.Group = "Algemeen";
-                            BasicService.MessagesService.StepMessage.ActiveStep.Status = "Wachten tot productgroup instructies na order uitgevoerd";
-
-                            if (BasicService.ProductGroupsService.ProductGroup.Loaded.InstructionListOn && BasicService.InstructionsService.Instructions.Selected != null)
-                            {
-                                bool allProductgroupInstructionsAfterDone = WaitForNextInstruction();
-                                if (allProductgroupInstructionsAfterDone)
-                                {
-                                    BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForProductInstructionsAfterOrder;
-
-                                    BasicService.InstructionsService.Instructions.Selected = BasicService.InstructionsService.Instructions.GetInstructionFromSequence(BasicService.ProductsService.Product.Loaded.InstructionListIdAfter, 1);
-                                }
-                            }
-                            else
-                            {
-                                BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForProductInstructionsAfterOrder;
-                                BasicService.InstructionsService.Instructions.Selected = BasicService.InstructionsService.Instructions.GetInstructionFromSequence(BasicService.ProductsService.Product.Loaded.InstructionListIdAfter, 1);
-                            }
-
-
-                            break;
-                        case OrderStepEnum.WaitForProductInstructionsAfterOrder:
-                            BasicService.MessagesService.StepMessage.StepStatus = MessageType.Wait;
-                            BasicService.MessagesService.StepMessage.ActiveStep.Group = "Algemeen";
-                            BasicService.MessagesService.StepMessage.ActiveStep.Status = "Wachten tot product instructies na order uitgevoerd";
-
-                            if (BasicService.ProductsService.Product.Loaded.InstructionListOn && BasicService.InstructionsService.Instructions.Selected != null)
-                            {
-                                bool allProductInstructionsAfterDone = WaitForNextInstruction();
-                                if (allProductInstructionsAfterDone)
-                                {
-                                    BasicService.OrdersService.Order.OrderHistoryList = new List<OrderHistoryModel>();
-                                    Machine.StepCase = MachineTyp.MachineStepEnum.WaitCommunications;
-                                    BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitOrderDetails;
-                                    Machine.Cmd.CloseOrder = true;
-                                }
-                            }
-                            else
-                            {
-                                BasicService.ProductsService.Product.Loaded = new ProductModel();
-                                BasicService.ProductGroupsService.ProductGroup.Loaded = new ProductGroupModel();
-                                Machine.StepCase = MachineTyp.MachineStepEnum.WaitCommunications;
-                                BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitOrderDetails;
-                                Machine.Cmd.CloseOrder = true;
-                            }
-
                             break;
 
                     }
@@ -714,8 +471,6 @@ namespace LIB0000
             {
                 BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForMachineInstructionsDuringOrder;
 
-                BasicService.InstructionsService.Instructions.Selected = BasicService.InstructionsService.Instructions.GetInstructionFromSequence(Machine.Par.Workstation.InstructionListPeriodicIdBefore, 1);
-
                 Machine.Stat.NextPeriodicControlWorkstation += Machine.Par.Workstation.InstructionListPeriodicFrequency;
 
                 Application.Current.Dispatcher.Invoke(() =>
@@ -731,10 +486,6 @@ namespace LIB0000
             {
                 BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForProductGroupInstructionsDuringOrder;
 
-                BasicService.InstructionsService.Instructions.Selected = BasicService.InstructionsService.Instructions.GetInstructionFromSequence(BasicService.ProductGroupsService.ProductGroup.Loaded.InstructionListPeriodicIdBefore, 1);
-
-
-
                 Machine.Stat.NextPeriodicControlProductgroup += BasicService.ProductGroupsService.ProductGroup.Loaded.InstructionListPeriodicFrequency;
 
                 Application.Current.Dispatcher.Invoke(() =>
@@ -749,8 +500,6 @@ namespace LIB0000
               BasicService.InstructionsService.Instructions.GetInstructionCount(BasicService.ProductsService.Product.Loaded.InstructionListPeriodicIdBefore) > 0)
             {
                 BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForProductInstructionsDuringOrder;
-
-                BasicService.InstructionsService.Instructions.Selected = BasicService.InstructionsService.Instructions.GetInstructionFromSequence(BasicService.ProductsService.Product.Loaded.InstructionListPeriodicIdBefore, 1);
 
                 Machine.Stat.NextPeriodicControlProduct += BasicService.ProductsService.Product.Loaded.InstructionListPeriodicFrequency;
 

@@ -70,7 +70,11 @@
                     Button2Image="pack://application:,,,/Assets/Images/Delete.png"
                     Button2Visibility="{Binding BasicService.OrdersService.Order.IsOrderBusy}"
                     Button2Command="{Binding cmdEndOrderCommand}"   
-                                           
+                                         
+                    Button3Text="Start/Stop machine"
+                    Button3Image="pack://application:,,,/Assets/Images/Yes.png"
+                    Button3Visibility="{Binding BasicService.OrdersService.Order.IsOrderBusy}"
+                    Button3Command="{Binding cmdStartStopMachineCommand}"   
 
           />
 
