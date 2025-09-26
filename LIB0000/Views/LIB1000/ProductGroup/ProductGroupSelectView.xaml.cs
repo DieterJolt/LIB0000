@@ -23,7 +23,7 @@ namespace LIB0000
         [RelayCommand]
         private void cmdOk()
         {
-            BasicService.InstructionsService.InstructionLists.ObjectToWriteSelected.SetValue(BasicService.ProductGroupsService.ProductGroup.Selected.Id);
+            BasicService.OrdersService.ObjectToWriteSelected.SetValue(BasicService.ProductGroupsService.ProductGroup.Selected.Id);
             NavigationService.GoBack();
         }
 

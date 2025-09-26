@@ -16,7 +16,7 @@ namespace LIB0000
         [ObservableProperty]
         private int? _productGroupId;
         [ObservableProperty]
-        private int? _productId;
+        private int _productId;
         [ObservableProperty]
         private int _instructionSequence;
         [ObservableProperty]

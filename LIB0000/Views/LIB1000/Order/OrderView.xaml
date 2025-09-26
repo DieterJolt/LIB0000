@@ -19,7 +19,7 @@
         <StackPanel Orientation="Vertical" Margin="10" Grid.Row="0">
             <local:TextInputTextUserControl 
                     TextLeft="{DynamicResource OrderNr}"
-                    Input="{Binding BasicService.OrdersService.Order.Edit.OrderNr, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Input="{Binding BasicService.OrdersService.Order.Edit.OrderNr, Mode=TwoWay}"
                     TextRight=""/>
             <local:TextInputButtonUserControl
                     TextLeft="{DynamicResource ProductGroep}"
@@ -53,7 +53,7 @@
             </local:TextInputButtonUserControl>
             <local:TextNumberTextUserControl
                     TextLeft="{DynamicResource Aantal}"
-                    Input="{Binding BasicService.OrdersService.Order.Loaded.Amount, Mode=TwoWay}"
+                    Input="{Binding BasicService.OrdersService.Order.Edit.Amount, Mode=TwoWay}"
                     TextRight=""/>
 
         </StackPanel>

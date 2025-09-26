@@ -15,6 +15,7 @@ namespace LIB0000
                 BasicService.ProductsService.Product.LoadProduct(BasicService.OrdersService.Order.Edit.ProductId);
                 BasicService.ProductGroupsService.ProductGroup.LoadProductGroup(BasicService.OrdersService.Order.Edit.ProductGroupId);
                 BasicService.ProductDetailService.LoadProductDetails(BasicService.ProductsService.Product.Loaded.Id);
+                BasicService.OrdersService.Order.Load(BasicService.OrdersService.Order.Edit.ProductId,BasicService.UsersService.Login.ActualUser.Id);
 
                 foreach (HardwareModel hardware in BasicService.HardwareService.Hardware.List)
                 {
@@ -48,15 +49,16 @@ namespace LIB0000
         [RelayCommand]
         public void cmdSelectProductGroup()
         {
-            BasicService.InstructionsService.InstructionLists.ObjectToWriteSelected = new PropertyReferenceModel(BasicService.OrdersService.Order.Edit, nameof(BasicService.OrdersService.Order.Edit.ProductGroupId));
-
+            BasicService.OrdersService.ObjectToWriteSelected = new PropertyReferenceModel(BasicService.OrdersService.Order.Edit, nameof(BasicService.OrdersService.Order.Edit.ProductGroupId));            
+            
             NavigationService.Navigate(typeof(ProductGroupSelectView));
         }
 
         [RelayCommand]
         public void cmdSelectProduct()
         {
-            BasicService.InstructionsService.InstructionLists.ObjectToWriteSelected = new PropertyReferenceModel(BasicService.OrdersService.Order.Edit, nameof(BasicService.OrdersService.Order.Edit.ProductId));
+            BasicService.OrdersService.ObjectToWriteSelected = new PropertyReferenceModel(BasicService.OrdersService.Order.Edit, nameof(BasicService.OrdersService.Order.Edit.ProductId));
+
             NavigationService.Navigate(typeof(ProductSelectView));
         }
 

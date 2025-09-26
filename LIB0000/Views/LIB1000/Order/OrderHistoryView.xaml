@@ -31,12 +31,12 @@
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
-            <local:StatusBorderTextValueUserControl Grid.Column="0" Color="{StaticResource ColorGray}" ColorText="White" TextTop="Order" TextBottom="{Binding BasicService.OrdersService.Order.Selected.OrderNr}"/>
+            <!--<local:StatusBorderTextValueUserControl Grid.Column="0" Color="{StaticResource ColorGray}" ColorText="White" TextTop="Order" TextBottom="{Binding BasicService.OrdersService.Order.Selected.OrderNr}"/>
             <local:StatusBorderTextValueUserControl Grid.Column="1" Color="{StaticResource ColorGray}" ColorText="White" TextTop="Producten totaal" TextBottom="{Binding BasicService.OrdersService.Order.Selected.TotalProduct}"/>
             <local:StatusBorderTextValueUserControl Grid.Column="2" Color="{StaticResource ColorRed}" ColorText="White" TextTop="Product afkeur" TextBottom="{Binding BasicService.OrdersService.Order.Selected.BadProduct}"/>
             <local:StatusBorderTextValueUserControl Grid.Column="3" Color="{StaticResource ColorGreen}" ColorText="White" TextTop="Product ok" TextBottom="{Binding BasicService.OrdersService.Order.Selected.GoodProduct}"/>
             <local:StatusBorderTextValueUserControl Grid.Column="4" Color="{StaticResource ColorGray}" ColorText="White" TextTop="Begin order" TextBottom="{Binding BasicService.OrdersService.Order.Selected.DateTimeStart}"/>
-            <local:StatusBorderTextValueUserControl Grid.Column="5" Color="{StaticResource ColorGray}" ColorText="White" TextTop="Einde order" TextBottom="{Binding BasicService.OrdersService.Order.Selected.DateTimeStop}"/>
+            <local:StatusBorderTextValueUserControl Grid.Column="5" Color="{StaticResource ColorGray}" ColorText="White" TextTop="Einde order" TextBottom="{Binding BasicService.OrdersService.Order.Selected.DateTimeStop}"/>-->
 
         </Grid>
 
@@ -51,7 +51,7 @@
 
         <Grid x:Name="gridRow2" Grid.Row="2" Background="#202020" Margin="0,0,10,0" MaxHeight="500">
 
-            <Border BorderBrush="DimGray" BorderThickness="2">
+            <!--<Border BorderBrush="DimGray" BorderThickness="2">
                 <ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Visible"  HorizontalScrollBarVisibility="Disabled">
                     <ListBox x:Name="MyListBox" ItemsSource="{Binding BasicService.OrdersService.Order.ListSelectedFiltered, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                 SelectedItem="{Binding BasicService.InstructionsService.InstructionHistory.OrderHistorySelected,Mode=TwoWay}" IsEnabled="True"
@@ -59,8 +59,8 @@
 
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <local:OrderUserControl OrderHistory="{Binding}"
-                                                     cmdNavigateToInstructionHistory="{Binding DataContext.cmdNavigateToInstructionHistoryCommand, RelativeSource={RelativeSource AncestorType=Page}}"/>
+                                --><!--<local:OrderUserControl OrderHistory="{Binding}"
+                                                     cmdNavigateToInstructionHistory="{Binding DataContext.cmdNavigateToInstructionHistoryCommand, RelativeSource={RelativeSource AncestorType=Page}}"/>--><!--
                             </DataTemplate>
                         </ListBox.ItemTemplate>
 
@@ -73,15 +73,15 @@
                         </ListBox.ItemContainerStyle>
                     </ListBox>
                 </ScrollViewer>
-            </Border>
+            </Border>-->
         </Grid>
 
         <Grid x:Name="gridButtons" Grid.Row="3">
-            <local:Footer5ButtonsUserControl VerticalAlignment="Center"    
+            <!--<local:Footer5ButtonsUserControl VerticalAlignment="Center"    
                                                 Button1Text="{DynamicResource Terug}"
                                                 Button1Image="/Assets/Images/Return.png"
                                                 Button1Visibility="True"
-                                                Button1Command="{Binding cmdBackCommand}"/>
+                                                Button1Command="{Binding cmdBackCommand}"/>-->
         </Grid>
     </Grid>
 </Page>

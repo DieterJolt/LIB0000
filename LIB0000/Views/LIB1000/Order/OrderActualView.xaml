@@ -25,7 +25,7 @@
 
 
         <Grid x:Name="gridRow0" Grid.Row="0" >
-            <local:StatusBorderTextValueUserControl Grid.Column="0" Color="{StaticResource ColorGray}" ColorText="White" TextTop="Order" TextBottom="{Binding BasicService.OrdersService.Order.Loaded.OrderNr}"/>
+            <local:StatusBorderTextValueUserControl Grid.Column="0" Color="{StaticResource ColorGray}" ColorText="White" TextTop="Order" TextBottom="{Binding BasicService.OrdersService.Order.Loaded.OrderNr, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
         </Grid>
 
         <Grid x:Name="gridRow1" Grid.Row="1">
@@ -35,8 +35,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <local:StatusBorderTextValueUserControl Grid.Column="1" Color="{StaticResource ColorGray}" ColorText="White" TextTop="Product" TextBottom="{Binding BasicService.ProductsService.Product.Loaded.Description}"/>
-            <local:StatusBorderTextValueUserControl Grid.Column="0" Color="{StaticResource ColorGray}" ColorText="White" TextTop="Productgroup" TextBottom="{Binding BasicService.ProductGroupsService.ProductGroup.Loaded.Description}"/>
+            <local:StatusBorderTextValueUserControl Grid.Column="1" Color="{StaticResource ColorGray}" ColorText="White" TextTop="Product" TextBottom="{Binding BasicService.ProductsService.Product.Loaded.Name}"/>
+            <local:StatusBorderTextValueUserControl Grid.Column="0" Color="{StaticResource ColorGray}" ColorText="White" TextTop="Productgroup" TextBottom="{Binding BasicService.ProductGroupsService.ProductGroup.Loaded.Name}"/>
 
         </Grid>
         <Grid x:Name="gridRow2" Grid.Row="2">

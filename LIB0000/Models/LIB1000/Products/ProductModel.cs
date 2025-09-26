@@ -27,27 +27,6 @@ namespace LIB0000
         public int _productGroupId;
 
         [ObservableProperty]
-        public bool _instructionListOn;
-
-        [AllowNull]
-        [ObservableProperty]
-        public int? _instructionListIdBefore;
-
-        [AllowNull]
-        [ObservableProperty]
-        public int? _instructionListPeriodicIdBefore;
-
-        [AllowNull]
-        [ObservableProperty]
-        public int? _instructionListIdAfter;
-
-        [ObservableProperty]
-        public int _instructionListPeriodicFrequency;
-
-        [ObservableProperty]
-        public InstructionListMode _instructionListMode = InstructionListMode.Product;
-
-        [ObservableProperty]
         public byte[]? _image;
 
     }

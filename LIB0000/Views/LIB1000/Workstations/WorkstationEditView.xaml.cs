@@ -22,28 +22,6 @@ namespace LIB0000
             NavigationService.GoBack();
         }
 
-        [RelayCommand]
-        private void cmdSelectBefore()
-        {
-            BasicService.InstructionsService.InstructionLists.ObjectToWriteSelected = new PropertyReferenceModel(BasicService.WorkstationsService.Workstations.Edit, nameof(BasicService.WorkstationsService.Workstations.Edit.InstructionListIdBefore));
-            NavigationService.Navigate(typeof(InstructionListSelectView));
-        }
-
-        [RelayCommand]
-        private void cmdSelectPeriodic()
-        {
-            BasicService.InstructionsService.InstructionLists.ObjectToWriteSelected = new PropertyReferenceModel(BasicService.WorkstationsService.Workstations.Edit, nameof(BasicService.WorkstationsService.Workstations.Edit.InstructionListPeriodicIdBefore));
-            NavigationService.Navigate(typeof(InstructionListSelectView));
-        }
-
-        [RelayCommand]
-        private void cmdSelectAfter()
-        {
-            BasicService.InstructionsService.InstructionLists.ObjectToWriteSelected = new PropertyReferenceModel(BasicService.WorkstationsService.Workstations.Edit, nameof(BasicService.WorkstationsService.Workstations.Edit.InstructionListIdAfter));
-            NavigationService.Navigate(typeof(InstructionListSelectView));
-        }
-
-
         #endregion
 
         #region Constructor

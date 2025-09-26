@@ -107,7 +107,7 @@ namespace LIB0000
             {
                 Machine.Cmd.EndOrder = false;
                 BasicService.OrdersService.Order.IsOrderBusy = false;
-                BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForMachineInstructionsAfterOrder;
+                BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitOrderDetails;
             }
 
             if (Machine.Cmd.CloseOrder)
@@ -253,7 +253,6 @@ namespace LIB0000
                             if (Machine.Stat.Started)
                             {
                                 BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForStop;
-                                BasicService.OrdersService.Order.AddOrderHistory(OrderHistoryType.Run, BasicService.UsersService.Login.ActualUser.User, BasicService.OrdersService.Order.Loaded.Amount, "Machine started", BasicService.OrdersService.Order.Loaded.TotalProduct);
                             }
 
                             break;
@@ -464,50 +463,6 @@ namespace LIB0000
                                                 !Machine.Error.StoppedByCamera &&
                                                 (Machine.StepCase >= MachineTyp.MachineStepEnum.WaitOrder);
 
-            //opstarten tussentijdse instructieControle voor workstation
-            WorkstationModel workstation = BasicService.WorkstationsService.Workstations.GetWorkstation(Machine.Par.WorkstationName);
-            if ((workstation != null) && (BasicService.OrdersService.Order.Loaded.OrderStep == OrderStepEnum.WaitForStop) && (BasicService.OrdersService.Order.Loaded.TotalProduct >= Machine.Stat.NextPeriodicControlWorkstation && BasicService.OrdersService.Order.Loaded.TotalProduct != 0) &&
-              BasicService.InstructionsService.Instructions.GetInstructionCount(Machine.Par.Workstation.InstructionListPeriodicIdBefore) > 0)
-            {
-                BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForMachineInstructionsDuringOrder;
-
-                Machine.Stat.NextPeriodicControlWorkstation += Machine.Par.Workstation.InstructionListPeriodicFrequency;
-
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    NavigationService.Navigate(typeof(InstructionView));
-                });
-            }
-
-            //opstarten tussentijdse instructieControle voor productgroup
-            ProductGroupModel productgroup = BasicService.ProductGroupsService.ProductGroup.GetProductGroup(BasicService.ProductGroupsService.ProductGroup.Loaded.Id);
-            if ((productgroup != null) && (BasicService.OrdersService.Order.Loaded.OrderStep == OrderStepEnum.WaitForStop) && (productgroup.InstructionListPeriodicFrequency != 0) && (BasicService.OrdersService.Order.Loaded.TotalProduct >= Machine.Stat.NextPeriodicControlProductgroup && BasicService.OrdersService.Order.Loaded.TotalProduct != 0) &&
-              BasicService.InstructionsService.Instructions.GetInstructionCount(BasicService.ProductGroupsService.ProductGroup.Loaded.InstructionListPeriodicIdBefore) > 0)
-            {
-                BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForProductGroupInstructionsDuringOrder;
-
-                Machine.Stat.NextPeriodicControlProductgroup += BasicService.ProductGroupsService.ProductGroup.Loaded.InstructionListPeriodicFrequency;
-
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    NavigationService.Navigate(typeof(InstructionView));
-                });
-            }
-
-            //opstarten tussentijdse instructieControle voor product
-            ProductModel product = BasicService.ProductsService.Product.GetProduct(BasicService.ProductsService.Product.Loaded.Id);
-            if ((product != null) && (BasicService.OrdersService.Order.Loaded.OrderStep == OrderStepEnum.WaitForStop) && (product.InstructionListPeriodicFrequency != 0) && (BasicService.OrdersService.Order.Loaded.TotalProduct >= Machine.Stat.NextPeriodicControlProduct && BasicService.OrdersService.Order.Loaded.TotalProduct != 0) &&
-              BasicService.InstructionsService.Instructions.GetInstructionCount(BasicService.ProductsService.Product.Loaded.InstructionListPeriodicIdBefore) > 0)
-            {
-                BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForProductInstructionsDuringOrder;
-
-                Machine.Stat.NextPeriodicControlProduct += BasicService.ProductsService.Product.Loaded.InstructionListPeriodicFrequency;
-
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    NavigationService.Navigate(typeof(InstructionView));
-                });
-            }
         }
 
 
@@ -547,99 +502,6 @@ namespace LIB0000
                 toggle5sOld = DateTime.Now;
                 Toggle5s = !Toggle5s;
             }
-        }
-
-        private bool WaitForNextInstruction()
-        {
-            if (!BasicService.OrdersService.Order.LastInstructionOk)
-                return false;
-
-            BasicService.OrdersService.Order.LastInstructionOk = false;
-            var instruction = BasicService.InstructionsService.Instructions.Selected;
-            bool conditionsOk = true;
-
-            switch (instruction.InstructionType)
-            {
-                case InstructionType.Hotspot:
-                    if (instruction.HotspotId != instruction.InputText1)
-                    {
-                        conditionsOk = false;
-                    }
-                    break;
-            }
-
-            if (!conditionsOk)
-            {
-                if (instruction.InstructionType == InstructionType.Hotspot)
-                {
-                    BasicService.OrdersService.Order.AddOrderHistory(
-                        OrderHistoryType.InstructionNok,
-                        BasicService.UsersService.Login.ActualUser.User,
-                        BasicService.OrdersService.Order.Loaded.Amount,
-                        "extra info",
-                        BasicService.OrdersService.Order.Loaded.TotalProduct,
-                        instruction);
-                    instruction.InputText1 = "";
-                }
-                return false;
-            }
-
-            BasicService.OrdersService.Order.AddOrderHistory(
-                OrderHistoryType.InstructionOk,
-                BasicService.UsersService.Login.ActualUser.User,
-                BasicService.OrdersService.Order.Loaded.Amount,
-                instruction.InstructionTypeName,
-                BasicService.OrdersService.Order.Loaded.TotalProduct,
-                instruction);
-
-            var loadedOrder = BasicService.OrdersService.Order.Loaded;
-            int instructionCount = 0;
-            int? instructionListId = 0;
-
-            switch (loadedOrder.OrderStep)
-            {
-                case OrderStepEnum.WaitForMachineInstructionsBeforeOrder:
-                    instructionListId = Machine.Par.Workstation.InstructionListIdBefore;
-                    break;
-                case OrderStepEnum.WaitForMachineInstructionsDuringOrder:
-                    instructionListId = Machine.Par.Workstation.InstructionListPeriodicIdBefore;
-                    break;
-                case OrderStepEnum.WaitForMachineInstructionsAfterOrder:
-                    instructionListId = Machine.Par.Workstation.InstructionListIdAfter;
-                    break;
-                case OrderStepEnum.WaitForProductGroupInstructionsBeforeOrder:
-                    instructionListId = BasicService.ProductGroupsService.ProductGroup.Loaded.InstructionListIdBefore;
-                    break;
-                case OrderStepEnum.WaitForProductGroupInstructionsDuringOrder:
-                    instructionListId = BasicService.ProductGroupsService.ProductGroup.Loaded.InstructionListPeriodicIdBefore;
-                    break;
-                case OrderStepEnum.WaitForProductGroupInstructionsAfterOrder:
-                    instructionListId = BasicService.ProductGroupsService.ProductGroup.Loaded.InstructionListIdAfter;
-                    break;
-                case OrderStepEnum.WaitForProductInstructionsBeforeOrder:
-                    instructionListId = BasicService.ProductsService.Product.Loaded.InstructionListIdBefore;
-                    break;
-                case OrderStepEnum.WaitForProductInstructionsDuringOrder:
-                    instructionListId = BasicService.ProductsService.Product.Loaded.InstructionListPeriodicIdBefore;
-                    break;
-                case OrderStepEnum.WaitForProductInstructionsAfterOrder:
-                    instructionListId = BasicService.ProductsService.Product.Loaded.InstructionListIdAfter;
-                    break;
-                default:
-                    return false;
-            }
-
-            instructionCount = BasicService.InstructionsService.Instructions.GetInstructionCount(instructionListId);
-            if (loadedOrder.InstructionSequence < instructionCount)
-            {
-                loadedOrder.InstructionSequence++;
-                BasicService.InstructionsService.Instructions.Selected =
-                    BasicService.InstructionsService.Instructions.GetInstructionFromSequence(instructionListId, loadedOrder.InstructionSequence);
-                return false;
-            }
-
-            BasicService.OrdersService.Order.Loaded.InstructionSequence = 1;
-            return true;
         }
 
 

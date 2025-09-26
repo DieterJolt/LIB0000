@@ -182,18 +182,10 @@ namespace LIB0000
                 services.AddSingleton<OrderActualHistoryView>();
                 services.AddSingleton<OrderActualCameraView>();
                 services.AddSingleton<OrderHistoryView>();
-                services.AddSingleton<InstructionHistoryView>();
+
 
 
                 //LIB0000
-                services.AddSingleton<InstructionListDetailView>();
-                services.AddSingleton<InstructionListsEditView>();
-                services.AddSingleton<InstructionTypeSelectView>();
-                services.AddSingleton<InstructionListView>();
-                services.AddSingleton<InstructionListSelectView>();
-                services.AddSingleton<InstructionListVersionSelectView>();
-                services.AddSingleton<InstructionView>();
-
                 services.AddSingleton<WorkstationSelectView>();
                 services.AddSingleton<WorkstationEditView>();
                 services.AddSingleton<WorkstationView>();

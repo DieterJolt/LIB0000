@@ -37,6 +37,9 @@ namespace LIB0000
         [ObservableProperty]
         private string _databasePath;
 
+        [ObservableProperty]
+        private PropertyReferenceModel _objectToWriteSelected;
+
         #endregion
 
     }
@@ -100,7 +103,7 @@ namespace LIB0000
             GetList();
             GetJoinModel();
         }
-        public void AddOrderHistory(OrderHistoryType orderHistoryType, string login, int orderAmount, string info, int counter, InstructionModel? instruction = null)
+        public void AddOrderHistory(OrderHistoryType orderHistoryType, string login, int orderAmount, string info, int counter)
         {
 
             using (var context = new ServerDbContext(DatabasePath))
@@ -114,46 +117,6 @@ namespace LIB0000
                 orderHistory.Info = info;
                 orderHistory.TimeStamp = DateTime.Now;
                 orderHistory.OrderAmount = orderAmount;
-
-                switch (orderHistoryType)
-                {
-                    case OrderHistoryType.InstructionOk:
-                    case OrderHistoryType.InstructionNok:
-                        InstructionHistoryModel instructionHistory = new();
-                        instructionHistory.InstructionType = instruction.InstructionType;
-                        instructionHistory.InstructionId = instruction.Id;
-                        instructionHistory.InputText1 = instruction.InputText1;
-                        instructionHistory.InputText2 = instruction.InputText2;
-                        instructionHistory.InputText3 = instruction.InputText3;
-                        instructionHistory.InputText4 = instruction.InputText4;
-                        instructionHistory.InputText5 = instruction.InputText5;
-                        instructionHistory.InputText6 = instruction.InputText6;
-                        instructionHistory.InputText7 = instruction.InputText7;
-                        instructionHistory.InputText8 = instruction.InputText8;
-                        instructionHistory.InputText9 = instruction.InputText9;
-                        instructionHistory.InputText10 = instruction.InputText10;
-                        instructionHistory.InputBool1 = instruction.InputBool1;
-                        instructionHistory.InputBool2 = instruction.InputBool2;
-                        instructionHistory.InputBool3 = instruction.InputBool3;
-                        instructionHistory.InputBool4 = instruction.InputBool4;
-                        instructionHistory.InputBool5 = instruction.InputBool5;
-                        instructionHistory.InputBool6 = instruction.InputBool6;
-                        instructionHistory.InputBool7 = instruction.InputBool7;
-                        instructionHistory.InputBool8 = instruction.InputBool8;
-                        instructionHistory.InputBool9 = instruction.InputBool9;
-                        instructionHistory.InputBool10 = instruction.InputBool10;
-                        instructionHistory.InputImage1 = instruction.InputImage1;
-
-                        context.InstructionHistoryDbSet.Add(instructionHistory);
-                        context.SaveChanges();
-                        orderHistory.RelatedId = instructionHistory.Id;
-
-                        break;
-
-                    default:
-                        orderHistory.RelatedId = 0;
-                        break;
-                }
 
                 context.OrderHistoryDbSet.Add(orderHistory);
                 context.SaveChanges();
@@ -256,11 +219,11 @@ namespace LIB0000
                 IsOrderBusy = false;
             }
         }
-        public bool Load(int recipeId, int userId)
+        public bool Load(int productId, int userId)
         {
             bool result = false;
 
-            Edit.ProductId = recipeId;
+            Edit.ProductId = productId;
             Edit.UserId = userId;
 
 
@@ -269,6 +232,7 @@ namespace LIB0000
                 Loaded.Id = Edit.Id;
                 Loaded.OrderNr = Edit.OrderNr;
                 Loaded.ProductId = Edit.ProductId;
+
                 Loaded.UserId = Edit.UserId;
                 Loaded.Amount = Edit.Amount;
                 Loaded.Extra1 = Edit.Extra1;

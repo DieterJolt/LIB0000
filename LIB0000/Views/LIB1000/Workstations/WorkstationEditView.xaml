@@ -34,58 +34,6 @@
                     TextLeft="{DynamicResource Beschrijving}"
                     Input="{Binding BasicService.WorkstationsService.Workstations.Edit.Description,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     TextRight=""/>
-                <local:TextToggleUserControl
-                    TextLeft="{DynamicResource Instructies}"
-                    TextToggleOff="{DynamicResource Uit}"
-                    TextToggleOn="{DynamicResource Aan}"
-                    ToggleIsChecked="{Binding BasicService.WorkstationsService.Workstations.Edit.InstructionListOn,Mode=TwoWay}"
-                 />
-                <local:TextInputClearButtonUserControl 
-                Visibility="{Binding BasicService.WorkstationsService.Workstations.Edit.InstructionListOn, Converter={StaticResource ConverterBoolToVisibility1Visible0Hidden}}" 
-                TextLeft="{DynamicResource InstructielijstVoorOrder}"
-                VisibilityRight="True" 
-                CommandRight="{Binding cmdSelectBeforeCommand}"
-                ImageRight="pack://application:,,,/Assets/Images/Instructions.png">
-
-                    <local:TextInputClearButtonUserControl.Input>
-                        <MultiBinding Converter="{StaticResource InstructionListIdToNameMultiConverter}" Mode="TwoWay">
-                            <Binding Path="BasicService.WorkstationsService.Workstations.Edit.InstructionListIdBefore" />
-                            <Binding Path="BasicService.InstructionsService.InstructionLists.List" />
-                        </MultiBinding>
-                    </local:TextInputClearButtonUserControl.Input>
-
-                </local:TextInputClearButtonUserControl>
-                <local:TextInputClearButtonUserControl Visibility="{Binding BasicService.WorkstationsService.Workstations.Edit.InstructionListOn,Converter={StaticResource ConverterBoolToVisibility1Visible0Hidden}}" 
-                    TextLeft="{DynamicResource InstructielijstTijdensOrder}"
-                    VisibilityRight="True"
-                    CommandRight="{Binding cmdSelectPeriodicCommand}"
-                    ImageRight="pack://application:,,,/Assets/Images/Instructions.png">
-
-                    <local:TextInputClearButtonUserControl.Input>
-                        <MultiBinding Converter="{StaticResource InstructionListIdToNameMultiConverter}" Mode="TwoWay">
-                            <Binding Path="BasicService.WorkstationsService.Workstations.Edit.InstructionListPeriodicIdBefore" />
-                            <Binding Path="BasicService.InstructionsService.InstructionLists.List" />
-                        </MultiBinding>
-                    </local:TextInputClearButtonUserControl.Input>
-
-                </local:TextInputClearButtonUserControl>
-                <local:TextNumberTextUserControl Visibility="{Binding BasicService.WorkstationsService.Workstations.Edit.InstructionListOn,Converter={StaticResource ConverterBoolToVisibility1Visible0Hidden}}" 
-                    TextLeft="{DynamicResource Frequentie}" Input="{Binding BasicService.WorkstationsService.Workstations.Edit.InstructionListPeriodicFrequency, Mode=TwoWay}"
-                 />
-                <local:TextInputClearButtonUserControl Visibility="{Binding BasicService.WorkstationsService.Workstations.Edit.InstructionListOn,Converter={StaticResource ConverterBoolToVisibility1Visible0Hidden}}" 
-                    TextLeft="{DynamicResource InstructielijstNaOrder}"
-                    VisibilityRight="True"
-                    CommandRight="{Binding cmdSelectAfterCommand}"
-                    ImageRight="pack://application:,,,/Assets/Images/Instructions.png">
-
-                    <local:TextInputClearButtonUserControl.Input>
-                        <MultiBinding Converter="{StaticResource InstructionListIdToNameMultiConverter}" Mode="TwoWay">
-                            <Binding Path="BasicService.WorkstationsService.Workstations.Edit.InstructionListIdAfter" />
-                            <Binding Path="BasicService.InstructionsService.InstructionLists.List" />
-                        </MultiBinding>
-                    </local:TextInputClearButtonUserControl.Input>
-
-                </local:TextInputClearButtonUserControl>
             </StackPanel>
 
             <Image Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10"

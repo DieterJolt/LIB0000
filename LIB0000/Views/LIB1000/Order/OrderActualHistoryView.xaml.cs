@@ -23,11 +23,6 @@ namespace LIB0000
 
         #region Commands
 
-        [RelayCommand]
-        private void cmdNavigateToInstructionHistory()
-        {
-            NavigationService.Navigate(typeof(InstructionHistoryView));
-        }
         #endregion
 
         #region Constructor
@@ -47,11 +42,6 @@ namespace LIB0000
         #endregion
 
         #region Events
-        private void ListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            BasicService.InstructionsService.InstructionHistory.GetJoinModel();
-
-        }
 
         private void FilterStoppedByCamera(object sender, RoutedEventArgs e)
         {

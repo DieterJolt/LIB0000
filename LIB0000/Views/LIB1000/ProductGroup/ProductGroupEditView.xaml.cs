@@ -36,27 +36,6 @@ namespace LIB0000
             NavigationService.GoBack();
         }
 
-        [RelayCommand]
-        private void cmdSelectBefore()
-        {
-            BasicService.InstructionsService.InstructionLists.ObjectToWriteSelected = new PropertyReferenceModel(BasicService.ProductGroupsService.ProductGroup.Edit, nameof(BasicService.ProductGroupsService.ProductGroup.Edit.InstructionListIdBefore));
-            NavigationService.Navigate(typeof(InstructionListSelectView));
-        }
-
-        [RelayCommand]
-        private void cmdSelectPeriodic()
-        {
-            BasicService.InstructionsService.InstructionLists.ObjectToWriteSelected = new PropertyReferenceModel(BasicService.ProductGroupsService.ProductGroup.Edit, nameof(BasicService.ProductGroupsService.ProductGroup.Edit.InstructionListPeriodicIdBefore));
-            NavigationService.Navigate(typeof(InstructionListSelectView));
-        }
-
-        [RelayCommand]
-        private void cmdSelectAfter()
-        {
-            BasicService.InstructionsService.InstructionLists.ObjectToWriteSelected = new PropertyReferenceModel(BasicService.ProductGroupsService.ProductGroup.Edit, nameof(BasicService.ProductGroupsService.ProductGroup.Edit.InstructionListIdAfter));
-            NavigationService.Navigate(typeof(InstructionListSelectView));
-        }
-
         //LL170225
         //[RelayCommand]
         //private void cmdAddRow()

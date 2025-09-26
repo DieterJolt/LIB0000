@@ -97,11 +97,6 @@ namespace LIB0000
                     row = new ProductGroupModel();
                     row.Name = Edit.Name;
                     row.Description = Edit.Description;
-                    row.InstructionListOn = Edit.InstructionListOn;
-                    row.InstructionListIdBefore = Edit.InstructionListIdBefore;
-                    row.InstructionListPeriodicIdBefore = Edit.InstructionListPeriodicIdBefore;
-                    row.InstructionListIdAfter = Edit.InstructionListIdAfter;
-                    row.InstructionListPeriodicFrequency = Edit.InstructionListPeriodicFrequency;
                     ImageService = new ImageService();
                     row.Image = Edit.Image;
                     context.ProductGroupDbSet.Add(row);
@@ -164,11 +159,6 @@ namespace LIB0000
                 {
                     row.Name = Edit.Name;
                     row.Description = Edit.Description;
-                    row.InstructionListOn = Edit.InstructionListOn;
-                    row.InstructionListIdBefore = Edit.InstructionListIdBefore;
-                    row.InstructionListPeriodicIdBefore = Edit.InstructionListPeriodicIdBefore;
-                    row.InstructionListIdAfter = Edit.InstructionListIdAfter;
-                    row.InstructionListPeriodicFrequency = Edit.InstructionListPeriodicFrequency;
                     context.ProductGroupDbSet.Update(row);
                     context.SaveChanges();
                     Edit.Name = "";
@@ -185,11 +175,6 @@ namespace LIB0000
                 Edit.Description = Selected.Description;
                 Edit.Image = Selected.Image;
                 Edit.Id = Selected.Id;
-                Edit.InstructionListOn = Selected.InstructionListOn;
-                Edit.InstructionListIdBefore = Selected.InstructionListIdBefore;
-                Edit.InstructionListPeriodicIdBefore = Selected.InstructionListPeriodicIdBefore;
-                Edit.InstructionListIdAfter = Selected.InstructionListIdAfter;
-                Edit.InstructionListPeriodicFrequency = Selected.InstructionListPeriodicFrequency;
             }
         }
         public void AddImage()

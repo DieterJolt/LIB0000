@@ -68,33 +68,7 @@ namespace LIB0000
                 Local = true;
             }
         }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            // Hier nodige indexen definieren voor snellere query's
-
-            //InstructionModel
-            modelBuilder.Entity<InstructionModel>()
-                .HasIndex(i => i.InstructionListVersionId)
-                .HasDatabaseName("IX_InstructionListVersionId");
-
-            modelBuilder.Entity<InstructionModel>()
-                .HasIndex(i => i.Sequence)
-                .HasDatabaseName("IX_Sequence");
-
-            modelBuilder.Entity<InstructionModel>()
-                .HasIndex(i => new { i.InstructionListVersionId, i.Sequence }) // Combined index for filtering & ordering
-                .HasDatabaseName("IX_InstructionListVersionId_Sequence");
-
-            modelBuilder.Entity<InstructionModel>()
-                .HasIndex(i => i.InstructionType)
-                .HasDatabaseName("IX_InstructionType");
-
-            //InstructionTypesModel
-            modelBuilder.Entity<InstructionTypesModel>()
-                .HasIndex(t => t.InstructionType)
-                .HasDatabaseName("IX_InstructionType_Join");
-        }
+       
         #endregion
 
         #region Properties
@@ -110,11 +84,6 @@ namespace LIB0000
         public DbSet<UserModel> UserDbSet { get; set; }
         public DbSet<UserHistoryModel> UserHistoryDbSet { get; set; }
         public DbSet<UserPagesModel> UserPagesDbSet { get; set; }
-        public DbSet<InstructionModel> InstructionDbSet { get; set; }
-        public DbSet<InstructionListModel> InstructionListDbSet { get; set; }
-        public DbSet<InstructionListVersionModel> InstructionListVersionDbSet { get; set; }
-        public DbSet<InstructionTypesModel> InstructionTypesDbSet { get; set; }
-        public DbSet<InstructionHistoryModel> InstructionHistoryDbSet { get; set; }
         public DbSet<WorkstationModel> WorkstationDbSet { get; set; }
         public DbSet<ProductGroupModel> ProductGroupDbSet { get; set; }
         public DbSet<ProductModel> ProductDbSet { get; set; }

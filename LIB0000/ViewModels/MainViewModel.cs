@@ -127,7 +127,6 @@ namespace LIB0000
             new NavigationViewItem("Werkstations", new BitmapImage(new Uri("pack://application:,,,/Assets/Images/Workstations.png")), typeof(WorkstationView)),
             new NavigationViewItem("Product groepen", new BitmapImage(new Uri("pack://application:,,,/Assets/Images/ProductGroups.png")), typeof(ProductGroupView)),
             new NavigationViewItem("Producten", new BitmapImage(new Uri("pack://application:,,,/Assets/Images/Products.png")), typeof(ProductView)),
-            new NavigationViewItem("Instructielijsten", new BitmapImage(new Uri("pack://application:,,,/Assets/Images/InstructionList.png")), typeof(InstructionListView)),
             new NavigationViewItem("Gebruikers", new BitmapImage(new Uri("pack://application:,,,/Assets/Images/User.png")), typeof(EmptyIndexView))
             {
             MenuItemsSource = new object[]

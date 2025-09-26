@@ -111,11 +111,11 @@
 
 
             <local:HeaderUserControl Grid.Column="1" 
-                    Button1Text="{Binding BasicService.OrdersService.Order.Edit.OrderNr}"
+                    Button1Text="{Binding BasicService.OrdersService.Order.Loaded.OrderNr}"
                     Button1Image="pack://application:,,,/Assets/Images/Orders.png"
                     Button1Visibility="True"                    
                     
-                    Button2Text="{Binding BasicService.ProductsService.Product.Loaded.Description}"
+                    Button2Text="{Binding BasicService.ProductsService.Product.Loaded.Name}"
                     Button2Image="pack://application:,,,/Assets/Images/Products.png"
                     Button2Visibility="True"         
                     Button2Command="{Binding cmdChangePageToProductDetailViewCommand}"
@@ -127,7 +127,7 @@
                     Button3TextVisibility="{Binding BasicService.UsersService.Login.ActualUser.User, Converter={StaticResource ConverterStringToVisibilityEmptyStringHidden}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                     Button3Command="{Binding cmdChangePageToUsersLoginLogoutViewCommand}"
                     
-                    Button4Text="{Binding BasicService.ProductGroupsService.ProductGroup.Loaded.Description}"
+                    Button4Text="{Binding BasicService.ProductGroupsService.ProductGroup.Loaded.Name}"
                     Button4Image="pack://application:,,,/Assets/Images/Productgroups.png"
                     Button4Visibility="True"                    
                     

@@ -25,7 +25,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <local:StatusBorderTextValueUserControl Grid.Column="0" Color="{StaticResource ColorGray}" ColorText="White" TextTop="Order" TextBottom="{Binding BasicService.OrdersService.Order.Loaded.OrderNr}"/>
+            <!--<local:StatusBorderTextValueUserControl Grid.Column="0" Color="{StaticResource ColorGray}" ColorText="White" TextTop="Order" TextBottom="{Binding BasicService.OrdersService.Order.Loaded.OrderNr}"/>-->
 
         </Grid>
 
@@ -40,29 +40,7 @@
 
         <Grid x:Name="gridRow2" Grid.Row="2" Background="#202020" Margin="0,0,10,0" MaxHeight="1000">
 
-            <Border BorderBrush="DimGray" BorderThickness="2">
-                <ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Visible"  HorizontalScrollBarVisibility="Disabled">
-                    <ListBox x:Name="MyListBox" ItemsSource="{Binding BasicService.OrdersService.Order.ListLoadedFiltered, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                SelectedItem="{Binding BasicService.InstructionsService.InstructionHistory.OrderHistorySelected,Mode=TwoWay}" IsEnabled="True"
-                                SelectionChanged="ListBox_SelectionChanged">
-
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <local:OrderUserControl OrderHistory="{Binding}"
-                                                     cmdNavigateToInstructionHistory="{Binding DataContext.cmdNavigateToInstructionHistoryCommand, RelativeSource={RelativeSource AncestorType=Page}}"/>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="ListBoxItem" >
-                                <Style.Setters>
-                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                </Style.Setters>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                    </ListBox>
-                </ScrollViewer>
-            </Border>
+           
         </Grid>
     </Grid>
 </Page>

@@ -28,24 +28,6 @@ namespace LIB0000
         public double _productCode;
 
         [ObservableProperty]
-        public bool _instructionListOn;
-
-        [AllowNull]
-        [ObservableProperty]
-        public int? _instructionListIdBefore;
-
-        [AllowNull]
-        [ObservableProperty]
-        public int? _instructionListPeriodicIdBefore;
-
-        [AllowNull]
-        [ObservableProperty]
-        public int? _instructionListIdAfter;
-
-        [ObservableProperty]
-        public int _instructionListPeriodicFrequency;
-
-        [ObservableProperty]
         public byte[]? _image;
 
     }

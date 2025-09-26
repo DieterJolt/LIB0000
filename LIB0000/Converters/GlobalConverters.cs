@@ -140,75 +140,7 @@ namespace LIB0000
         }
     }
 
-    public class InstructionListIdToNameMultiConverter : IMultiValueConverter
-    {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (values.Length == 2 && values[0] is int instructionListId && values[1] is List<InstructionListModel> instructionList)
-            {
-                // Zoek de instructie met het gegeven ID
-                var instruction = instructionList.FirstOrDefault(i => i.Id == instructionListId);
-                return instruction?.Name ?? "";
-            }
-            return "";
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            if (value is string instructionName && parameter is List<InstructionListModel> instructionList)
-            {
-                var instruction = instructionList.FirstOrDefault(i => i.Name == instructionName);
-                return new object[] { instruction?.Id ?? 0, instructionList };
-            }
-            return new object[] { 0, parameter };
-        }
-    }
-
-    public class InstructionTypeToStringConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is InstructionType Image)
-            {
-                switch (Image)
-                {
-                    case InstructionType.Click: return "pack://application:,,,/Assets/Images/InstructionTypeClick.png";
-                    case InstructionType.Hotspot: return "pack://application:,,,/Assets/Images/InstructionTypeHotspot.png";
-                    case InstructionType.Snapshot: return "pack://application:,,,/Assets/Images/InstructionTypeSnapshot.png";
-                    case InstructionType.RemoteInput: return "pack://application:,,,/Assets/Images/InstructionTypeRemoteInput.png";
-                    case InstructionType.Scan: return "pack://application:,,,/Assets/Images/InstructionTypeCheckBarcode.png";
-                    case InstructionType.Checklist: return "pack://application:,,,/Assets/Images/InstructionTypeChecklist.png";
-                    case InstructionType.ImageChecklist: return "pack://application:,,,/Assets/Images/InstructionTypeChecklist.png";
-                    case InstructionType.Selectionlist: return "pack://application:,,,/Assets/Images/InstructionTypeSelectionlist.png";
-                    case InstructionType.ImageSelectionlist: return "pack://application:,,,/Assets/Images/InstructionTypeSelectionlist.png";
-                    case InstructionType.Login: return "pack://application:,,,/Assets/Images/InstructionTypeYesNo.png";
-                    case InstructionType.YesNo: return "pack://application:,,,/Assets/Images/InstructionTypeYesNo.png";
-                    default: return "";
-                }
-            }
-            return "";
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is string ImageString)
-            {
-                switch (ImageString)
-                {
-                    case "pack://application:,,,/Assets/Images/InstructionTypeClick.png": return InstructionType.Click;
-                    case "pack://application:,,,/Assets/Images/InstructionTypeHotspot.png": return InstructionType.Hotspot;
-                    case "pack://application:,,,/Assets/Images/InstructionTypeSnapshot.png": return InstructionType.Snapshot;
-                    case "pack://application:,,,/Assets/Images/InstructionTypeRemoteInput.png": return InstructionType.RemoteInput;
-                    case "pack://application:,,,/Assets/Images/InstructionTypeCheckBarcode.png": return InstructionType.Scan;
-                    case "pack://application:,,,/Assets/Images/InstructionTypeChecklist.png": return InstructionType.Checklist;
-                    case "pack://application:,,,/Assets/Images/InstructionTypeSelectionlist.png": return InstructionType.Selectionlist;
-                    case "pack://application:,,,/Assets/Images/InstructionTypeYesNo.png": return InstructionType.YesNo;
-                    default: return Binding.DoNothing;
-                }
-            }
-            return Binding.DoNothing;
-        }
-    }
+   
 
     public class UserNameAndLevelMultiConverter : IMultiValueConverter
     {
@@ -427,52 +359,7 @@ namespace LIB0000
 
 
 
-    public class InstructionTypeToBitmapConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is InstructionType instructionType)
-            {
-                return instructionType switch
-                {
-                    InstructionType.Click => new BitmapImage(new Uri("pack://application:,,,/Assets/Images/InstructionTypeClick.png", UriKind.Absolute)),
-                    InstructionType.Hotspot => new BitmapImage(new Uri("pack://application:,,,/Assets/Images/InstructionTypeHotspot.png", UriKind.Absolute)),
-                    InstructionType.Snapshot => new BitmapImage(new Uri("pack://application:,,,/Assets/Images/InstructionTypeSnapshot.png", UriKind.Absolute)),
-                    InstructionType.RemoteInput => new BitmapImage(new Uri("pack://application:,,,/Assets/Images/InstructionTypeRemoteInput.png", UriKind.Absolute)),
-                    InstructionType.Scan => new BitmapImage(new Uri("pack://application:,,,/Assets/Images/InstructionTypeCheckBarcode.png", UriKind.Absolute)),
-                    InstructionType.Checklist => new BitmapImage(new Uri("pack://application:,,,/Assets/Images/InstructionTypeChecklist.png", UriKind.Absolute)),
-                    InstructionType.ImageChecklist => new BitmapImage(new Uri("pack://application:,,,/Assets/Images/InstructionTypeChecklist.png", UriKind.Absolute)),
-                    InstructionType.Selectionlist => new BitmapImage(new Uri("pack://application:,,,/Assets/Images/InstructionTypeSelectionlist.png", UriKind.Absolute)),
-                    InstructionType.ImageSelectionlist => new BitmapImage(new Uri("pack://application:,,,/Assets/Images/InstructionTypeSelectionlist.png", UriKind.Absolute)),
-                    InstructionType.Login => new BitmapImage(new Uri("pack://application:,,,/Assets/Images/User.png", UriKind.Absolute)),
-                    InstructionType.YesNo => new BitmapImage(new Uri("pack://application:,,,/Assets/Images/InstructionTypeYesNo.png", UriKind.Absolute)),
-                    _ => null // Default case returns null instead of an empty string
-                };
-            }
-            return null;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is string ImageString)
-            {
-                switch (ImageString)
-                {
-                    case "pack://application:,,,/Assets/Images/InstructionTypeClick.png": return InstructionType.Click;
-                    case "pack://application:,,,/Assets/Images/InstructionTypeHotspot.png": return InstructionType.Hotspot;
-                    case "pack://application:,,,/Assets/Images/InstructionTypeSnapshot.png": return InstructionType.Snapshot;
-                    case "pack://application:,,,/Assets/Images/InstructionTypeRemoteInput.png": return InstructionType.RemoteInput;
-                    case "pack://application:,,,/Assets/Images/InstructionTypeCheckBarcode.png": return InstructionType.Scan;
-                    case "pack://application:,,,/Assets/Images/InstructionTypeChecklist.png": return InstructionType.Checklist;
-                    case "pack://application:,,,/Assets/Images/InstructionTypeSelectionlist.png": return InstructionType.Selectionlist;
-                    case "pack://application:,,,/Assets/Images/User.png": return InstructionType.Login;
-                    case "pack://application:,,,/Assets/Images/InstructionTypeYesNo.png": return InstructionType.YesNo;
-                    default: return Binding.DoNothing;
-                }
-            }
-            return Binding.DoNothing;
-        }
-    }
+    
 
     public class ConverterBoolToInverseBool : IValueConverter
     {

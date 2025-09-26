@@ -64,7 +64,7 @@
             <!--JoinId-->
             <local:ConverterJoinId x:Key="ConverterJoinId"/>
             
-            <local:InstructionTypeToBitmapConverter x:Key="InstructionTypeToBitmapConverter"/>
+
             <local:OrderTypeDetailToImageStringConverter x:Key="OrderTypeDetailToImageStringConverter"/>
             <local:OrderTypeDetailToStringConverter x:Key="OrderTypeDetailToStringConverter"/>
             <local:ConverterVisibilityToInverseVisibility x:Key="ConverterVisibilityToInverseVisibility"/>
@@ -72,9 +72,7 @@
             <local:StringMultiVisibilityConverter x:Key="StringMultiVisibilityConverter"/>
             <local:CheckboxMultiVisibilityConverter x:Key="CheckboxMultiVisibilityConverter"/>
             <local:UserNameAndLevelMultiConverter x:Key="UserNameAndLevelMultiConverter"/>
-            <local:InstructionTypeToStringConverter x:Key="InstructionTypeToStringConverter"/>
             <local:OddEvenIntToColorConverter x:Key="OddEvenIntToColorConverter"/>
-            <local:InstructionListIdToNameMultiConverter x:Key="InstructionListIdToNameMultiConverter"/>
             <local:ProductGroupIdToNameMultiConverter x:Key="ProductGroupIdToNameMultiConverter"/>
             <local:ProductIdToNameMultiConverter x:Key="ProductIdToNameMultiConverter"/>
             <local:ApprovedOnTextConverter x:Key="ApprovedOnTextConverter"/>
