@@ -18,13 +18,11 @@ namespace LIB0000
         #region Constructor
         public GlobalService(BasicService basicService, INavigationService navigationService)
         {
-            Recipe = new RecipeTyp();
             Settings = new SettingsTyp();
             Machine = new MachineTyp();
 
             Invoer = new InvoerTyp();
             Uitvoer = new UitvoerTyp();
-            Recipe = new RecipeTyp();
             BasicService = basicService;
             NavigationService = navigationService;
 
@@ -103,17 +101,18 @@ namespace LIB0000
 
             }
 
-            if (Machine.Cmd.EndOrder)
-            {
-                Machine.Cmd.EndOrder = false;
-                BasicService.OrdersService.Order.IsOrderBusy = false;
-                BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitOrderDetails;
-            }
-
             if (Machine.Cmd.CloseOrder)
             {
                 Machine.Cmd.CloseOrder = false;
+                BasicService.OrdersService.Order.AddOrderHistory(OrderHistoryType.OrderClose, BasicService.UsersService.Login.ActualUser.User, BasicService.OrdersService.Order.Loaded.Amount, "Order Closed", BasicService.OrdersService.Order.Loaded.TotalProduct);
+
                 BasicService.OrdersService.Order.CloseOrder();
+                BasicService.OrdersService.Order.IsOrderBusy = false;
+
+                BasicService.OrdersService.Order.Loaded = new OrderModel();
+                BasicService.ProductGroupsService.ProductGroup.Loaded = new ProductGroupModel();
+                BasicService.ProductsService.Product.Loaded = new ProductModel();
+                BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitOrderDetails;
 
                 foreach (FhService fhService in BasicService.FhService)
                 {
@@ -233,10 +232,11 @@ namespace LIB0000
                             if (Machine.Cmd.StartOrder)
                             {
                                 Machine.Cmd.StartOrder = false;
-                                if (BasicService.OrdersService.Order.Edit.OrderNr != null && BasicService.OrdersService.Order.Loaded.OrderNr != "")
+                                if (BasicService.OrdersService.Order.Loaded.OrderNr != "")
                                 {
                                     BasicService.OrdersService.Order.IsOrderBusy = true;
                                     BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForStart;
+                                    BasicService.OrdersService.Order.AddOrderHistory(OrderHistoryType.OrderStart, BasicService.UsersService.Login.ActualUser.User, BasicService.OrdersService.Order.Loaded.Amount, "Order start", BasicService.OrdersService.Order.Loaded.TotalProduct);
                                     Application.Current.Dispatcher.Invoke(() =>
                                     {
                                         NavigationService.Navigate(typeof(OrderActualView));
@@ -252,6 +252,7 @@ namespace LIB0000
 
                             if (Machine.Stat.Started)
                             {
+                                BasicService.OrdersService.Order.AddOrderHistory(OrderHistoryType.Run, BasicService.UsersService.Login.ActualUser.User, BasicService.OrdersService.Order.Loaded.Amount, "Machine Started", BasicService.OrdersService.Order.Loaded.TotalProduct);
                                 BasicService.OrdersService.Order.Loaded.OrderStep = OrderStepEnum.WaitForStop;
                             }
 
@@ -288,6 +289,7 @@ namespace LIB0000
 
             if (BasicService.OrdersService.Order.Loaded.OrderStep != BasicService.OrdersService.Order.Loaded.OrderStepBefore)
             {
+                // update status of the order when the step is changed
                 BasicService.OrdersService.Order.UpdateOrder();
                 BasicService.OrdersService.Order.Loaded.OrderStepBefore = BasicService.OrdersService.Order.Loaded.OrderStep;
             }
@@ -314,38 +316,11 @@ namespace LIB0000
                 BasicService.MessagesService.Reset("Machine", "001");
             }
 
-            if (Machine.Error.TimeoutWorkstation)
-            {
-                BasicService.MessagesService.Set("Machine", "002");
-            }
-            else
-            {
-                BasicService.MessagesService.Reset("Machine", "002");
-            }
-
-            if (Machine.Error.TimeoutProductgroup)
-            {
-                BasicService.MessagesService.Set("Machine", "003");
-            }
-            else
-            {
-                BasicService.MessagesService.Reset("Machine", "003");
-            }
-
-            if (Machine.Error.TimeoutProduct)
-            {
-                BasicService.MessagesService.Set("Machine", "004");
-            }
-            else
-            {
-                BasicService.MessagesService.Reset("Machine", "004");
-            }
-
             if (Machine.Error.StoppedByCamera)
             {
                 if (BasicService.MessagesService.ActualMessage.List.Count(x => x.Type == MessageType.Error && x.Group == "Machine" && x.Nr == "005") == 0)
                 {
-                    BasicService.OrdersService.Order.AddOrderHistory(OrderHistoryType.StoppedByCamera, BasicService.UsersService.Login.ActualUser.User, BasicService.OrdersService.Order.Loaded.Amount, "Camera fout detectie", BasicService.OrdersService.Order.Loaded.TotalProduct);
+                    //BasicService.OrdersService.Order.AddOrderHistory(OrderHistoryType.StoppedByCamera, BasicService.UsersService.Login.ActualUser.User, BasicService.OrdersService.Order.Loaded.Amount, "Camera fout detectie", BasicService.OrdersService.Order.Loaded.TotalProduct);
                 }
                 BasicService.MessagesService.Set("Machine", "005");
             }
@@ -387,44 +362,6 @@ namespace LIB0000
             Machine.Error.Algemeen = BasicService.MessagesService.ActualMessage.List.Any(x => x.Type == MessageType.Error);
             Machine.Error.Database = false;
 
-            if ((Machine.Stat.TellerWorkstationInstructionStart < BasicService.OrdersService.Order.Loaded.TotalProduct) && (BasicService.OrdersService.Order.Loaded.OrderStep == OrderStepEnum.WaitForMachineInstructionsDuringOrder))
-            {
-                if (Machine.Error.TimeoutWorkstation == false)
-                {
-                    BasicService.OrdersService.Order.AddOrderHistory(OrderHistoryType.Timeout, BasicService.UsersService.Login.ActualUser.User, BasicService.OrdersService.Order.Loaded.Amount, "Workstation instructionlist timeout", BasicService.OrdersService.Order.Loaded.TotalProduct);
-                }
-                Machine.Error.TimeoutWorkstation = true;
-            }
-            else
-            {
-                Machine.Error.TimeoutWorkstation = false;
-            }
-
-            if ((Machine.Stat.TellerProductgroupInstructionStart < BasicService.OrdersService.Order.Loaded.TotalProduct) && (BasicService.OrdersService.Order.Loaded.OrderStep == OrderStepEnum.WaitForProductGroupInstructionsDuringOrder))
-            {
-                if (Machine.Error.TimeoutProductgroup == false)
-                {
-                    BasicService.OrdersService.Order.AddOrderHistory(OrderHistoryType.Timeout, BasicService.UsersService.Login.ActualUser.User, BasicService.OrdersService.Order.Loaded.Amount, "ProductGroup instructionlist timeout", BasicService.OrdersService.Order.Loaded.TotalProduct);
-                }
-                Machine.Error.TimeoutProductgroup = true;
-            }
-            else
-            {
-                Machine.Error.TimeoutProductgroup = false;
-            }
-
-            if ((Machine.Stat.TellerProductInstructionStart < BasicService.OrdersService.Order.Loaded.TotalProduct) && (BasicService.OrdersService.Order.Loaded.OrderStep == OrderStepEnum.WaitForProductInstructionsDuringOrder))
-            {
-                if (Machine.Error.TimeoutProduct == false)
-                {
-                    BasicService.OrdersService.Order.AddOrderHistory(OrderHistoryType.Timeout, BasicService.UsersService.Login.ActualUser.User, BasicService.OrdersService.Order.Loaded.Amount, "Product instructionlist timeout", BasicService.OrdersService.Order.Loaded.TotalProduct);
-                }
-                Machine.Error.TimeoutProduct = true;
-            }
-            else
-            {
-                Machine.Error.TimeoutProduct = false;
-            }
         }
         private void setStatus()
         {
@@ -456,11 +393,7 @@ namespace LIB0000
             Machine.Stat.SettingsOk = !Machine.Par.WorkstationName.IsNullOrEmpty() && !(Machine.Par.Workstation == null);
             Machine.Stat.CommunicationOk = !Machine.Stat.HardwareCom;
 
-            Machine.Stat.ConditionsToStartOk = (BasicService.OrdersService.Order.Loaded.OrderStep > OrderStepEnum.WaitForProductInstructionsBeforeOrder) &&
-                                                !Machine.Error.TimeoutWorkstation &&
-                                                !Machine.Error.TimeoutProductgroup &&
-                                                !Machine.Error.TimeoutProduct &&
-                                                !Machine.Error.StoppedByCamera &&
+            Machine.Stat.ConditionsToStartOk =  !Machine.Error.StoppedByCamera &&
                                                 (Machine.StepCase >= MachineTyp.MachineStepEnum.WaitOrder);
 
         }
@@ -510,18 +443,7 @@ namespace LIB0000
         /// Copy the parameters from the recipe to the machine
         /// Add every machine part to this
         /// </summary>
-        public void LoadRecipeToMachine()
-        {
-            RecipeTyp recipe = new RecipeTyp();
-            recipe = BasicService.RecipesService.RecipeDetail.Get<RecipeTyp>(BasicService.RecipesService.Recipe.Selected.Id);
 
-            if (recipe != null)
-            {
-                Machine.Par = recipe.MachinePar;
-                Invoer.Par = recipe.InvoerPar;
-                Uitvoer.Par = recipe.UitvoerPar;
-            }
-        }
 
         #endregion
         #region Properties
@@ -537,8 +459,6 @@ namespace LIB0000
         private InvoerTyp _invoer;
         [ObservableProperty]
         private UitvoerTyp _uitvoer;
-        [ObservableProperty]
-        private RecipeTyp _recipe;
         [ObservableProperty]
         private SettingsTyp _settings;
         [ObservableProperty]

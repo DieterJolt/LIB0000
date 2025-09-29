@@ -90,50 +90,6 @@
 
             <Grid x:Name="Buttons" Grid.Row="2">
 
-                <!--<Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Button Grid.Column="1" HorizontalAlignment="Stretch" Command="{Binding cmdAddInstructionCommand}">
-                    <Grid Width="100">
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="6*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Image Source="pack://application:,,,/Assets/Images/Plus.png"  MaxWidth="15" Grid.Column="0"/>
-                        <TextBlock Text="OK" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" />
-
-                    </Grid>
-                </Button>
-
-                <Button Grid.Column="3" HorizontalAlignment="Stretch" Command="{Binding cmdDeleteInstructionCommand}">
-                    <Grid Width="100">
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
-
-                            <ColumnDefinition Width="6*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Image Source="pack://application:,,,/Assets/Images/Delete.png" MaxWidth="15" Grid.Column="0"/>
-                        <TextBlock Text="{DynamicResource Annuleer}" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" />
-
-                    </Grid>
-                </Button>-->
-
                 <local:Footer5ButtonsUserControl VerticalAlignment="Center"
     
     Button1Text="OK"

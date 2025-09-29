@@ -48,27 +48,7 @@ namespace LIB0000
             throw new NotImplementedException();
         }
     }
-    public class ConverterCheckOrderdetailTypeToVisibility : IMultiValueConverter
-    {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (values.Length < 2) return Visibility.Hidden;
-
-            if (values[0] is bool isSelected && values[1] is OrderHistoryType orderHistoryType)
-            {
-                if (isSelected && (orderHistoryType == OrderHistoryType.InstructionOk || orderHistoryType == OrderHistoryType.InstructionNok))
-                {
-                    return Visibility.Visible;
-                }
-            }
-            return Visibility.Hidden;
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
+   
     public class ApprovedOnTextConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -285,77 +265,9 @@ namespace LIB0000
 
     }
 
-    public class OrderTypeDetailToImageStringConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is OrderHistoryType Image)
-            {
-                switch (Image)
-                {
-                    case OrderHistoryType.Run: return "pack://application:,,,/Assets/Images/Playbutton.png";
-                    case OrderHistoryType.Stop: return "pack://application:,,,/Assets/Images/StopButton.png";
-                    case OrderHistoryType.BadProduct: return "pack://application:,,,/Assets/Images/Uitroepteken.png";
-                    case OrderHistoryType.InstructionOk: return "pack://application:,,,/Assets/Images/InstructionList.png";
-                    case OrderHistoryType.InstructionNok: return "pack://application:,,,/Assets/Images/InstructionList.png";
-                    case OrderHistoryType.StartInstructionListBefore: return "pack://application:,,,/Assets/Images/InstructionList.png";
-                    case OrderHistoryType.StartInstructionListPeriodic: return "pack://application:,,,/Assets/Images/InstructionList.png";
-                    case OrderHistoryType.StartInstructionListAfter: return "pack://application:,,,/Assets/Images/InstructionList.png";
-                    case OrderHistoryType.Timeout: return "pack://application:,,,/Assets/Images/timeout.png";
-                    case OrderHistoryType.StoppedByCamera: return "pack://application:,,,/Assets/Images/InstructionTypeSnapshot.png";
-                    default: return "";
-                }
-            }
-            return "";
-        }
+   
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is string ImageString)
-            {
-                switch (ImageString)
-                {
-                    case "pack://application:,,,/Assets/Images/Playbutton.png": return OrderHistoryType.Run;
-                    case "pack://application:,,,/Assets/Images/StopButton.png": return OrderHistoryType.Stop;
-                    case "pack://application:,,,/Assets/Images/Uitroepteken.png": return OrderHistoryType.BadProduct;
-                    case "pack://application:,,,/Assets/Images/InstructionList.png": return OrderHistoryType.InstructionOk;
-                    case "pack://application:,,,/Assets/Images/timeout.png": return OrderHistoryType.Timeout;
-                    default: return Binding.DoNothing;
-                }
-            }
-            return Binding.DoNothing;
-        }
-    }
-
-    public class OrderTypeDetailToStringConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is OrderHistoryType Image)
-            {
-                switch (Image)
-                {
-                    case OrderHistoryType.Run: return "Start";
-                    case OrderHistoryType.Stop: return "Stop";
-                    case OrderHistoryType.BadProduct: return "Afgekeurd product";
-                    case OrderHistoryType.InstructionOk: return "Instructie OK";
-                    case OrderHistoryType.InstructionNok: return "Instructie NOK";
-                    case OrderHistoryType.StartInstructionListBefore: return "Start instructielijst voor order";
-                    case OrderHistoryType.StartInstructionListPeriodic: return "Start periodieke instructielijst";
-                    case OrderHistoryType.StartInstructionListAfter: return "Start instructielijst na order";
-                    case OrderHistoryType.Timeout: return "Timeout";
-                    case OrderHistoryType.StoppedByCamera: return "Gestopt door camera";
-                    default: return "";
-                }
-            }
-            return "";
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
+   
 
 
 
@@ -408,29 +320,6 @@ namespace LIB0000
     }
 
     //multiConverter
-
-    public class MultiConverterStringToVisibilityEmptyStringHidden : IMultiValueConverter
-    {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (values.Length < 2) return Visibility.Collapsed;
-
-            string text1 = values[0] as string ?? string.Empty;
-            string instructionTypeName = values[1] as string ?? string.Empty;
-
-            if (string.IsNullOrWhiteSpace(text1) || string.IsNullOrWhiteSpace(instructionTypeName))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
 
     public class MultiConverterEqualToTrue : IMultiValueConverter
     {
@@ -1053,51 +942,6 @@ namespace LIB0000
             }
 
             return Visibility.Collapsed; // Als de parameter niet overeenkomt of ongeldig is, zet op Collapsed
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    //OrderHistoryType
-    public class ConverterOrderHistoryTypeInstructionVisibilityVisible : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value == null) { return Visibility.Hidden; }
-
-            if (value is OrderHistoryType t)
-            {
-                if (t == OrderHistoryType.InstructionOk || t == OrderHistoryType.InstructionNok)
-                { return Visibility.Visible; }
-                else { return Visibility.Hidden; }
-            }
-
-            return Visibility.Hidden;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class ConverterOrderHistoryTypeInstructionVisibilityHidden : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value == null) { return Visibility.Hidden; }
-
-            if (value is OrderHistoryType t)
-            {
-                if (t == OrderHistoryType.InstructionOk || t == OrderHistoryType.InstructionNok)
-                { return Visibility.Hidden; }
-                else { return Visibility.Visible; }
-            }
-
-            return Visibility.Hidden;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

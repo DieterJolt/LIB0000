@@ -70,8 +70,6 @@
         [ObservableProperty]
         bool _startOrder;
         [ObservableProperty]
-        bool _endOrder;         //Commando voor einde order -> daarna nog eventuele instructielijsten after order uitvoeren
-        [ObservableProperty]
         bool _closeOrder;       //Commando voor definitief afsluiten order
         [ObservableProperty]
         bool _orCameraNok;
@@ -136,18 +134,6 @@
         bool _stopped;
         [ObservableProperty]
         bool _hardwareCom;
-        [ObservableProperty]
-        int _nextPeriodicControlWorkstation;
-        [ObservableProperty]
-        int _nextPeriodicControlProductgroup;
-        [ObservableProperty]
-        int _nextPeriodicControlProduct;
-        [ObservableProperty]
-        int _tellerWorkstationInstructionStart;
-        [ObservableProperty]
-        int _tellerProductgroupInstructionStart;
-        [ObservableProperty]
-        int _tellerProductInstructionStart;
         [ObservableProperty]
         bool _bovenVerlichting;
 

@@ -24,30 +24,6 @@ namespace LIB0000
             });
             lMessages.Add(new MessageModel
             {
-                Nr = "002",
-                Group = "Machine",
-                MessageText = "Timeout Periodieke controle Workstation",
-                Help = "",
-                Type = MessageType.Error
-            });
-            lMessages.Add(new MessageModel
-            {
-                Nr = "003",
-                Group = "Machine",
-                MessageText = "Timeout Periodieke controle Productgroup",
-                Help = "",
-                Type = MessageType.Error
-            });
-            lMessages.Add(new MessageModel
-            {
-                Nr = "004",
-                Group = "Machine",
-                MessageText = "Timeout Periodieke controle Product",
-                Help = "",
-                Type = MessageType.Error
-            });
-            lMessages.Add(new MessageModel
-            {
                 Nr = "005",
                 Group = "Machine",
                 MessageText = "Camera foutdetectie",

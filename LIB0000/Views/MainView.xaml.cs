@@ -26,14 +26,6 @@ namespace LIB0000
             }
         }
 
-        [RelayCommand]
-        public void cmdtest()
-        {
-
-            BasicService.OrdersService.Order.Loaded.TotalProduct++;
-            BasicService.OrdersService.Order.Loaded.GoodProduct++;
-        }
-
         #endregion
         #region Constructor
         public MainView(

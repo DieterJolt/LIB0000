@@ -44,36 +44,13 @@
             <StackPanel Orientation="Horizontal">
                 <ui:ToggleSwitch IsChecked="{Binding BasicService.OrdersService.Order.FilterStoppedByCamera}" Content="Camera detectie" Foreground="White" Margin="10"/>
                 <ui:ToggleSwitch IsChecked="{Binding BasicService.OrdersService.Order.FilterTimeouts}" Content="TimeOut" Foreground="White" Margin="10"/>
-                <ui:ToggleSwitch IsChecked="{Binding BasicService.OrdersService.Order.FilterInstruction}" Content="Instructies" Foreground="White" Margin="10"/>
                 <ui:ToggleSwitch IsChecked="{Binding BasicService.OrdersService.Order.FilterStartStop}" Content="Start / Stop" Foreground="White" Margin="10"/>
             </StackPanel>
         </Grid>
 
         <Grid x:Name="gridRow2" Grid.Row="2" Background="#202020" Margin="0,0,10,0" MaxHeight="500">
 
-            <!--<Border BorderBrush="DimGray" BorderThickness="2">
-                <ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Visible"  HorizontalScrollBarVisibility="Disabled">
-                    <ListBox x:Name="MyListBox" ItemsSource="{Binding BasicService.OrdersService.Order.ListSelectedFiltered, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                SelectedItem="{Binding BasicService.InstructionsService.InstructionHistory.OrderHistorySelected,Mode=TwoWay}" IsEnabled="True"
-                                SelectionChanged="ListBox_SelectionChanged">
 
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                --><!--<local:OrderUserControl OrderHistory="{Binding}"
-                                                     cmdNavigateToInstructionHistory="{Binding DataContext.cmdNavigateToInstructionHistoryCommand, RelativeSource={RelativeSource AncestorType=Page}}"/>--><!--
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="ListBoxItem" >
-                                <Style.Setters>
-                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                </Style.Setters>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                    </ListBox>
-                </ScrollViewer>
-            </Border>-->
         </Grid>
 
         <Grid x:Name="gridButtons" Grid.Row="3">

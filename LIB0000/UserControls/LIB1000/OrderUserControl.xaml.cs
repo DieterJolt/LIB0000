@@ -50,14 +50,6 @@ namespace LIB0000
 
         public static readonly DependencyProperty OrderHistoryProperty = DependencyProperty.Register("OrderHistory", typeof(OrderHistoryModel), typeof(OrderUserControl));
 
-
-        public ICommand cmdNavigateToInstructionHistory
-        {
-            get => (ICommand)GetValue(cmdNavigateToInstructionHistoryProperty);
-            set => SetValue(cmdNavigateToInstructionHistoryProperty, value);
-        }
-
-        public static readonly DependencyProperty cmdNavigateToInstructionHistoryProperty = DependencyProperty.Register(nameof(cmdNavigateToInstructionHistory), typeof(ICommand), typeof(OrderUserControl), new PropertyMetadata(null));
     }
 
 }

@@ -16,7 +16,7 @@
             <RowDefinition Height="12*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Vertical" Margin="10" Grid.Row="0">
+        <StackPanel Orientation="Vertical" Margin="10" Grid.Row="0" Visibility="{Binding BasicService.OrdersService.Order.IsOrderBusy,Converter={StaticResource ConverterBoolToVisibility0Visible1Hidden}}">
             <local:TextInputTextUserControl 
                     TextLeft="{DynamicResource OrderNr}"
                     Input="{Binding BasicService.OrdersService.Order.Edit.OrderNr, Mode=TwoWay}"
@@ -36,7 +36,7 @@
                 </local:TextInputButtonUserControl.Input>
 
             </local:TextInputButtonUserControl>
-            <local:TextInputButtonUserControl
+            <local:TextInputButtonUserControl 
                     TextLeft="{DynamicResource Product}"
                     CommandRight="{Binding cmdSelectProductCommand}"
                     TextRight=""
@@ -58,6 +58,32 @@
 
         </StackPanel>
 
+        <StackPanel Orientation="Vertical" Margin="10" Grid.Row="0" IsEnabled="False" Visibility="{Binding BasicService.OrdersService.Order.IsOrderBusy,Converter={StaticResource ConverterBoolToVisibility1Visible0Hidden}}">
+            
+            <local:TextInputTextUserControl 
+            TextLeft="{DynamicResource OrderNr}"
+            Input="{Binding BasicService.OrdersService.Order.Loaded.OrderNr, Mode=TwoWay}"
+            TextRight=""/>
+
+            <local:TextInputTextUserControl 
+            TextLeft="{DynamicResource ProductGroep}"
+            Input="{Binding BasicService.ProductGroupsService.ProductGroup.Loaded.Name, Mode=TwoWay}"
+            TextRight=""/>
+
+            <local:TextInputTextUserControl 
+            TextLeft="{DynamicResource Product}"
+            Input="{Binding BasicService.ProductsService.Product.Loaded.Name, Mode=TwoWay}"
+            TextRight=""/>
+
+            <local:TextInputTextUserControl 
+            TextLeft="{DynamicResource Aantal}"
+            Input="{Binding BasicService.OrdersService.Order.Loaded.Amount, Mode=TwoWay}"
+            TextRight=""/>
+
+
+
+        </StackPanel>
+
 
         <local:Footer5ButtonsUserControl VerticalAlignment="Center" Grid.Row="1"
                     
@@ -69,7 +95,7 @@
                     Button2Text="Close order"
                     Button2Image="pack://application:,,,/Assets/Images/Delete.png"
                     Button2Visibility="{Binding BasicService.OrdersService.Order.IsOrderBusy}"
-                    Button2Command="{Binding cmdEndOrderCommand}"   
+                    Button2Command="{Binding cmdCloseOrderCommand}"   
                                          
                     Button3Text="Start/Stop machine"
                     Button3Image="pack://application:,,,/Assets/Images/Yes.png"

@@ -34,16 +34,11 @@ namespace LIB0000
     public enum OrderHistoryType
     {
         // Deze nummers niet hernummeren, enkel toevoegen onderaan
+        OrderStart = 0,
         Run = 1,
         Stop = 2,
-        BadProduct = 3,
-        InstructionOk = 4,
-        InstructionNok = 5,
-        Timeout = 6,
-        StartInstructionListBefore = 7,
-        StartInstructionListPeriodic = 8,
-        StartInstructionListAfter = 9,
-        StoppedByCamera = 10,
+        OrderClose = 3,
+
     }
 
 }

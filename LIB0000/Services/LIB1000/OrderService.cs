@@ -48,14 +48,7 @@ namespace LIB0000
     {
 
         #region Commands
-        [RelayCommand]
-        public void cmdInstructionOk()
-        {
-            LastInstructionOk = true;
-        }
-
-
-
+      
         #endregion
 
         #region Constructor
@@ -93,9 +86,10 @@ namespace LIB0000
                     row.Extra2 = Edit.Extra2;
                     row.Extra3 = Edit.Extra3;
                     row.DateTimeStart = Edit.DateTimeStart;
-                    row.WorkstationId = Loaded.WorkstationId;
+                    row.WorkstationId = Edit.WorkstationId;
                     context.OrderDbSet.Add(row);
                     context.SaveChanges();
+                    // zorgt ervoor dat juiste order in edit zit als je order afsluit
                     Edit.Id = row.Id;
                     UpdateSelected();
                 }
@@ -173,37 +167,9 @@ namespace LIB0000
             {
                 OrderHistoryList = context.OrderHistoryDbSet.Where(od => od.OrderId == orderId).OrderByDescending(od => od.TimeStamp).ToList();
             }
-            FilterOrderLoadedHistoryList();
+
         }
-        private void FilterOrderLoadedHistoryList()
-        {
-            var listLoadedFiltered = OrderHistoryList.Where(ojm =>
-                                (FilterInstruction && (ojm.OrderHistoryType == OrderHistoryType.InstructionOk || ojm.OrderHistoryType == OrderHistoryType.InstructionNok)) ||
-                                (FilterStoppedByCamera && ojm.OrderHistoryType == OrderHistoryType.StoppedByCamera) ||
-                                (FilterStartStop && (ojm.OrderHistoryType == OrderHistoryType.Run || ojm.OrderHistoryType == OrderHistoryType.Stop)) ||
-                                (FilterTimeouts && ojm.OrderHistoryType == OrderHistoryType.Timeout)
-                                ).ToList();
-
-
-            ListLoadedFiltered = listLoadedFiltered.OrderByDescending(orderHistoryitem => orderHistoryitem.TimeStamp).ToList(); ;
-        }
-
-        private void FilterOrderSelectedHistoryList()
-        {
-            if (Selected == null) { return; }
-
-            using (var context = new ServerDbContext(DatabasePath))
-            {
-                var orderHistoryList = context.OrderHistoryDbSet.Where(od => od.OrderId == Selected.Id).OrderByDescending(od => od.TimeStamp).ToList();
-                var listSelectedFiltered = orderHistoryList.Where(ojm =>
-                                    (FilterInstruction && (ojm.OrderHistoryType == OrderHistoryType.InstructionOk || ojm.OrderHistoryType == OrderHistoryType.InstructionNok)) ||
-                                    (FilterStoppedByCamera && ojm.OrderHistoryType == OrderHistoryType.StoppedByCamera) ||
-                                    (FilterStartStop && (ojm.OrderHistoryType == OrderHistoryType.Run || ojm.OrderHistoryType == OrderHistoryType.Stop)) ||
-                                    (FilterTimeouts && ojm.OrderHistoryType == OrderHistoryType.Timeout)
-                                    ).ToList();
-                ListSelectedFiltered = listSelectedFiltered.OrderByDescending(orderHistoryitem => orderHistoryitem.TimeStamp).ToList(); ;
-            }
-        }
+      
 
         public void GetLastActiveOrder(int? workstationId)
         {
@@ -219,16 +185,12 @@ namespace LIB0000
                 IsOrderBusy = false;
             }
         }
-        public bool Load(int productId, int userId)
+        public bool Load(int userId)
         {
             bool result = false;
-
-            Edit.ProductId = productId;
             Edit.UserId = userId;
-
-
             if ((Edit is OrderModel) && (Edit.OrderNr.Length > 1) && (Edit.Amount > 0) && (Edit.ProductId > 0) && (Edit.UserId > 0))
-            {
+            {  
                 Loaded.Id = Edit.Id;
                 Loaded.OrderNr = Edit.OrderNr;
                 Loaded.ProductId = Edit.ProductId;
@@ -242,8 +204,8 @@ namespace LIB0000
                 result = true;
                 IsOrderBusy = true;
                 AddRow();
-                Edit.OrderNr = "";
-                Edit.Amount = 0;
+                Edit = new OrderModel();
+
             }
             else
             {
@@ -301,6 +263,7 @@ namespace LIB0000
                     Loaded.Extra2 = "";
                     Loaded.Extra3 = "";
                     Loaded.Extra3 = "";
+                    // is dit hier nodig? heb ik nu ook  gezet in OrderService lijn 247
                     Edit = new OrderModel();
                     ListLoadedFiltered = new List<OrderHistoryModel>();
                     UpdateSelected();
@@ -368,7 +331,6 @@ namespace LIB0000
                 {
                     _selected = value;
                     OnPropertyChanged(nameof(Selected));
-                    FilterOrderSelectedHistoryList();
                 }
             }
         }
@@ -436,26 +398,8 @@ namespace LIB0000
         [ObservableProperty]
         private bool _databaseConnectionOk = true;
 
-        [ObservableProperty]
-        private bool _lastInstructionOk = false;
 
-
-        //Filter properties
-        private bool _filterInstruction = true;
-        public bool FilterInstruction
-        {
-            get { return _filterInstruction; }
-            set
-            {
-                if (_filterInstruction != value)
-                {
-                    _filterInstruction = value;
-                    OnPropertyChanged(nameof(FilterInstruction));
-                    GetOrderLoadedHistoryList(Loaded.Id);
-                    FilterOrderSelectedHistoryList();
-                }
-            }
-        }
+       
 
         private bool _filterStoppedByCamera = true;
         public bool FilterStoppedByCamera
@@ -468,7 +412,6 @@ namespace LIB0000
                     _filterStoppedByCamera = value;
                     OnPropertyChanged(nameof(FilterStoppedByCamera));
                     GetOrderLoadedHistoryList(Loaded.Id);
-                    FilterOrderSelectedHistoryList();
                 }
             }
         }
@@ -484,7 +427,6 @@ namespace LIB0000
                     _filterStartStop = value;
                     OnPropertyChanged(nameof(FilterStartStop));
                     GetOrderLoadedHistoryList(Loaded.Id);
-                    FilterOrderSelectedHistoryList();
                 }
             }
         }
@@ -500,7 +442,6 @@ namespace LIB0000
                     _filterTimeouts = value;
                     OnPropertyChanged(nameof(FilterTimeouts));
                     GetOrderLoadedHistoryList(Loaded.Id);
-                    FilterOrderSelectedHistoryList();
                 }
             }
         }

@@ -18,8 +18,6 @@ namespace LIB0000
         [ObservableProperty]
         private int _productId;
         [ObservableProperty]
-        private int _instructionSequence;
-        [ObservableProperty]
         private int _amount;
         [ObservableProperty]
         private int _totalProduct;
@@ -50,16 +48,7 @@ namespace LIB0000
     public enum OrderStepEnum
     {
         WaitOrderDetails,
-        WaitForMachineInstructionsBeforeOrder,
-        WaitForProductGroupInstructionsBeforeOrder,
-        WaitForProductInstructionsBeforeOrder,
         WaitForStart,
         WaitForStop,
-        WaitForMachineInstructionsDuringOrder,
-        WaitForProductGroupInstructionsDuringOrder,
-        WaitForProductInstructionsDuringOrder,
-        WaitForMachineInstructionsAfterOrder,
-        WaitForProductGroupInstructionsAfterOrder,
-        WaitForProductInstructionsAfterOrder,
     }
 }

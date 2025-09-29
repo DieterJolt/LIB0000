@@ -79,8 +79,6 @@ namespace LIB0000
 
         public DbSet<OrderModel> OrderDbSet { get; set; }
         public DbSet<OrderHistoryModel> OrderHistoryDbSet { get; set; }
-        public DbSet<RecipeModel> RecipeDbSet { get; set; }
-        public DbSet<RecipeDetailModel> RecipeDetailsDbSet { get; set; }
         public DbSet<UserModel> UserDbSet { get; set; }
         public DbSet<UserHistoryModel> UserHistoryDbSet { get; set; }
         public DbSet<UserPagesModel> UserPagesDbSet { get; set; }

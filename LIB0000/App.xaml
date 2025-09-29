@@ -46,13 +46,9 @@
             <local:ConverterObservableCollectionHardwareFunctionCountGreaterThenParameterVisble x:Key="ConverterObservableCollectionHardwareFunctionCountGreaterThenParameterVisble"/>
             <!--MultiConverters-->
             <local:MultiConverterEqualToTrue x:Key="MultiConverterEqualToTrue"/>
-            <local:MultiConverterStringToVisibilityEmptyStringHidden x:Key="MultiConverterStringToVisibilityEmptyStringHidden"/>
             <!--int to visible-->
             <local:IntToVisibilityConverter x:Key="IntToVisibilityConverter"/>
             <local:ConverterBoolToInverseBool x:Key="ConverterBoolToInverseBool"/>
-            <!--orderhistorytype to visible-->
-            <local:ConverterOrderHistoryTypeInstructionVisibilityVisible x:Key="ConverterOrderHistoryTypeInstructionVisibilityVisible"/>
-            <local:ConverterOrderHistoryTypeInstructionVisibilityHidden x:Key="ConverterOrderHistoryTypeInstructionVisibilityHidden"/>
 
             <!--hardwarefunction to visible-->
             <local:ConverterHardWareFunctionToVisibilityFhv7ShapeSearchVisible x:Key="ConverterHardWareFunctionToVisibilityFhv7ShapeSearchVisible"/>
@@ -65,8 +61,8 @@
             <local:ConverterJoinId x:Key="ConverterJoinId"/>
             
 
-            <local:OrderTypeDetailToImageStringConverter x:Key="OrderTypeDetailToImageStringConverter"/>
-            <local:OrderTypeDetailToStringConverter x:Key="OrderTypeDetailToStringConverter"/>
+            <!--<local:OrderTypeDetailToImageStringConverter x:Key="OrderTypeDetailToImageStringConverter"/>-->
+            <!--<local:OrderTypeDetailToStringConverter x:Key="OrderTypeDetailToStringConverter"/>-->
             <local:ConverterVisibilityToInverseVisibility x:Key="ConverterVisibilityToInverseVisibility"/>
             <local:ByteArrayToVisibilityConverter x:Key="ByteArrayToVisibilityConverter"/>
             <local:StringMultiVisibilityConverter x:Key="StringMultiVisibilityConverter"/>
@@ -76,7 +72,7 @@
             <local:ProductGroupIdToNameMultiConverter x:Key="ProductGroupIdToNameMultiConverter"/>
             <local:ProductIdToNameMultiConverter x:Key="ProductIdToNameMultiConverter"/>
             <local:ApprovedOnTextConverter x:Key="ApprovedOnTextConverter"/>
-            <local:ConverterCheckOrderdetailTypeToVisibility x:Key="ConverterCheckOrderdetailTypeToVisibility"/>
+
 
 
             <SolidColorBrush x:Key="ColorGreen" Color="#4CAF50"/>

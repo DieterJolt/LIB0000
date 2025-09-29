@@ -32,9 +32,7 @@ namespace LIB0000
             BasicService = basicService;
             GlobalService = globalService;
             BasicService.OrdersService.Order.FilterStoppedByCamera = true;
-            BasicService.OrdersService.Order.FilterInstruction = true;
             BasicService.OrdersService.Order.FilterTimeouts = true;
-            BasicService.OrdersService.Order.FilterInstruction = true;
 
             DataContext = this;
             InitializeComponent();
@@ -65,18 +63,6 @@ namespace LIB0000
             else
             {
                 BasicService.OrdersService.Order.FilterTimeouts = true;
-            }
-        }
-
-        private void FilterInstructions(object sender, RoutedEventArgs e)
-        {
-            if (BasicService.OrdersService.Order.FilterInstruction)
-            {
-                BasicService.OrdersService.Order.FilterInstruction = false;
-            }
-            else
-            {
-                BasicService.OrdersService.Order.FilterInstruction = true;
             }
         }
 

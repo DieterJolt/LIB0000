@@ -217,35 +217,7 @@ namespace LIB0000
                     }
                 }
             }
-            //}
-        }
-
-        public void GetJoinList(int workstionId)
-        {
-            //using (var context = new ServerDbContext(DatabasePath))
-            //{
-            //    JoinList = context.WorkstationDbSet  // Assuming this is the correct table
-            //        .Where(workstation => workstation.Id == workstionId)
-            //        .Join(
-            //            context.InstructionListDbSet,
-            //            workstation => workstation.Id, // Field in WorkstationModel
-            //            instructionList => instructionList.Id, // Field in InstructionListModel
-            //            (workstation, instructionList) => new WorkstationJoinModel
-            //            {
-            //                WorkstationName = workstation.Name,
-            //                WorkstationDescription = workstation.Description,
-            //                WorkstationImage = workstation.Image,  // Assuming workstation has an image field
-            //                WorkstationInstructionListOn = workstation.InstructionListOn,
-            //                WorkstationInstructionListIdBefore = workstation.InstructionListIdBefore,
-            //                WorkstationInstructionListPeriodicIdBefore = workstation.InstructionListPeriodicIdBefore,
-            //                WorkstationInstructionListIdAfter = workstation.InstructionListIdAfter,
-            //                WorkstationInstructionListPeriodicFrequency = workstation.InstructionListPeriodicFrequency,
-            //                InstructionListName = instructionList.Name  // Joining the InstructionList's Name field
-            //            })
-            //        .OrderBy(workstation => workstation.WorkstationName)  // Assuming you want to order by Name
-            //        .AsNoTracking()  // Improves performance by preventing EF from tracking changes
-            //        .ToList();
-            //}
+            
         }
 
         #endregion
@@ -257,9 +229,6 @@ namespace LIB0000
 
         [ObservableProperty]
         private ObservableCollection<WorkstationModel> _list = new ObservableCollection<WorkstationModel>();
-
-        [ObservableProperty]
-        private ObservableCollection<WorkstationJoinModel> _joinList = new ObservableCollection<WorkstationJoinModel>();
 
         [ObservableProperty]
         private WorkstationModel _edit = new WorkstationModel();

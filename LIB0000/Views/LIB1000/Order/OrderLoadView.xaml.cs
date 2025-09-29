@@ -24,7 +24,7 @@ namespace LIB0000
         private void cmdOrderLoad()
         {
 
-            bool result = BasicService.OrdersService.Order.Load(BasicService.RecipesService.Recipe.Loaded.Id, BasicService.UsersService.Login.ActualUser.Id);
+            bool result = BasicService.OrdersService.Order.Load(BasicService.UsersService.Login.ActualUser.Id);
             if (result == true)
             {
                 NavigationService.Navigate(typeof(OrderActualView));

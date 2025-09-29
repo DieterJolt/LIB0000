@@ -34,12 +34,12 @@
                 </Grid>
 
                 <Grid Grid.Column="1">
-                    <Image Source="{Binding OrderHistoryType, Converter={StaticResource OrderTypeDetailToImageStringConverter}}" Width="40" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10"/>
+                    <!--<Image Source="{Binding OrderHistoryType, Converter={StaticResource OrderTypeDetailToImageStringConverter}}" Width="40" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10"/>-->
                 </Grid>
 
                 <Grid Grid.Column="2" >
 
-                    <TextBlock Text="{Binding OrderHistoryType, Converter={StaticResource OrderTypeDetailToStringConverter}}" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+                    <!--<TextBlock Text="{Binding OrderHistoryType, Converter={StaticResource OrderTypeDetailToStringConverter}}" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>-->
 
                 </Grid>
 

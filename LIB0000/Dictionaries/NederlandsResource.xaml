@@ -11,8 +11,6 @@
     <sys:String x:Key="Aan">Aan</sys:String>
     <sys:String x:Key="Aantal">Aantal :</sys:String>
     <sys:String x:Key="Actie">Actie :</sys:String>
-    <sys:String x:Key="AfbeeldingSelectielijstInstrucie">Instruction selectionlist</sys:String>
-    <sys:String x:Key="AfbeeldingSelectielijstInstrucieAanpassen">Edit instruction selectionlist</sys:String>
     <sys:String x:Key="Annuleer">Annuleer</sys:String>
     <sys:String x:Key="Beschrijving">Beschrijving :</sys:String>
     <sys:String x:Key="Bewaren">Bewaren</sys:String>
@@ -33,15 +31,6 @@
     <sys:String x:Key="Hotspotinstructie">Hotspotinstructie</sys:String>
     <sys:String x:Key="HotspotinstructieAanpassen">Hotspotinstructie aanpassen</sys:String>
     <sys:String x:Key="Inloggen">Inloggen</sys:String>
-    <sys:String x:Key="Instructies">Instructies :</sys:String>
-    <sys:String x:Key="Instructielijst">Instructielijst</sys:String>
-    <sys:String x:Key="InstructielijstenToevoegen">Instructielijsten toevoegen</sys:String>
-    <sys:String x:Key="InstructielijstVoorOrder">Instructielijst voor order :</sys:String>
-    <sys:String x:Key="InstructielijstTijdensOrder">Instructielijst tijdens order :</sys:String>
-    <sys:String x:Key="InstructielijstNaOrder">Instructielijst na order :</sys:String>
-    <sys:String x:Key="InstructieToevoegen">Instructie Toevoegen</sys:String>
-    <sys:String x:Key="JaNeeInstructie">Yes No instruction</sys:String>
-    <sys:String x:Key="JaNeeInstructieAanpassen">Edit Yes No instruction</sys:String>
     <sys:String x:Key="LadenVanDefault">Laden van default</sys:String>
     <sys:String x:Key="MaxWaarde">Max. waarde</sys:String>
     <sys:String x:Key="MinWaarde">Min. waarde</sys:String>

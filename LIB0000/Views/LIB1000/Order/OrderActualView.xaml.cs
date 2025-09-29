@@ -12,11 +12,6 @@ namespace LIB0000
 
         #region Commands
 
-        [RelayCommand]
-        private void cmdFilterTest()
-        {
-            BasicService.OrdersService.Order.FilterInstruction = !BasicService.OrdersService.Order.FilterInstruction;
-        }
         #endregion
 
         #region Constructor

@@ -148,14 +148,10 @@ namespace LIB0000
 
                 //Voeg de services toe
                 services.AddSingleton<INavigationService, NavigationService>();
-
-                services.AddSingleton<ISnackbarService, SnackbarService>();
                 services.AddSingleton<IContentDialogService, ContentDialogService>();
-
                 services.AddSingleton<GlobalService>();
                 services.AddSingleton<BasicService>();
                 services.AddSingleton<ImageService>();
-
 
                 //Voeg de views toe
                 services.AddSingleton<MainView>();
@@ -183,26 +179,19 @@ namespace LIB0000
                 services.AddSingleton<OrderActualCameraView>();
                 services.AddSingleton<OrderHistoryView>();
 
-
-
                 //LIB0000
                 services.AddSingleton<WorkstationSelectView>();
                 services.AddSingleton<WorkstationEditView>();
                 services.AddSingleton<WorkstationView>();
-
                 services.AddSingleton<ProductGroupSelectView>();
                 services.AddSingleton<ProductGroupsEditView>();
                 services.AddSingleton<ProductGroupView>();
-
                 services.AddSingleton<HardwareView>();
                 services.AddSingleton<HardwareTypeSelectView>();
                 services.AddSingleton<HardwareEditView>();
-
                 services.AddSingleton<ProductEditView>();
                 services.AddSingleton<ProductSelectView>();
                 services.AddSingleton<ProductView>();
-
-
                 services.AddSingleton<FunctionHalconShapeSearchView>();
 
                 // Voeg de viewmodels toe

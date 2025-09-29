@@ -71,7 +71,6 @@ namespace LIB0000
             ProductsService = new ProductsService(ServerPath);
             UsersService = new UserService(ServerPath);
             OrdersService = new OrderService(ServerPath);
-            RecipesService = new RecipeService(ServerPath);
             WorkstationsService = new WorkstationService(ServerPath);
             ProductGroupsService = new ProductGroupService(ServerPath);
 
@@ -155,9 +154,6 @@ namespace LIB0000
 
         [ObservableProperty]
         private MessageService _messagesService;
-
-        [ObservableProperty]
-        private RecipeService _recipesService;
 
         [ObservableProperty]
         private WorkstationService _workstationsService;

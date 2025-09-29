@@ -33,7 +33,6 @@
             <StackPanel Orientation="Horizontal">
                 <ui:ToggleSwitch IsChecked="{Binding BasicService.OrdersService.Order.FilterStoppedByCamera}" Content="Camera detectie" Foreground="White" Margin="10"/>
                 <ui:ToggleSwitch IsChecked="{Binding BasicService.OrdersService.Order.FilterTimeouts}" Content="TimeOut" Foreground="White" Margin="10"/>
-                <ui:ToggleSwitch IsChecked="{Binding BasicService.OrdersService.Order.FilterInstruction}" Content="Instructies" Foreground="White" Margin="10"/>
                 <ui:ToggleSwitch IsChecked="{Binding BasicService.OrdersService.Order.FilterStartStop}" Content="Start / Stop" Foreground="White" Margin="10"/>
             </StackPanel>
         </Grid>

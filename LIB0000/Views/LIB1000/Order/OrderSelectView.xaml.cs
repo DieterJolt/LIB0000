@@ -14,11 +14,7 @@
         [RelayCommand]
         private void cmdDetail()
         {
-            //if (BasicService.InstructionsService.InstructionLists.SelectedVersion != null)
-            //{
-            //    BasicService.InstructionsService.Instructions.GetJoinList(BasicService.InstructionsService.InstructionLists.SelectedVersion.Id);
             NavigationService.Navigate(typeof(OrderHistoryView));
-            //}
         }
 
 

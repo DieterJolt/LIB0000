@@ -20,19 +20,6 @@ namespace LIB0000.Services
         #endregion
 
         #region Methods
-        public T RetrieveXmlFromDatabase<T>(int id)
-        {
-            using (var context = new ServerDbContext(DatabasePath))
-            {
-                var xmlData = context.RecipeDetailsDbSet.SingleOrDefault(x => x.RecipeId == id);
-                if (xmlData != null)
-                {
-                    return DeserializeXmlToObject<T>(xmlData.RecipeDetail);
-                }
-            }
-
-            return default;
-        }
 
         public T DeserializeXmlToObject<T>(string xml)
         {
