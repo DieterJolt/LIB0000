@@ -9,6 +9,8 @@
     Language="NL-BE" Loaded="Page_Loaded">
 
     <Page.Resources>
+
+
         <local:SettingDataTemplate x:Key="ObjectTypeTemplateSelector">
             <local:SettingDataTemplate.TemplateTextBox>
                 <DataTemplate>
@@ -26,11 +28,11 @@
                                 </Grid.ColumnDefinitions>
                                 <ui:TextBlock Grid.Row="0" Grid.Column="0" FontSize="{DynamicResource LargeFontSize}" FontTypography="Body" Text="{Binding SettingName}"/>
                                 <ui:TextBox Grid.Row="0" Grid.Column="1" MinWidth="100" MaxWidth="700" HorizontalAlignment="Right" FontSize="{DynamicResource LargeFontSize}" 
-                                            Text="{Binding ScreenValue,UpdateSourceTrigger=PropertyChanged}"  TextChanged="EventSettingChangedTextBox"/>
+                                        Text="{Binding ScreenValue,UpdateSourceTrigger=PropertyChanged}"  TextChanged="EventSettingChangedTextBox"/>
                                 <ui:TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" 
-                                              Foreground="{Binding ScreenValueMode, Converter={StaticResource ConverterScreenValueModeToColor}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                              FontSize="{StaticResource MediumFontSize}" FontWeight="Medium"
-                                              Text="{Binding ScreenValueMode, Converter={StaticResource ConverterScreenValueModeString}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                          Foreground="{Binding ScreenValueMode, Converter={StaticResource ConverterScreenValueModeToColor}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                          FontSize="{StaticResource MediumFontSize}" FontWeight="Medium"
+                                          Text="{Binding ScreenValueMode, Converter={StaticResource ConverterScreenValueModeString}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <ui:TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Nr}" FontSize="{DynamicResource LargeFontSize}"/>
                             </Grid>
                         </ui:CardExpander.Header>
@@ -39,25 +41,25 @@
                             <StackPanel>
                                 <WrapPanel Margin="0,20,0,0">
                                     <ui:TextBlock Text="{DynamicResource DefaultWaarde}" FontSize="{DynamicResource MediumFontSize}" 
-                                                  Visibility="{Binding DefaultValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                              Visibility="{Binding DefaultValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                     <ui:TextBlock Text="{Binding DefaultValue}" FontSize="{DynamicResource MediumFontSize}" 
-                                                  Visibility="{Binding DefaultValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                              Visibility="{Binding DefaultValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                 </WrapPanel>
                             </StackPanel>
                             <StackPanel>
                                 <WrapPanel>
-                                    <ui:TextBlock Text="Min. waarde: " FontSize="{DynamicResource MediumFontSize}" 
-                                                  Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                    <ui:TextBlock Text="Min. value: " FontSize="{DynamicResource MediumFontSize}" 
+                                              Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                     <ui:TextBlock Text="{Binding MinValue}" FontSize="{DynamicResource MediumFontSize}" 
-                                                  Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                              Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                 </WrapPanel>
                             </StackPanel>
                             <StackPanel>
                                 <WrapPanel>
-                                    <ui:TextBlock Text="Max. waarde: " FontSize="{DynamicResource MediumFontSize}" 
-                                                  Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                    <ui:TextBlock Text="Max. value: " FontSize="{DynamicResource MediumFontSize}" 
+                                              Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                     <ui:TextBlock Text="{Binding MaxValue}" FontSize="{DynamicResource MediumFontSize}" 
-                                                  Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                              Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                 </WrapPanel>
                             </StackPanel>
                         </StackPanel>
@@ -81,15 +83,15 @@
                                 <ui:TextBlock Grid.Row="0" Grid.Column="0" FontSize="{DynamicResource LargeFontSize}" FontTypography="Body" Text="{Binding SettingName}"/>
                                 <WrapPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right">
                                     <ui:Button Margin="10,0,10,0" Click="EventClickOpenFile" Tag="{Binding ScreenValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                        <ui:SymbolIcon Symbol="Document24" Filled="True" Height="24" Width="24" VerticalAlignment="Center" />   
+                                        <ui:SymbolIcon Symbol="Document24" Filled="True" Height="24" Width="24" VerticalAlignment="Center" />
                                     </ui:Button>
                                     <ui:TextBox  MinWidth="100" MaxWidth="400" FontSize="{DynamicResource MediumFontSize}" Text="{Binding ScreenValue,UpdateSourceTrigger=PropertyChanged}" 
-                                                 TextChanged="EventSettingChangedTextBox"/>
+                                             TextChanged="EventSettingChangedTextBox"/>
                                 </WrapPanel>
                                 <ui:TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" 
-                                              Foreground="{Binding ScreenValueMode, Converter={StaticResource ConverterScreenValueModeToColor}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                              FontSize="{DynamicResource MediumFontSize}" FontWeight="Medium"
-                                              Text="{Binding ScreenValueMode, Converter={StaticResource ConverterScreenValueModeString}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                          Foreground="{Binding ScreenValueMode, Converter={StaticResource ConverterScreenValueModeToColor}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                          FontSize="{DynamicResource MediumFontSize}" FontWeight="Medium"
+                                          Text="{Binding ScreenValueMode, Converter={StaticResource ConverterScreenValueModeString}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <ui:TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Nr}" FontSize="{DynamicResource LargeFontSize}"/>
                             </Grid>
                         </ui:CardExpander.Header>
@@ -98,25 +100,25 @@
                             <StackPanel>
                                 <WrapPanel Margin="0,20,0,0">
                                     <ui:TextBlock Text="{DynamicResource DefaultWaarde}" FontSize="{DynamicResource MediumFontSize}" 
-                                                  Visibility="{Binding DefaultValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                              Visibility="{Binding DefaultValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                     <ui:TextBlock Text="{Binding DefaultValue}" FontSize="{DynamicResource MediumFontSize}" 
-                                                  Visibility="{Binding DefaultValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                              Visibility="{Binding DefaultValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                 </WrapPanel>
                             </StackPanel>
                             <StackPanel>
                                 <WrapPanel>
-                                    <ui:TextBlock Text="Min. waarde: " FontSize="{DynamicResource MediumFontSize}" 
-                                                  Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                    <ui:TextBlock Text="Min. value: " FontSize="{DynamicResource MediumFontSize}" 
+                                              Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                     <ui:TextBlock Text="{Binding MinValue}" FontSize="{DynamicResource MediumFontSize}" 
-                                                  Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                              Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                 </WrapPanel>
                             </StackPanel>
                             <StackPanel>
                                 <WrapPanel>
-                                    <ui:TextBlock Text="Max. waarde: " FontSize="{DynamicResource MediumFontSize}" 
-                                                  Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                    <ui:TextBlock Text="Max. value: " FontSize="{DynamicResource MediumFontSize}" 
+                                              Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                     <ui:TextBlock Text="{Binding MaxValue}" FontSize="{DynamicResource MediumFontSize}" 
-                                                  Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                              Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                 </WrapPanel>
                             </StackPanel>
                         </StackPanel>
@@ -143,12 +145,12 @@
                                         <ui:SymbolIcon Symbol="Folder24" Filled="True" Height="24" Width="24" VerticalAlignment="Center" />
                                     </ui:Button>
                                     <ui:TextBox MinWidth="100" MaxWidth="400" FontSize="{DynamicResource MediumFontSize}" Text="{Binding ScreenValue,UpdateSourceTrigger=PropertyChanged}" 
-                                                TextChanged="EventSettingChangedTextBox"/>
+                                            TextChanged="EventSettingChangedTextBox"/>
                                 </WrapPanel>
                                 <ui:TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" 
-                                              Foreground="{Binding ScreenValueMode, Converter={StaticResource ConverterScreenValueModeToColor}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                              FontSize="{StaticResource MediumFontSize}" FontWeight="Medium"
-                                              Text="{Binding ScreenValueMode, Converter={StaticResource ConverterScreenValueModeString}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                          Foreground="{Binding ScreenValueMode, Converter={StaticResource ConverterScreenValueModeToColor}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                          FontSize="{StaticResource MediumFontSize}" FontWeight="Medium"
+                                          Text="{Binding ScreenValueMode, Converter={StaticResource ConverterScreenValueModeString}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <ui:TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Nr}" FontSize="{DynamicResource LargeFontSize}"/>
                             </Grid>
                         </ui:CardExpander.Header>
@@ -157,25 +159,25 @@
                             <StackPanel>
                                 <WrapPanel Margin="0,20,0,0">
                                     <ui:TextBlock Text="{DynamicResource DefaultWaarde}" FontSize="{DynamicResource MediumFontSize}" 
-                                                  Visibility="{Binding DefaultValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                              Visibility="{Binding DefaultValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                     <ui:TextBlock Text="{Binding DefaultValue}" FontSize="{DynamicResource MediumFontSize}" 
-                                                  Visibility="{Binding DefaultValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                              Visibility="{Binding DefaultValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                 </WrapPanel>
                             </StackPanel>
                             <StackPanel>
                                 <WrapPanel>
-                                    <ui:TextBlock Text="Min. waarde: " FontSize="{DynamicResource MediumFontSize}" 
-                                                  Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                    <ui:TextBlock Text="Min. value: " FontSize="{DynamicResource MediumFontSize}" 
+                                              Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                     <ui:TextBlock Text="{Binding MinValue}" FontSize="{DynamicResource MediumFontSize}" 
-                                                  Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                              Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                 </WrapPanel>
                             </StackPanel>
                             <StackPanel>
                                 <WrapPanel>
-                                    <ui:TextBlock Text="Max. waarde: " FontSize="{DynamicResource MediumFontSize}" 
-                                                  Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                    <ui:TextBlock Text="Max. value: " FontSize="{DynamicResource MediumFontSize}" 
+                                              Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                     <ui:TextBlock Text="{Binding MaxValue}" FontSize="{DynamicResource MediumFontSize}" 
-                                                  Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                              Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                 </WrapPanel>
                             </StackPanel>
                         </StackPanel>
@@ -200,7 +202,8 @@
                                 <WrapPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right">
                                     <ui:ToggleSwitch  FontSize="{DynamicResource LargeFontSize}" IsChecked="{Binding ScreenValue,Converter={StaticResource ConverterStringToBool1True}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Checked="EventSettingChangedToggleSwitch" Unchecked="EventSettingChangedToggleSwitch"/>
                                     <ui:TextBlock Margin="10,0,0,0" FontSize="{DynamicResource MediumFontSize}" Text="{Binding ScreenValue, Converter={StaticResource ConverterStringToString1Aan}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                </ui:TextBlock></WrapPanel>
+                                    </ui:TextBlock>
+                                </WrapPanel>
                                 <ui:TextBlock  Grid.Row="1" Grid.Column="0" Text="{Binding Nr}" FontSize="{DynamicResource LargeFontSize}"/>
                             </Grid>
                         </ui:CardExpander.Header>
@@ -214,13 +217,13 @@
                             </StackPanel>
                             <StackPanel>
                                 <WrapPanel>
-                                    <ui:TextBlock Text="Min. waarde: " FontSize="{DynamicResource MediumFontSize}" Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                    <ui:TextBlock Text="Min. value: " FontSize="{DynamicResource MediumFontSize}" Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                     <ui:TextBlock Text="{Binding MinValue}" FontSize="{DynamicResource MediumFontSize}" Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                 </WrapPanel>
                             </StackPanel>
                             <StackPanel>
                                 <WrapPanel>
-                                    <ui:TextBlock Text="Max. waarde: " FontSize="{DynamicResource MediumFontSize}" Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                    <ui:TextBlock Text="Max. value: " FontSize="{DynamicResource MediumFontSize}" Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                     <ui:TextBlock Text="{Binding MaxValue}" FontSize="{DynamicResource MediumFontSize}" Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                 </WrapPanel>
                             </StackPanel>
@@ -257,13 +260,13 @@
                             </StackPanel>
                             <StackPanel>
                                 <WrapPanel>
-                                    <ui:TextBlock Text="Min. waarde: " FontSize="{DynamicResource MediumFontSize}" Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                    <ui:TextBlock Text="Min. value: " FontSize="{DynamicResource MediumFontSize}" Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                     <ui:TextBlock Text="{Binding MinValue}" FontSize="{DynamicResource MediumFontSize}" Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                 </WrapPanel>
                             </StackPanel>
                             <StackPanel>
                                 <WrapPanel>
-                                    <ui:TextBlock Text="Max. waarde: " FontSize="{DynamicResource MediumFontSize}" Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                    <ui:TextBlock Text="Max. value: " FontSize="{DynamicResource MediumFontSize}" Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                     <ui:TextBlock Text="{Binding MaxValue}" FontSize="{DynamicResource MediumFontSize}" Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                 </WrapPanel>
                             </StackPanel>
@@ -288,16 +291,16 @@
                                 <ui:TextBlock Grid.Row="0" Grid.Column="0" FontSize="{DynamicResource LargeFontSize}" FontTypography="Body" Text="{Binding SettingName}"/>
                                 <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" MinWidth="100" MaxWidth="700" HorizontalAlignment="Right">
                                     <Slider x:Name="mySlider" IsSnapToTickEnabled="True" VerticalAlignment="Center"   Minimum="{Binding MinValue}" Maximum="{Binding MaxValue}" Value="{Binding ScreenValue,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="200"
-                                            ValueChanged="EventSettingChangedSlider"/>
+                                        ValueChanged="EventSettingChangedSlider"/>
                                     <TextBox Text="{Binding ScreenValue,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontSize="16" Margin="30,0,0,0" TextChanged="EventSettingChangedTextBox" Width="100"/>
                                 </StackPanel>
 
                                 <!--<ui:TextBox Grid.Row="0" Grid.Column="1" MinWidth="100" MaxWidth="700" HorizontalAlignment="Right" FontSize="{DynamicResource LargeFontSize}" 
-                                Text="{Binding ScreenValue,UpdateSourceTrigger=PropertyChanged}"  TextChanged="EventSettingChangedTextBox"/>-->
+                            Text="{Binding ScreenValue,UpdateSourceTrigger=PropertyChanged}"  TextChanged="EventSettingChangedTextBox"/>-->
                                 <ui:TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" 
-                                  Foreground="{Binding ScreenValueMode, Converter={StaticResource ConverterScreenValueModeToColor}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                  FontSize="{StaticResource MediumFontSize}" FontWeight="Medium"
-                                  Text="{Binding ScreenValueMode, Converter={StaticResource ConverterScreenValueModeString}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                              Foreground="{Binding ScreenValueMode, Converter={StaticResource ConverterScreenValueModeToColor}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                              FontSize="{StaticResource MediumFontSize}" FontWeight="Medium"
+                              Text="{Binding ScreenValueMode, Converter={StaticResource ConverterScreenValueModeString}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <ui:TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Nr}" FontSize="{DynamicResource LargeFontSize}"/>
                             </Grid>
                         </ui:CardExpander.Header>
@@ -306,25 +309,25 @@
                             <StackPanel>
                                 <WrapPanel Margin="0,20,0,0">
                                     <ui:TextBlock Text="{DynamicResource DefaultWaarde}" FontSize="{DynamicResource MediumFontSize}" 
-                                      Visibility="{Binding DefaultValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                  Visibility="{Binding DefaultValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                     <ui:TextBlock Text="{Binding DefaultValue}" FontSize="{DynamicResource MediumFontSize}" 
-                                      Visibility="{Binding DefaultValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                  Visibility="{Binding DefaultValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                 </WrapPanel>
                             </StackPanel>
                             <StackPanel>
                                 <WrapPanel>
-                                    <ui:TextBlock Text="Min. waarde: " FontSize="{DynamicResource MediumFontSize}" 
-                                      Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                    <ui:TextBlock Text="Min. value: " FontSize="{DynamicResource MediumFontSize}" 
+                                  Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                     <ui:TextBlock Text="{Binding MinValue}" FontSize="{DynamicResource MediumFontSize}" 
-                                      Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                  Visibility="{Binding MinValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                 </WrapPanel>
                             </StackPanel>
                             <StackPanel>
                                 <WrapPanel>
-                                    <ui:TextBlock Text="Max. waarde: " FontSize="{DynamicResource MediumFontSize}" 
-                                      Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                    <ui:TextBlock Text="Max. value: " FontSize="{DynamicResource MediumFontSize}" 
+                                  Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                     <ui:TextBlock Text="{Binding MaxValue}" FontSize="{DynamicResource MediumFontSize}" 
-                                      Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
+                                  Visibility="{Binding MaxValue,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}"/>
                                 </WrapPanel>
                             </StackPanel>
                         </StackPanel>
@@ -333,6 +336,9 @@
             </local:SettingDataTemplate.TemplateSlider>
         </local:SettingDataTemplate>
     </Page.Resources>
+
+
+
 
     <Grid x:Name="gridMain">
         <Grid.RowDefinitions>
@@ -343,7 +349,7 @@
             <RowDefinition Height="40*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-                
+
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -358,8 +364,9 @@
 
                 <ui:TextBlock Grid.Row="1" Margin="20,0,0,0" VerticalAlignment="Center" Text="{Binding BasicService.SettingsService.ErrorTextSettings,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FontSize="{DynamicResource LargeFontSize}" Visibility="{Binding BasicService.SettingsService.ErrorTextSettings,Converter={StaticResource ConverterStringToVisibilityEmptyStringCollapsed},UpdateSourceTrigger=PropertyChanged}" Foreground="{StaticResource ColorRed}"/>
 
-                <WrapPanel>
-                    <ItemsControl Grid.Row="1" ItemsSource="{Binding BasicService.SettingsService.HardwareFunctionBasicListSettings}">
+                <WrapPanel xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                    <ItemsControl Grid.Row="1"
+              ItemsSource="{Binding BasicService.SettingsService.HardwareFunctionBasicListSettings}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Horizontal"/>
@@ -367,33 +374,94 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <ui:Button Content="{Binding DisplayName}" 
-                                            Command="{Binding DataContext.ButtonCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" 
-                                            CommandParameter="{Binding}" 
-                                            Margin="5">
-                                    <ui:Button.Style>
-                                        <Style TargetType="ui:Button" BasedOn="{StaticResource {x:Type ui:Button}}">
-                                            <Style.Triggers>
+                                <ui:Button Content="{Binding DisplayName}" Focusable="True"
+                       Command="{Binding DataContext.ButtonCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                       CommandParameter="{Binding}"
+                       Margin="5">
+
+                                    <ui:Button.Template>
+                                        <ControlTemplate TargetType="ui:Button">
+                                            <Border x:Name="border"
+                                CornerRadius="4"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                                            </Border>
+
+                                            <ControlTemplate.Triggers>
+                                                <!-- Selected = red -->
                                                 <DataTrigger Value="True">
                                                     <DataTrigger.Binding>
                                                         <MultiBinding Converter="{StaticResource MultiConverterEqualToTrue}">
                                                             <Binding Path="DisplayName"/>
-                                                            <Binding Path="DataContext.BasicService.SettingsService.SelectedHardwareFunctionBasicSettingFilter.DisplayName" 
-                                                                RelativeSource="{RelativeSource AncestorType=ItemsControl}"/>
+                                                            <Binding Path="DataContext.BasicService.SettingsService.SelectedHardwareFunctionBasicSettingFilter.DisplayName"
+                                                 RelativeSource="{RelativeSource AncestorType=ItemsControl}"
+                                                 FallbackValue=""/>
                                                         </MultiBinding>
                                                     </DataTrigger.Binding>
-                                                    <Setter Property="Background" Value="{StaticResource ColorRed}"/>
+                                                    <Setter TargetName="border" Property="Background" Value="{StaticResource ColorRed}"/>
                                                 </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </ui:Button.Style>
+
+                                                <!-- Hover only if NOT selected -->
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True"/>
+                                                        <Condition>
+                                                            <Condition.Binding>
+                                                                <MultiBinding Converter="{StaticResource MultiConverterEqualToTrue}">
+                                                                    <Binding Path="DisplayName"/>
+                                                                    <Binding Path="DataContext.BasicService.SettingsService.SelectedHardwareFunctionBasicSettingFilter.DisplayName"
+                                                         RelativeSource="{RelativeSource AncestorType=ItemsControl}"
+                                                         FallbackValue=""/>
+                                                                </MultiBinding>
+                                                            </Condition.Binding>
+                                                            <Condition.Value>False</Condition.Value>
+                                                        </Condition>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter TargetName="border" Property="Background" Value="{StaticResource ColorGray}"/>
+                                                    <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ColorGray}"/>
+                                                </MultiDataTrigger>
+
+                                                <!-- Press only if NOT selected -->
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}" Value="True"/>
+                                                        <Condition>
+                                                            <Condition.Binding>
+                                                                <MultiBinding Converter="{StaticResource MultiConverterEqualToTrue}">
+                                                                    <Binding Path="DisplayName"/>
+                                                                    <Binding Path="DataContext.BasicService.SettingsService.SelectedHardwareFunctionBasicSettingFilter.DisplayName"
+                                                         RelativeSource="{RelativeSource AncestorType=ItemsControl}"
+                                                         FallbackValue=""/>
+                                                                </MultiBinding>
+                                                            </Condition.Binding>
+                                                            <Condition.Value>False</Condition.Value>
+                                                        </Condition>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter TargetName="border" Property="Background" Value="{StaticResource ColorGray}"/>
+                                                    <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ColorGray}"/>
+                                                </MultiDataTrigger>
+
+                                                <!-- Disabled -->
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter TargetName="border" Property="Opacity" Value="0.5"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </ui:Button.Template>
                                 </ui:Button>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
-                    <ui:AutoSuggestBox Width="200" Margin="10,0,0,0" Text="{Binding BasicService.SettingsService.FilterText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextChanged="TextBox_TextChanged" />
+                    <ui:AutoSuggestBox Width="200" Margin="10,0,0,0"
+                   Text="{Binding BasicService.SettingsService.FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                   TextChanged="TextBox_TextChanged"/>
                 </WrapPanel>
+
 
             </Grid>
 
@@ -422,38 +490,43 @@
 
         </Grid>
 
-        <Grid x:Name="gridUserControlAndSettigns" Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            
-            <ContentControl x:Name="TopUserControl" Grid.Column="0"/>
-            <StackPanel Grid.Column="1" CanHorizontallyScroll="False" Margin=" 0,0,15,0">
-                <ListBox ItemsSource="{Binding BasicService.SettingsService.ListSettings}" ItemTemplateSelector="{StaticResource ObjectTypeTemplateSelector}">
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem">
-                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                            <Setter Property="Width" Value="Auto"></Setter>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding ScreenVisible}" Value="True">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding ScreenVisible}" Value="False">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                </ListBox>
-            </StackPanel>
-        </Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="770" Grid.Row="1">
+            <ScrollViewer.Resources>
+                <Style TargetType="ScrollBar">
+                    <Setter Property="Width" Value="40"/>
+                </Style>
+            </ScrollViewer.Resources>
 
-        
+            <Grid x:Name="gridUserControlAndSettigns" Grid.Row="1" Margin="0,0,15,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-        <!--<Label Grid.Row="4" Content="Historiek" />
-        <DataGrid Grid.Row="4" ItemsSource="{Binding BasicService.SettingsService.ListHistorySettings,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>-->
+                <ContentControl x:Name="TopUserControl" Grid.Column="0"/>
+                <StackPanel Grid.Column="1" CanHorizontallyScroll="False" Margin=" 0,0,15,0">
+                    <ListBox ItemsSource="{Binding BasicService.SettingsService.ListSettings}" ItemTemplateSelector="{StaticResource ObjectTypeTemplateSelector}">
+
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Width" Value="Auto"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ScreenVisible}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ScreenVisible}" Value="False">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+
     </Grid>
 
 </Page>
