@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Documents;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using LIB0000;
+using LIB0000.Services;
 
 namespace LIB0000
 {
@@ -22,6 +24,7 @@ namespace LIB0000
         {
             DatabasePath = databasePath;
             Product = new Product(DatabasePath);
+            ProductStructure = new ProductStructure();
         }
 
         #endregion
@@ -39,6 +42,9 @@ namespace LIB0000
 
         [ObservableProperty]
         private Product _product;
+
+        [ObservableProperty]
+        private ProductStructure _productStructure;
 
         [ObservableProperty]
         private string _databasePath;
@@ -110,7 +116,7 @@ namespace LIB0000
             //}
         }
 
-        public void AddRow()
+        public void AddRow(object structure)
         {
             using (var context = new ServerDbContext(DatabasePath))
             {
@@ -123,6 +129,7 @@ namespace LIB0000
                     row.Description = Edit.Description;
                     ImageService = new ImageService();
                     row.Image = Edit.Image;
+                    row.Structure = new XmlService().SerializeObjectToXml(structure);
                     context.ProductDbSet.Add(row);
                     context.SaveChanges();
                     Edit.Name = "";
@@ -256,6 +263,8 @@ namespace LIB0000
                 {
                     row.Name = Edit.Name;
                     row.Description = Edit.Description;
+                    row.Structure = Edit.Structure;
+                    row.Image = Edit.Image;
                     context.ProductDbSet.Update(row);
                     context.SaveChanges();
                     Edit.Name = "";
@@ -272,6 +281,7 @@ namespace LIB0000
                 Edit.Name = Selected.Name;
                 Edit.Description = Selected.Description;
                 Edit.Id = Selected.Id;
+                Edit.Structure = Selected.Structure;
             }
         }
 
@@ -297,6 +307,33 @@ namespace LIB0000
 
         #endregion
 
+
+    }
+
+    public partial class ProductStructure : ObservableObject
+    {
+
+        #region Commands
+        #endregion
+
+        #region Constructor
+        #endregion
+
+        #region Events
+        #endregion
+
+        #region Fields
+        #endregion
+
+        #region Methods
+        #endregion
+
+        #region Properties
+
+        [ObservableProperty]
+        private ProductStructureTyp _edit = new ProductStructureTyp();
+
+        #endregion
 
     }
 }

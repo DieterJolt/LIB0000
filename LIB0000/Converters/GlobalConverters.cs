@@ -461,6 +461,30 @@ namespace LIB0000
         }
 
     }
+
+    public class CameraCoordsMmToPixelConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values[0] is double TotalWindowWidthMm && values[1] is double ValueMm && values[2] is double TotalCanvasWidthPixels)
+            {
+                if (values.Length > 3 && values[3] is string inverse)
+                {
+                    if (inverse == "True")
+                    {
+                        return (TotalCanvasWidthPixels * (TotalWindowWidthMm - ValueMm) / TotalWindowWidthMm);
+                    }
+                }
+                return (TotalCanvasWidthPixels * ValueMm / TotalWindowWidthMm);
+
+            }
+            return null;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+            => throw new NotImplementedException();
+    }
+
     public class ConverterBoolToVisibility1Visible0Hidden : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

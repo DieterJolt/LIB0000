@@ -32,7 +32,7 @@
                 <local:TextInputButtonUserControl 
                     TextLeft="Type :"
                     Input="{Binding BasicService.HardwareService.Hardware.Edit.HardwareType,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    VisibilityRight="True"
+                    VisibilityRight="false"
                     ImageRight="pack://application:,,,/Assets/Images/Instructions.png"
                     CommandRight="{Binding cmdNavigateToHardwareTypeCommand}"
                     />
@@ -50,11 +50,13 @@
                     Button1Text="{DynamicResource Ok}"
                     Button1Image="pack://application:,,,/Assets/Images/Yes.png"
                     Button1Visibility="True"
+                                             Button1TextColor="White"
                     Button1Command="{Binding cmdokCommand}"
                     
                     Button2Text="{DynamicResource Annuleer}"
                     Button2Image="pack://application:,,,/Assets/Images/Delete.png"
                     Button2Visibility="True"
+                                             Button2TextColor="White"
                     Button2Command="{Binding cmdCancelCommand}"
                                                                                                               
                     />

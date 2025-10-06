@@ -149,10 +149,10 @@
     <Compile Update="UserControls\LIB1000\TextNumberTextUserControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\LIB1000\Order\OrderHistoryView.xaml.cs">
+    <Compile Update="Views\LIB0000\Order\OrderHistoryView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\LIB1000\Workstations\WorkstationView.xaml.cs">
+    <Compile Update="Views\LIB0000\Workstations\WorkstationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

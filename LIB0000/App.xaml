@@ -40,6 +40,7 @@
             <local:ConverterScreenValueModeString x:Key="ConverterScreenValueModeString"/>
             <local:ConverterStringToVisibilityEmptyStringHidden x:Key="ConverterStringToVisibilityEmptyStringHidden"/>
             <local:ConverterIntToGridVisibility0NotVisible1Visible x:Key="ConverterIntToGridVisibility0NotVisible1Visible"/>
+            <local:CameraCoordsMmToPixelConverter x:Key="CameraCoordsMmToPixelConverter"/>
             <!--Converters Value-->
             <local:ConverterValueDivideBy2 x:Key="ConverterValueDivideBy2"/>
             <!--Converters List-->

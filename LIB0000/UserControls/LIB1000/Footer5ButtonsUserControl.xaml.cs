@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+﻿using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace LIB0000
 {
@@ -32,6 +21,17 @@ namespace LIB0000
         }
 
         public static readonly DependencyProperty Button1TextProperty = DependencyProperty.Register("Button1Text", typeof(string), typeof(Footer5ButtonsUserControl));
+
+        //Button 1 Textcolor
+        public SolidColorBrush Button1TextColor
+        {
+            get { return (System.Windows.Media.SolidColorBrush)GetValue(Button1TextColorProperty); }
+            set { SetValue(Button1TextColorProperty, value); }
+        }
+
+        public static readonly DependencyProperty Button1TextColorProperty = DependencyProperty.Register("Button1TextColor", typeof(System.Windows.Media.SolidColorBrush), typeof(Footer5ButtonsUserControl),
+        new PropertyMetadata(new SolidColorBrush(Colors.White)) // ← standaardwaarde
+    );
 
         //Button 1 Visibility
         public bool Button1Visibility
@@ -63,14 +63,6 @@ namespace LIB0000
 
         public static readonly DependencyProperty Button1CommandProperty = DependencyProperty.Register("Button1Command", typeof(RelayCommand), typeof(Footer5ButtonsUserControl));
 
-        public SolidColorBrush Button1BackgroundColor
-        {
-            get { return (SolidColorBrush)GetValue(Button1BackgroundColorProperty); }
-            set { SetValue(Button1BackgroundColorProperty, value); }
-        }
-
-        public static readonly DependencyProperty Button1BackgroundColorProperty = DependencyProperty.Register("Button1BackgroundColor", typeof(SolidColorBrush), typeof(Footer5ButtonsUserControl), new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF343434"))));
-
         #endregion
 
         #region Button 2
@@ -83,6 +75,17 @@ namespace LIB0000
         }
 
         public static readonly DependencyProperty Button2TextProperty = DependencyProperty.Register("Button2Text", typeof(string), typeof(Footer5ButtonsUserControl));
+
+        //Button 2 Textcolor
+        public SolidColorBrush Button2TextColor
+        {
+            get { return (System.Windows.Media.SolidColorBrush)GetValue(Button2TextColorProperty); }
+            set { SetValue(Button2TextColorProperty, value); }
+        }
+
+        public static readonly DependencyProperty Button2TextColorProperty = DependencyProperty.Register("Button2TextColor", typeof(System.Windows.Media.SolidColorBrush), typeof(Footer5ButtonsUserControl),
+        new PropertyMetadata(new SolidColorBrush(Colors.White)) // ← standaardwaarde
+    );
 
         //Button 2 Visibility
         public bool Button2Visibility
@@ -116,14 +119,6 @@ namespace LIB0000
 
         public static readonly DependencyProperty Button2CommandProperty = DependencyProperty.Register("Button2Command", typeof(RelayCommand), typeof(Footer5ButtonsUserControl));
 
-        public SolidColorBrush Button2BackgroundColor
-        {
-            get { return (SolidColorBrush)GetValue(Button2BackgroundColorProperty); }
-            set { SetValue(Button2BackgroundColorProperty, value); }
-        }
-
-        public static readonly DependencyProperty Button2BackgroundColorProperty = DependencyProperty.Register("Button2BackgroundColor", typeof(SolidColorBrush), typeof(Footer5ButtonsUserControl), new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF343434"))));
-
         #endregion
 
         #region Button 3
@@ -136,6 +131,17 @@ namespace LIB0000
         }
 
         public static readonly DependencyProperty Button3TextProperty = DependencyProperty.Register("Button3Text", typeof(string), typeof(Footer5ButtonsUserControl));
+
+        //Button 3 Textcolor
+        public SolidColorBrush Button3TextColor
+        {
+            get { return (System.Windows.Media.SolidColorBrush)GetValue(Button3TextColorProperty); }
+            set { SetValue(Button3TextColorProperty, value); }
+        }
+
+        public static readonly DependencyProperty Button3TextColorProperty = DependencyProperty.Register("Button3TextColor", typeof(System.Windows.Media.SolidColorBrush), typeof(Footer5ButtonsUserControl),
+        new PropertyMetadata(new SolidColorBrush(Colors.White)) // ← standaardwaarde
+    );
 
         //Button 3 Visibility
         public bool Button3Visibility
@@ -169,14 +175,6 @@ namespace LIB0000
 
         public static readonly DependencyProperty Button3CommandProperty = DependencyProperty.Register("Button3Command", typeof(RelayCommand), typeof(Footer5ButtonsUserControl));
 
-        public SolidColorBrush Button3BackgroundColor
-        {
-            get { return (SolidColorBrush)GetValue(Button3BackgroundColorProperty); }
-            set { SetValue(Button3BackgroundColorProperty, value); }
-        }
-
-        public static readonly DependencyProperty Button3BackgroundColorProperty = DependencyProperty.Register("Button3BackgroundColor", typeof(SolidColorBrush), typeof(Footer5ButtonsUserControl), new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF343434"))));
-
         #endregion
 
         #region Button 4
@@ -189,6 +187,17 @@ namespace LIB0000
         }
 
         public static readonly DependencyProperty Button4TextProperty = DependencyProperty.Register("Button4Text", typeof(string), typeof(Footer5ButtonsUserControl));
+
+        //Button 1 Textcolor
+        public SolidColorBrush Button4TextColor
+        {
+            get { return (System.Windows.Media.SolidColorBrush)GetValue(Button4TextColorProperty); }
+            set { SetValue(Button4TextColorProperty, value); }
+        }
+
+        public static readonly DependencyProperty Button4TextColorProperty = DependencyProperty.Register("Button4TextColor", typeof(System.Windows.Media.SolidColorBrush), typeof(Footer5ButtonsUserControl),
+        new PropertyMetadata(new SolidColorBrush(Colors.White)) // ← standaardwaarde
+    );
 
         //Button 4 Visibility
         public bool Button4Visibility
@@ -222,14 +231,6 @@ namespace LIB0000
 
         public static readonly DependencyProperty Button4CommandProperty = DependencyProperty.Register("Button4Command", typeof(RelayCommand), typeof(Footer5ButtonsUserControl));
 
-        public SolidColorBrush Button4BackgroundColor
-        {
-            get { return (SolidColorBrush)GetValue(Button4BackgroundColorProperty); }
-            set { SetValue(Button4BackgroundColorProperty, value); }
-        }
-
-        public static readonly DependencyProperty Button4BackgroundColorProperty = DependencyProperty.Register("Button4BackgroundColor", typeof(SolidColorBrush), typeof(Footer5ButtonsUserControl), new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF343434"))));
-
         #endregion
 
         #region Button 5
@@ -242,6 +243,17 @@ namespace LIB0000
         }
 
         public static readonly DependencyProperty Button5TextProperty = DependencyProperty.Register("Button5Text", typeof(string), typeof(Footer5ButtonsUserControl));
+
+        //Button 5 Textcolor
+        public SolidColorBrush Button5TextColor
+        {
+            get { return (System.Windows.Media.SolidColorBrush)GetValue(Button5TextColorProperty); }
+            set { SetValue(Button5TextColorProperty, value); }
+        }
+
+        public static readonly DependencyProperty Button5TextColorProperty = DependencyProperty.Register("Button5TextColor", typeof(System.Windows.Media.SolidColorBrush), typeof(Footer5ButtonsUserControl),
+        new PropertyMetadata(new SolidColorBrush(Colors.White)) // ← standaardwaarde
+    );
 
         //Button 5 Visibility
         public bool Button5Visibility
@@ -274,14 +286,6 @@ namespace LIB0000
         }
 
         public static readonly DependencyProperty Button5CommandProperty = DependencyProperty.Register("Button5Command", typeof(RelayCommand), typeof(Footer5ButtonsUserControl));
-
-        public SolidColorBrush Button5BackgroundColor
-        {
-            get { return (SolidColorBrush)GetValue(Button5BackgroundColorProperty); }
-            set { SetValue(Button5BackgroundColorProperty, value); }
-        }
-
-        public static readonly DependencyProperty Button5BackgroundColorProperty = DependencyProperty.Register("Button5BackgroundColor", typeof(SolidColorBrush), typeof(Footer5ButtonsUserControl), new PropertyMetadata(new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF343434"))));
 
         #endregion
 

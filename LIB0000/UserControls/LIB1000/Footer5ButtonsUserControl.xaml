@@ -25,48 +25,45 @@
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
 
-        <Button x:Name="Button_1" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" Background="{Binding Button1BackgroundColor,RelativeSource={RelativeSource AncestorType=UserControl}}"
+        <Button x:Name="Button_1" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
          Visibility="{Binding Button1Visibility,Converter={StaticResource ConverterBoolToVisibility1Visible0Hidden},RelativeSource={RelativeSource AncestorType=UserControl}}"
          Command="{Binding Button1Command,RelativeSource={RelativeSource AncestorType=UserControl}}">
             <StackPanel Orientation="Horizontal"  >
-                <Image Grid.Column="0" Source="{Binding Button1Image,RelativeSource={RelativeSource AncestorType=UserControl}}"  MaxWidth="{DynamicResource MediumIconFontSize}"  />
-                <TextBlock Grid.Column="2" Margin="9" Text="{Binding Button1Text,RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="{DynamicResource LargeFontSize}"/>
+                <Image Grid.Column="0" Source="{Binding Button1Image,RelativeSource={RelativeSource AncestorType=UserControl}}"  MaxWidth="{DynamicResource LargeTitleFontSize}" Margin="0,0,80,0"  />
+                <TextBlock Grid.Column="2" Margin="9,0,9,0" Text="{Binding Button1Text,RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="{Binding Button1TextColor,RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="{DynamicResource LargeFontSize}"/>
             </StackPanel>
         </Button>
-
-        <Button x:Name="Button_2" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" Background="{Binding Button2BackgroundColor,RelativeSource={RelativeSource AncestorType=UserControl}}"
+        <Button x:Name="Button_2" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
          Visibility="{Binding Button2Visibility,Converter={StaticResource ConverterBoolToVisibility1Visible0Hidden},RelativeSource={RelativeSource AncestorType=UserControl}}"
          Command="{Binding Button2Command,RelativeSource={RelativeSource AncestorType=UserControl}}">
             <StackPanel Orientation="Horizontal"  >
-                <Image Grid.Column="0" Source="{Binding Button2Image,RelativeSource={RelativeSource AncestorType=UserControl}}"  MaxWidth="{DynamicResource MediumIconFontSize}"  />
-                <TextBlock Grid.Column="2" Margin="9" Text="{Binding Button2Text,RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="{DynamicResource LargeFontSize}"/>
+                <Image Grid.Column="0" Source="{Binding Button2Image,RelativeSource={RelativeSource AncestorType=UserControl}}"  MaxWidth="{DynamicResource LargeTitleFontSize}" Margin="0,0,80,0"  />
+                <TextBlock Grid.Column="2" Margin="9,0,9,0" Text="{Binding Button2Text,RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="{Binding Button2TextColor,RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="{DynamicResource LargeFontSize}"/>
             </StackPanel>
         </Button>
-
-        <Button x:Name="Button_3" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Stretch" Background="{Binding Button3BackgroundColor,RelativeSource={RelativeSource AncestorType=UserControl}}"
+        <Button x:Name="Button_3" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
          Visibility="{Binding Button3Visibility,Converter={StaticResource ConverterBoolToVisibility1Visible0Hidden},RelativeSource={RelativeSource AncestorType=UserControl}}"
          Command="{Binding Button3Command,RelativeSource={RelativeSource AncestorType=UserControl}}">
             <StackPanel Orientation="Horizontal"  >
-                <Image Grid.Column="0" Source="{Binding Button3Image,RelativeSource={RelativeSource AncestorType=UserControl}}"  MaxWidth="{DynamicResource MediumIconFontSize}"  />
-                <TextBlock Grid.Column="2" Margin="9" Text="{Binding Button3Text,RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="{DynamicResource LargeFontSize}"/>
+                <Image Grid.Column="0" Source="{Binding Button3Image,RelativeSource={RelativeSource AncestorType=UserControl}}"  MaxWidth="{DynamicResource LargeTitleFontSize}" Margin="0,0,80,0"  />
+                <TextBlock Grid.Column="2" Margin="9,0,9,0" Text="{Binding Button3Text,RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="{Binding Button3TextColor,RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="{DynamicResource LargeFontSize}"/>
             </StackPanel>
         </Button>
-
-        <Button x:Name="Button_4" Grid.Column="6" Grid.Row="1" HorizontalAlignment="Stretch" Background="{Binding Button4BackgroundColor,RelativeSource={RelativeSource AncestorType=UserControl}}"
+        <Button x:Name="Button_4" Grid.Column="6" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
          Visibility="{Binding Button4Visibility,Converter={StaticResource ConverterBoolToVisibility1Visible0Hidden},RelativeSource={RelativeSource AncestorType=UserControl}}"
          Command="{Binding Button4Command,RelativeSource={RelativeSource AncestorType=UserControl}}">
             <StackPanel Orientation="Horizontal">
-                <Image Grid.Column="0" Source="{Binding Button4Image,RelativeSource={RelativeSource AncestorType=UserControl}}" MaxWidth="{DynamicResource MediumIconFontSize}" />
-                <TextBlock Grid.Column="2" Margin="9" Text="{Binding Button4Text,RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{DynamicResource LargeFontSize}"/>
+                <Image Grid.Column="0" Source="{Binding Button4Image,RelativeSource={RelativeSource AncestorType=UserControl}}" MaxWidth="{DynamicResource LargeTitleFontSize}" Margin="0,0,80,0"  />
+                <TextBlock Grid.Column="2" Margin="9,0,9,0" Text="{Binding Button4Text,RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="{Binding Button4TextColor,RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{DynamicResource LargeFontSize}"/>
             </StackPanel>
         </Button>
 
-        <Button x:Name="Button_5" Grid.Column="8" Grid.Row="1" HorizontalAlignment="Stretch" Background="{Binding Button5BackgroundColor,RelativeSource={RelativeSource AncestorType=UserControl}}"
+        <Button x:Name="Button_5" Grid.Column="8" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
          Visibility="{Binding Button5Visibility,Converter={StaticResource ConverterBoolToVisibility1Visible0Hidden},RelativeSource={RelativeSource AncestorType=UserControl}}"
          Command="{Binding Button5Command,RelativeSource={RelativeSource AncestorType=UserControl}}">
             <StackPanel Orientation="Horizontal">
-                <Image Grid.Column="0" Source="{Binding Button5Image,RelativeSource={RelativeSource AncestorType=UserControl}}" MaxWidth="{DynamicResource MediumIconFontSize}" />
-                <TextBlock Grid.Column="2" Margin="9" Text="{Binding Button5Text,RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{DynamicResource LargeFontSize}"/>
+                <Image Grid.Column="0" Source="{Binding Button5Image,RelativeSource={RelativeSource AncestorType=UserControl}}" MaxWidth="{DynamicResource LargeTitleFontSize}" Margin="0,0,80,0" />
+                <TextBlock Grid.Column="2" Margin="9,0,9,0" Text="{Binding Button5Text,RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="{Binding Button5TextColor,RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{DynamicResource LargeFontSize}"/>
             </StackPanel>
         </Button>
 

@@ -1,5 +1,8 @@
 ﻿
 
+using LIB0000.Services;
+using LIB0000;
+
 namespace LIB0000
 {
     /// <summary>
@@ -31,6 +34,16 @@ namespace LIB0000
             if ((BasicService.ProductsService.Product.Selected != null) && (BasicService.ProductsService.Product.Selected.Id > 0))
             {
                 NavigationService.Navigate(typeof(ProductEditView));
+            }
+        }
+
+        [RelayCommand]
+        private void cmdProductDetail()
+        {
+            if ((BasicService.ProductsService.Product.Selected != null) && (BasicService.ProductsService.Product.Selected.Id > 0))
+            {
+                BasicService.ProductsService.ProductStructure.Edit = new XmlService().DeserializeXmlToObject<ProductStructureTyp>(BasicService.ProductsService.Product.Selected.Structure);
+                NavigationService.Navigate(typeof(ProductDetail01));
             }
         }
 

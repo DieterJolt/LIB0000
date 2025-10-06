@@ -67,16 +67,19 @@
                     Button1Text="{DynamicResource Toevoegen}"
                     Button1Image="pack://application:,,,/Assets/Images/Plus.png"
                     Button1Visibility="True"
+                                                 Button1TextColor="White"
                     Button1Command="{Binding cmdAddRowCommand}"
                     
                     Button2Text="{DynamicResource Verwijderen}"
                     Button2Image="pack://application:,,,/Assets/Images/Delete.png"
                     Button2Visibility="True"
+                                                 Button2TextColor="White"
                     Button2Command="{Binding cmdDeleteRowCommand}"
                     
                     Button3Text="{DynamicResource Bewerken}"
                     Button3Image="pack://application:,,,/Assets/Images/Edit.png"
                     Button3Visibility="True"
+                                                 Button3TextColor="White"
                     Button3Command="{Binding cmdEditRowCommand}"                                                                                            
                     />
 

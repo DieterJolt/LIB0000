@@ -77,7 +77,12 @@
                     Button3Text="{DynamicResource Bewerken}"
                     Button3Image="pack://application:,,,/Assets/Images/Edit.png"
                     Button3Visibility="True"
-                    Button3Command="{Binding cmdEditRowCommand}"                                                                                            
+                    Button3Command="{Binding cmdEditRowCommand}"  
+                                                 
+                    Button4Text="{DynamicResource Detail}"
+                    Button4Image="pack://application:,,,/Assets/Images/Detail.png"
+                    Button4Visibility="True"
+                    Button4Command="{Binding cmdProductDetailCommand}" 
                     />
 
             </Grid>

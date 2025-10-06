@@ -8,6 +8,7 @@ using System.Windows.Threading;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using LIB0000;
 
 
 
@@ -193,6 +194,7 @@ namespace LIB0000
                 services.AddSingleton<ProductSelectView>();
                 services.AddSingleton<ProductView>();
                 services.AddSingleton<FunctionHalconShapeSearchView>();
+                services.AddSingleton<ProductDetail01>();
 
                 // Voeg de viewmodels toe
                 services.AddSingleton<MainViewModel>();

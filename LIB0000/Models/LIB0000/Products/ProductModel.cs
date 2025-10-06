@@ -29,5 +29,8 @@ namespace LIB0000
         [ObservableProperty]
         public byte[]? _image;
 
+        [ObservableProperty]
+        private string _structure;
+
     }
 }

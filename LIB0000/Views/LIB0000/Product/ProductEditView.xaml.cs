@@ -23,7 +23,7 @@ namespace LIB0000
         [RelayCommand]
         private void cmdOk()
         {
-            BasicService.ProductsService.Product.AddRow();
+            BasicService.ProductsService.Product.AddRow(BasicService.ProductsService.ProductStructure.Edit);
             NavigationService.GoBack();
         }
 

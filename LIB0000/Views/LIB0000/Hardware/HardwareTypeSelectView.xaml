@@ -66,11 +66,13 @@
             Button1Text="OK"
             Button1Image="pack://application:,,,/Assets/Images/Yes.png"
             Button1Visibility="True"
+                                                 Button1TextColor="White"
             Button1Command="{Binding CmdSelectHardwareOKCommand}"
             
             Button2Text="{DynamicResource Annuleer}"
             Button2Image="pack://application:,,,/Assets/Images/Delete.png"
             Button2Visibility="True"
+                                                 Button2TextColor="White"
             Button2Command="{Binding CmdSelectHardwareCancelCommand}"
                                                                                                         
             />
