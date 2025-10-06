@@ -104,8 +104,6 @@ namespace LIB0000
             MenuItemsSource = new object[]
             {
                 new NavigationViewItem("Actueel order", typeof(OrderActualView)),
-                new NavigationViewItem("Actueel order historiek", typeof(OrderActualHistoryView)),
-                new NavigationViewItem("Actueel order camera", typeof(OrderActualCameraView)),
             }
             },
             new NavigationViewItem("Order",new BitmapImage(new Uri("pack://application:,,,/Assets/Images/Orders.png")), typeof(OrderView)),

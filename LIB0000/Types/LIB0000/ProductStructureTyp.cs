@@ -18,12 +18,29 @@ namespace LIB0000
         #endregion
 
         #region Events
+
+        partial void OnWeightChanged(Single value)
+        {
+            BerekenTotalWeight();
+        }
+
+        partial void OnAmountChanged(int value)
+        {
+            BerekenTotalWeight();
+        }
+
         #endregion
 
         #region Fields
         #endregion
 
         #region Methods
+
+        private void BerekenTotalWeight()
+        {
+            TotalWeight = Weight * Amount;
+        }
+
         #endregion
 
         #region Properties

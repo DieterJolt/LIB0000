@@ -223,13 +223,24 @@ namespace LIB0000
         }
         public void GetList()
         {
+            int selectedId = 0;
             using (var context = new ServerDbContext(DatabasePath))
             {
+                if (Selected != null)
+                {
+                    selectedId = Selected.Id;
+                }
+
                 var result = from Products in context.ProductDbSet
                              orderby Products.Id
                              select Products;
 
                 List = result.ToList();
+
+                if (selectedId > 0)
+                {
+                    Selected = List.Where(x => x.Id == selectedId).FirstOrDefault();
+                }
             }
         }
 

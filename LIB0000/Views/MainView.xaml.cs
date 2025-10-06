@@ -17,15 +17,6 @@ namespace LIB0000
             NavigationService.Navigate(typeof(UsersLoginLogoutView));
         }
 
-        [RelayCommand]
-        public void cmdChangePageToProductDetailView()
-        {
-            if (BasicService.OrdersService.Order.Loaded != null && BasicService.OrdersService.Order.Loaded.Id > 0)
-            {
-                NavigationService.Navigate(typeof(ProductDetailView));
-            }
-        }
-
         #endregion
         #region Constructor
         public MainView(

@@ -18,11 +18,11 @@
 
         <Button Content="back" VerticalAlignment="Top" Grid.Row="0" Margin="10" Width="125" Command="{Binding cmdNavigateCommand}"/>
 
-        <ui:DataGrid x:Name="Datagrid" ItemsSource="{Binding BasicService.MessagesService.ListOfstepMessages,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+        <!--<ui:DataGrid x:Name="Datagrid" ItemsSource="{Binding BasicService.MessagesService.ListOfstepMessages,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
   Height="770" Margin="10,0,25,10" VerticalAlignment="Top" Grid.Row="1"
   IsManipulationEnabled="True" MinColumnWidth="250" AutoGenerateColumns="False">
 
-            <!-- Define columns -->
+            --><!-- Define columns --><!--
             <ui:DataGrid.Columns>
                 <DataGridTextColumn Visibility="Hidden" Header="Id" Binding="{Binding Id }" />
                 <DataGridTextColumn Header="TimeStamp" Binding="{Binding TimeStamp }" />
@@ -49,6 +49,6 @@
                     </Style.Triggers>
                 </Style>
             </DataGrid.RowStyle>
-        </ui:DataGrid>
+        </ui:DataGrid>-->
     </Grid>
 </Page>

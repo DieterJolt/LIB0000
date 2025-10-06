@@ -128,25 +128,25 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="UserControls\HalconSettingsUsercontrol.xaml.cs">
+    <Compile Update="UserControls\LIB0000\Halcon\HalconSettingsUsercontrol.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="UserControls\FhBasicSettingsUsercontrol.xaml.cs">
+    <Compile Update="UserControls\LIB0000\Fh\FhBasicSettingsUsercontrol.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="UserControls\LIB1000\ButtonImageUserControl.xaml.cs">
+    <Compile Update="UserControls\LIB0000\Buttons\ButtonImageUserControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="UserControls\LIB1000\TextInputClearButtonUserControl.xaml.cs">
+    <Compile Update="UserControls\LIB0000\Inputs\TextInputClearButtonUserControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="UserControls\LIB1000\TextInputButtonUserControl.xaml.cs">
+    <Compile Update="UserControls\LIB0000\Inputs\TextInputButtonUserControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="UserControls\LIB1000\TextToggleUserControl.xaml.cs">
+    <Compile Update="UserControls\LIB0000\Inputs\TextToggleUserControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="UserControls\LIB1000\TextNumberTextUserControl.xaml.cs">
+    <Compile Update="UserControls\LIB0000\Inputs\TextNumberTextUserControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\LIB0000\Order\OrderHistoryView.xaml.cs">

@@ -147,59 +147,88 @@ namespace LIB0000
             {
                 services.AddHostedService<ApplicationHostService>();
 
-                //Voeg de services toe
+                #region Services
                 services.AddSingleton<INavigationService, NavigationService>();
                 services.AddSingleton<IContentDialogService, ContentDialogService>();
                 services.AddSingleton<GlobalService>();
                 services.AddSingleton<BasicService>();
                 services.AddSingleton<ImageService>();
 
-                //Voeg de views toe
+                #endregion
+
+                #region Views
+
+                //Main
                 services.AddSingleton<MainView>();
-                services.AddSingleton<SettingsView>();
-                services.AddSingleton<SettingsHistoryView>();
-                services.AddSingleton<MessagesActualView>();
-                services.AddSingleton<MessagesHistoryView>();
-                services.AddSingleton<MessagesPossibleView>();
-                services.AddSingleton<AboutView>();
+
+                //Users
                 services.AddSingleton<UsersLoginLogoutView>();
                 services.AddSingleton<UserLijstView>();
                 services.AddSingleton<UserPagesView>();
                 services.AddSingleton<UserHistoriekView>();
                 services.AddSingleton<UserSelectView>();
                 services.AddSingleton<UserEditView>();
-                services.AddSingleton<EmptyIndexView>();
-                services.AddSingleton<MessageStepView>();
-                services.AddSingleton<OrderView>();
-                services.AddSingleton<OrderLoadView>();
-                services.AddSingleton<OrderSelectView>();
-                services.AddSingleton<VideoInfoView>();
-                services.AddSingleton<ProductDetailView>();
-                services.AddSingleton<OrderActualView>();
-                services.AddSingleton<OrderActualHistoryView>();
-                services.AddSingleton<OrderActualCameraView>();
-                services.AddSingleton<OrderHistoryView>();
 
-                //LIB0000
-                services.AddSingleton<WorkstationSelectView>();
-                services.AddSingleton<WorkstationEditView>();
-                services.AddSingleton<WorkstationView>();
+                //Product Groups
                 services.AddSingleton<ProductGroupSelectView>();
                 services.AddSingleton<ProductGroupsEditView>();
                 services.AddSingleton<ProductGroupView>();
-                services.AddSingleton<HardwareView>();
-                services.AddSingleton<HardwareTypeSelectView>();
-                services.AddSingleton<HardwareEditView>();
+
+                //Products
                 services.AddSingleton<ProductEditView>();
                 services.AddSingleton<ProductSelectView>();
                 services.AddSingleton<ProductView>();
-                services.AddSingleton<FunctionHalconShapeSearchView>();
+
+                //Product Details
                 services.AddSingleton<ProductDetail01>();
 
-                // Voeg de viewmodels toe
+                //Order
+                services.AddSingleton<OrderSelectView>();
+                services.AddSingleton<OrderActualView>();
+                services.AddSingleton<OrderHistoryView>();
+                services.AddSingleton<OrderView>();
+
+                //Messages
+                services.AddSingleton<MessagesActualView>();
+                services.AddSingleton<MessagesHistoryView>();
+                services.AddSingleton<MessagesPossibleView>();
+                services.AddSingleton<MessageStepView>();
+
+                //Workstation
+                services.AddSingleton<WorkstationSelectView>();
+                services.AddSingleton<WorkstationEditView>();
+                services.AddSingleton<WorkstationView>();
+
+                //Settings
+                services.AddSingleton<SettingsView>();
+                services.AddSingleton<SettingsHistoryView>();
+
+                //Hardware
+                services.AddSingleton<HardwareView>();
+                services.AddSingleton<HardwareTypeSelectView>();
+                services.AddSingleton<HardwareEditView>();
+
+                //About
+                services.AddSingleton<AboutView>();
+
+                //VideoInfo
+                services.AddSingleton<VideoInfoView>();
+
+                //FunctionHalconShapeSearch
+                services.AddSingleton<FunctionHalconShapeSearchView>();
+
+                //EmptyView
+                services.AddSingleton<EmptyIndexView>();
+
+                #endregion
+
+                #region Viewmodels
                 services.AddSingleton<MainViewModel>();
                 services.AddSingleton<AboutViewModel>();
                 services.AddSingleton<MessagesViewModel>();
+
+                #endregion
+
             }).Build();
 
 
