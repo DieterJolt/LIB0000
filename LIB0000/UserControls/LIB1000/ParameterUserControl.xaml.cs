@@ -19,13 +19,13 @@ namespace LIB0000
         public static readonly DependencyProperty ParameterNameProperty = DependencyProperty.Register("ParameterName", typeof(string), typeof(ParameterUserControl));
 
         //Label Text
-        public string LabelText
+        public string ParameterValue
         {
-            get { return (string)GetValue(LabelTextProperty); }
-            set { SetValue(LabelTextProperty, value); }
+            get { return (string)GetValue(ParameterValueProperty); }
+            set { SetValue(ParameterValueProperty, value); }
         }
 
-        public static readonly DependencyProperty LabelTextProperty = DependencyProperty.Register("LabelText", typeof(string), typeof(ParameterUserControl));
+        public static readonly DependencyProperty ParameterValueProperty = DependencyProperty.Register("ParameterValue", typeof(string), typeof(ParameterUserControl));
 
         //Parameter Text
         public string ParameterUnitText

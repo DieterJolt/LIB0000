@@ -38,7 +38,7 @@
                     <local:ParameterUserControl x:Name="ProductAmount"
             
                      ParameterName="Hoeveelheid:" 
-                     LabelText="{Binding BasicService.ProductsService.ProductStructure.Edit.Amount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                     ParameterValue="{Binding BasicService.ProductsService.ProductStructure.Edit.Amount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                      ParameterUnitText="stuks"
                      MinValue="1" MaxValue="10000" 
                      StepValue="1" 
@@ -49,7 +49,7 @@
 
                     <local:ParameterUserControl x:Name="ProductDiameter"
                                             
-                     ParameterName="Product diameter:" LabelText="{Binding BasicService.ProductsService.ProductStructure.Edit.Diameter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                     ParameterName="Product diameter:" ParameterValue="{Binding BasicService.ProductsService.ProductStructure.Edit.Diameter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                      ParameterUnitText="mm"
                      MinValue="1" MaxValue="250" 
                      StepValue="1" 
@@ -60,7 +60,7 @@
 
                     <local:ParameterUserControl x:Name="ProductLenght"
             
-                     ParameterName="Product lengte:" LabelText="{Binding BasicService.ProductsService.ProductStructure.Edit.Length, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                     ParameterName="Product lengte:" ParameterValue="{Binding BasicService.ProductsService.ProductStructure.Edit.Length, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                      ParameterUnitText="mm"
                      MinValue="1" MaxValue="250" 
                      StepValue="1" 
@@ -71,7 +71,7 @@
 
                     <local:ParameterUserControl x:Name="ProductWidth" Visibility="Collapsed"
             
-                    ParameterName="Product breedte:" LabelText="{Binding BasicService.ProductsService.ProductStructure.Edit.Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                    ParameterName="Product breedte:" ParameterValue="{Binding BasicService.ProductsService.ProductStructure.Edit.Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                     ParameterUnitText="mm"
                     MinValue="1" MaxValue="250" 
                     StepValue="1" 
@@ -82,7 +82,7 @@
 
                     <local:ParameterUserControl x:Name="ProductHeight"
             
-                     ParameterName="Product hoogte:" LabelText="{Binding BasicService.ProductsService.ProductStructure.Edit.Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                     ParameterName="Product hoogte:" ParameterValue="{Binding BasicService.ProductsService.ProductStructure.Edit.Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                      ParameterUnitText="mm"
                      MinValue="1" MaxValue="250" 
                      StepValue="1" 
@@ -94,7 +94,7 @@
                     <local:ParameterUserControl x:Name="ProductWeight"
             
                      ParameterName="Product gewicht:"
-                     LabelText="{Binding BasicService.ProductsService.ProductStructure.Edit.Weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     ParameterValue="{Binding BasicService.ProductsService.ProductStructure.Edit.Weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      ParameterUnitText="g"
                      MinValue="1" MaxValue="250" 
                      StepValue="1" 

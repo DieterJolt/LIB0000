@@ -22,13 +22,13 @@
 
         <Label Grid.Column="0" Margin="10,0,10,0" Content="{Binding ParameterName,RelativeSource={RelativeSource AncestorType=UserControl}}" 
                    Foreground="White"  VerticalAlignment="Center"  />
-        <TextBox Grid.Column="2"  Text="{Binding LabelText,RelativeSource={RelativeSource AncestorType=UserControl}}" 
+        <TextBox Grid.Column="2"  Text="{Binding ParameterValue,RelativeSource={RelativeSource AncestorType=UserControl}}" 
                      Foreground="White" LostFocus="TextBox_LostFocus" VerticalAlignment="Center" Margin="10,10,10,10"/>
         <Label Grid.Column="3" Content="{Binding ParameterUnitText,RelativeSource={RelativeSource AncestorType=UserControl}}"
                    Foreground="White"  VerticalAlignment="Center" />
 
         <local:ButtonUserControl Grid.Column="4" Margin="1,1,1,1"
-                         Value="{Binding LabelText,RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Value="{Binding ParameterValue,RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          MinValue="{Binding MinValue,RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          MaxValue="{Binding MaxValue,RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          StepValue="{Binding StepValue,RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -40,7 +40,7 @@
                                  />
 
         <local:ButtonUserControl Grid.Column="5" Margin="1,1,1,1"
-                                 Value="{Binding LabelText,RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Value="{Binding ParameterValue,RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  MinValue="{Binding MinValue,RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  MaxValue="{Binding MaxValue,RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  StepValue="{Binding StepValue,RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
