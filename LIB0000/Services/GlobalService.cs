@@ -20,7 +20,6 @@ namespace LIB0000
         {
             Settings = new SettingsTyp();
             Machine = new MachineTyp();
-
             Invoer = new InvoerTyp();
             Uitvoer = new UitvoerTyp();
             BasicService = basicService;
@@ -29,19 +28,13 @@ namespace LIB0000
         }
         #endregion
         #region Events
-
-
         #endregion
         #region Fields
-
         bool executeOnce = false;
-
         public BasicService BasicService { get; set; }
         public INavigationService NavigationService { get; set; }
-
         private DateTime toggle500msOld = DateTime.Now;
         private DateTime toggle5sOld = DateTime.Now;
-
         #endregion
         #region Methods
         public void MachineProgram()
@@ -76,18 +69,6 @@ namespace LIB0000
         {
             //Voorbeeld:
             //Machine.In.InputExample = IoSollaeCieh14AService.Inputs[0];
-            if (BasicService.CommunicationService.Count > 0)
-            {
-                Machine.In.Start = BasicService.CommunicationService[0].ToVsFromPlcBoolCollection[0];
-                Machine.In.Stop = BasicService.CommunicationService[0].ToVsFromPlcBoolCollection[1];
-                Machine.In.LightSwitch = BasicService.CommunicationService[0].ToVsFromPlcBoolCollection[2];
-
-                Machine.Stat.BovenVerlichting = BasicService.CommunicationService[0].ToVsFromPlcBoolCollection[3];
-                Machine.Stat.Started = BasicService.CommunicationService[0].ToVsFromPlcBoolCollection[4];
-                Machine.Stat.Stopped = BasicService.CommunicationService[0].ToVsFromPlcBoolCollection[5];
-
-                Machine.Error.StoppedByCamera = BasicService.CommunicationService[0].ToVsFromPlcBoolCollection[6];
-            }
         }
 
         private void getCommands()
@@ -125,10 +106,6 @@ namespace LIB0000
                 });
             }
         }
-
-        DateTime nextTimeGenerateData = DateTime.Now; // test LL, deze method mag weg na voltooien Acutal View
-        int nextCounterGenerateData = 0; // test LL, deze method mag weg na voltooien Acutal View
-
 
         private void getSettings()
         {

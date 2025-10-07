@@ -32,10 +32,27 @@
                  TextLeft="{DynamicResource Beschrijving}"
                  Input="{Binding BasicService.ProductsService.Product.Edit.Description,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  TextRight=""/>
-                
-               
-                
-               
+
+                <local:TextInputButtonUserControl
+                    TextLeft="Productgroup :"
+                    CommandRight="{Binding cmdSelectProductGroupCommand}"
+                    TextRight=""
+                    ImageRight="pack://application:,,,/Assets/Images/Products.png"
+                    VisibilityRight="True"
+                    >
+
+                    <local:TextInputButtonUserControl.Input>
+                        <MultiBinding Converter="{StaticResource ProductGroupIdToNameMultiConverter}" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="BasicService.ProductsService.Product.Edit.ProductGroupId" />
+                            <Binding Path="BasicService.ProductGroupsService.ProductGroup.List" />
+                        </MultiBinding>
+                    </local:TextInputButtonUserControl.Input>
+
+                </local:TextInputButtonUserControl>
+
+
+
+
             </StackPanel>
 
             <Image Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10" 

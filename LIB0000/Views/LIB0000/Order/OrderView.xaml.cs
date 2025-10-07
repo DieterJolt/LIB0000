@@ -49,7 +49,7 @@ namespace LIB0000
         [RelayCommand]
         public void cmdSelectProductGroup()
         {
-            BasicService.OrdersService.ObjectToWriteSelected = new PropertyReferenceModel(BasicService.OrdersService.Order.Edit, nameof(BasicService.OrdersService.Order.Edit.ProductGroupId));            
+            BasicService.ObjectToWriteSelected = new PropertyReferenceModel(BasicService.OrdersService.Order.Edit, nameof(BasicService.OrdersService.Order.Edit.ProductGroupId));            
             
             NavigationService.Navigate(typeof(ProductGroupSelectView));
         }
@@ -57,7 +57,7 @@ namespace LIB0000
         [RelayCommand]
         public void cmdSelectProduct()
         {
-            BasicService.OrdersService.ObjectToWriteSelected = new PropertyReferenceModel(BasicService.OrdersService.Order.Edit, nameof(BasicService.OrdersService.Order.Edit.ProductId));
+            BasicService.ObjectToWriteSelected = new PropertyReferenceModel(BasicService.OrdersService.Order.Edit, nameof(BasicService.OrdersService.Order.Edit.ProductId));
 
             NavigationService.Navigate(typeof(ProductSelectView));
         }

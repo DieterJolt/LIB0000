@@ -47,6 +47,23 @@ namespace LIB0000
             }
         }
 
+        [RelayCommand]
+        private void cmdSelectProductGroup()
+        {
+            BasicService.ObjectToWriteSelected = new PropertyReferenceModel(BasicService.ProductsService.Product.Edit, nameof(BasicService.ProductsService.Product.Edit.ProductGroupId));
+
+            
+
+            NavigationService.Navigate(typeof(ProductGroupSelectView));
+        }
+
+        [RelayCommand]
+        private void cmdSelectAllProductGroups()
+        {
+            BasicService.ProductsService.Product.Edit.ProductGroupId = 0;
+            BasicService.ProductsService.Product.GetList();
+        }
+
 
         #endregion
 
@@ -78,7 +95,17 @@ namespace LIB0000
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            BasicService.ProductsService.Product.GetList();
+            
+            if(BasicService.ProductsService.Product.Edit.ProductGroupId == 0)
+            {
+                BasicService.ProductsService.Product.GetList();
+            }
+            else
+            {
+                BasicService.ProductsService.Product.FilterListOnProductGroup(BasicService.ProductsService.Product.Edit.ProductGroupId);
+            }
+                
+            
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)

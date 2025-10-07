@@ -34,7 +34,15 @@ namespace LIB0000
             BasicService.ProductsService.Product.Edit.Description = "";
             NavigationService.GoBack();
         }
-             
+
+        [RelayCommand]
+        public void cmdSelectProductGroup()
+        {
+            BasicService.ObjectToWriteSelected = new PropertyReferenceModel(BasicService.ProductsService.Product.Edit, nameof(BasicService.ProductsService.Product.Edit.ProductGroupId));
+
+            NavigationService.Navigate(typeof(ProductGroupSelectView));
+        }
+
 
         #endregion
 

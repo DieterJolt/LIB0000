@@ -32,7 +32,7 @@
                 <local:TextInputButtonUserControl 
                     TextLeft="Type :"
                     Input="{Binding BasicService.HardwareService.Hardware.Edit.HardwareType,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    VisibilityRight="false"
+                    VisibilityRight="True"
                     ImageRight="pack://application:,,,/Assets/Images/Instructions.png"
                     CommandRight="{Binding cmdNavigateToHardwareTypeCommand}"
                     />

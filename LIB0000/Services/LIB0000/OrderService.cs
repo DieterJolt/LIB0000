@@ -37,8 +37,6 @@ namespace LIB0000
         [ObservableProperty]
         private string _databasePath;
 
-        [ObservableProperty]
-        private PropertyReferenceModel _objectToWriteSelected;
 
         #endregion
 

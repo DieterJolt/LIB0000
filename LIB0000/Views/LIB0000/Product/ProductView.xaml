@@ -19,7 +19,48 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <ui:AutoSuggestBox Grid.Row="0"  x:Name="AutoSuggestBox" TextChanged="AutoSuggestBox_TextChanged" />
+            <Grid Grid.Row="0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0" VerticalAlignment="Center">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" x:Name="ProductGroupFilter" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label.Content>
+                                <MultiBinding Converter="{StaticResource ProductGroupIdToNameMultiConverter}" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding Path="BasicService.ProductsService.Product.Edit.ProductGroupId" />
+                                    <Binding Path="BasicService.ProductGroupsService.ProductGroup.List" />
+                                </MultiBinding>
+                            </Label.Content>
+                        </Label>
+                        <Button Content="Kies product group" Command="{Binding cmdSelectProductGroupCommand}" Grid.Column="1"/>
+                        <Button Grid.Column="2" Content="Alle product groepen" Command="{Binding cmdSelectAllProductGroupsCommand}"/>
+
+                    </Grid>
+                    
+
+                    <ui:AutoSuggestBox Grid.Column="1"  x:Name="AutoSuggestBox" TextChanged="AutoSuggestBox_TextChanged" />
+
+                </Grid>
+
+            </Grid>
+
             <Grid x:Name="gridDatagrid" Grid.Row="1" >
 
                 <Grid.ColumnDefinitions>
@@ -28,7 +69,7 @@
                 </Grid.ColumnDefinitions>
 
                 <DataGrid HeadersVisibility="Column" Grid.Column="0" MaxHeight="{Binding ActualHeight, ElementName=gridDatagrid}"
-                             ItemsSource="{Binding BasicService.ProductsService.Product.List ,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+                             ItemsSource="{Binding BasicService.ProductsService.Product.List ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              SelectedValue="{Binding BasicService.ProductsService.Product.Selected}" 
                              AutoGenerateColumns="False" 
                              SelectionChanged="DataGrid_SelectionChanged" >

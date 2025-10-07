@@ -201,6 +201,9 @@ namespace LIB0000
         [ObservableProperty]
         private HalconService _halconServiceSelected;
 
+        [ObservableProperty]
+        private PropertyReferenceModel _objectToWriteSelected;
+
         #endregion
 
 

@@ -49,8 +49,6 @@ namespace LIB0000
         [ObservableProperty]
         private string _databasePath;
 
-        [ObservableProperty]
-        private PropertyReferenceModel _objectToWriteSelectedProduct;
 
         #endregion
 
@@ -115,7 +113,6 @@ namespace LIB0000
             }
             //}
         }
-
         public void AddRow(object structure)
         {
             using (var context = new ServerDbContext(DatabasePath))
@@ -127,6 +124,7 @@ namespace LIB0000
                     row = new ProductModel();
                     row.Name = Edit.Name;
                     row.Description = Edit.Description;
+                    row.ProductGroupId = Edit.ProductGroupId;
                     ImageService = new ImageService();
                     row.Image = Edit.Image;
                     row.Structure = new XmlService().SerializeObjectToXml(structure);
@@ -145,7 +143,6 @@ namespace LIB0000
             }
             GetList();
         }
-
         private void addProductHardwareDatabase(int productId)
         {
             using (var localContext = new LocalDbContext())
@@ -221,6 +218,18 @@ namespace LIB0000
                 List = result.ToList();
             }
         }
+        public void FilterListOnProductGroup(int filter)
+        {
+            using (var context = new ServerDbContext(DatabasePath))
+            {
+                var result = from Products in context.ProductDbSet
+                             where EF.Functions.Like(Products.ProductGroupId.ToString(), filter.ToString())
+                             orderby Products.Id
+                             select Products;
+
+                List = result.ToList();
+            }
+        }
         public void GetList()
         {
             int selectedId = 0;
@@ -243,7 +252,6 @@ namespace LIB0000
                 }
             }
         }
-
         public void LoadProduct(int? productId)
         {
             using (var context = new ServerDbContext(DatabasePath))
@@ -256,12 +264,10 @@ namespace LIB0000
                 }
             }
         }
-
         public ProductModel GetProduct(int id)
         {
             return List.FirstOrDefault(e => e.Id == id);
         }
-
         public void UpdateRow()
         {
             using (var context = new ServerDbContext(DatabasePath))
@@ -274,6 +280,7 @@ namespace LIB0000
                 {
                     row.Name = Edit.Name;
                     row.Description = Edit.Description;
+                    row.ProductGroupId = Edit.ProductGroupId;
                     row.Structure = Edit.Structure;
                     row.Image = Edit.Image;
                     context.ProductDbSet.Update(row);
