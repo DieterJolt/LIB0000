@@ -294,7 +294,7 @@ namespace LIB0000
                     {
                         byte[] data = new byte[client.Available];
                         client.Client.Receive(data);
-                        dataString = Encoding.ASCII.GetString(data) + dataString;
+                        dataString = dataString + Encoding.ASCII.GetString(data);
                         Debug.WriteLine(dataString);
 
                     }
