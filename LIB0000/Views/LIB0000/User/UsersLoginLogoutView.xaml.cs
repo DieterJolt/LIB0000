@@ -12,7 +12,7 @@ namespace LIB0000
             if (BasicService.UsersService.Login.InputUser == null || BasicService.UsersService.Login.InputUser.User == null | BasicService.UsersService.Login.InputUser.Password == null)
             { return; }
 
-            if ((!GlobalService.Machine.Par.LoginViaActiveDirectory) || (BasicService.UsersService.Login.InputUser.User == "User"
+            if ((!GlobalService.Hmi.Par.LoginViaActiveDirectory) || (BasicService.UsersService.Login.InputUser.User == "User"
                 && BasicService.UsersService.Login.InputUser.Password == "ORG0001"))
             {
                 BasicService.UsersService.LoginAndRegister();

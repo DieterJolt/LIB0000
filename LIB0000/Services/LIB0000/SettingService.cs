@@ -622,10 +622,13 @@ namespace LIB0000
     public enum HardwareFunction
     {
         None = 0,
-        MachineParTab1 = 1,
-        MachineParTab2 = 2,
-        MachineParTab3 = 3,
+        HmiParTab1 = 1,
+        HmiParTab2 = 2,
+        HmiParTab3 = 3,
 
+        MachineParTab1 = 10,
+        MachineParTab2 = 11,
+        MachineParTab3 = 12,
 
         // GigeCam functions
         GigeCamShapeSearch = 100,

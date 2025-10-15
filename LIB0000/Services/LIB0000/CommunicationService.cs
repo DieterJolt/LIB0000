@@ -3,8 +3,6 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Windows.Services.Maps;
 
 namespace LIB0000
 {
@@ -74,7 +72,7 @@ namespace LIB0000
                 int byteIndex = i / 8;
                 int bitIndex = i % 8;
                 bool bitValue = (bufferReceive[byteIndex] & (1 << bitIndex)) != 0;
-                ToVsFromPlcBoolCollection[i] = bitValue;
+                BoolToHmi[i] = bitValue;
 
             }
 
@@ -83,7 +81,7 @@ namespace LIB0000
                 int byteIndex = (i + 800) / 8;
                 int bitIndex = (i + 800) % 8;
                 bool bitValue = (bufferReceive[byteIndex] & (1 << bitIndex)) != 0;
-                ToVsFromPlcBoolCollection2[i] = bitValue;
+                BoolToHmi02[i] = bitValue;
             }
 
             // Vul de ParArray met float waarden uit de laatste 1000 bytes van de byte array
@@ -93,7 +91,7 @@ namespace LIB0000
                 int byteIndex = 200 + i * 4;
                 if (byteIndex + 3 < bufferReceive.Length)
                 {
-                    ToVsFromPlcSingleCollection[i] = BitConverter.ToSingle(bufferReceive, byteIndex);
+                    SingleToHmi[i] = BitConverter.ToSingle(bufferReceive, byteIndex);
                 }
             }
 
@@ -106,7 +104,7 @@ namespace LIB0000
             {
                 int byteIndex = i / 8;
                 int bitIndex = i % 8;
-                if (FromVsToPlcBoolCollection[i])
+                if (BoolToPlc[i])
                 {
                     bufferSend[byteIndex] |= (byte)(1 << bitIndex);
                 }
@@ -121,7 +119,7 @@ namespace LIB0000
             {
                 int byteIndex = (i + 800) / 8;
                 int bitIndex = (i + 800) % 8;
-                if (FromVsToPlcBoolCollection02[i])
+                if (BoolToPlc02[i])
                 {
                     bufferSend[byteIndex] |= (byte)(1 << bitIndex);
                 }
@@ -138,7 +136,7 @@ namespace LIB0000
                 int byteIndex = 200 + i * 4;
                 if (byteIndex + 3 < bufferSend.Length)
                 {
-                    byte[] floatBytes = BitConverter.GetBytes(FromVsToPlcSingleCollection[i]);
+                    byte[] floatBytes = BitConverter.GetBytes(SingleToPlc[i]);
                     Array.Copy(floatBytes, 0, bufferSend, byteIndex, 4);
                 }
             }
@@ -196,7 +194,7 @@ namespace LIB0000
                         {
                             //Step = stepEnum.Send;
                             // watchdog ophogen
-                            WatchDogLag = WatchDog - ToVsFromPlcSingleCollection[0];
+                            WatchDogLag = WatchDog - SingleToHmi[400];
                             WatchDog++;
                             if (WatchDog > 1000)
                             {
@@ -205,8 +203,8 @@ namespace LIB0000
                                 CycleTime = dtStop - dtStart;
                                 dtStart = DateTime.Now;
                             }
-                            FromVsToPlcSingleCollection[61] = 61;
-                            FromVsToPlcSingleCollection[400] = WatchDog;
+                            SingleToPlc[61] = 61;
+                            SingleToPlc[400] = WatchDog;
                             // data omzetten naar byte array
                             await convertSendData();
                             // data versturen
@@ -215,13 +213,13 @@ namespace LIB0000
                             if (success)
                             {
                                 WriteCounter++;
-                                Debug.WriteLine("Send ok " + WriteCounter);
+                                //  Debug.WriteLine("Send ok " + WriteCounter);
                             }
                             else
                             {
 
                                 //{ Step = stepEnum.WaitConnect; }
-                                Debug.WriteLine("Send nok " + WriteCounter);
+                                //  Debug.WriteLine("Send nok " + WriteCounter);
                             }
 
 
@@ -236,12 +234,12 @@ namespace LIB0000
                                 timeRead = DateTime.Now;
                                 await convertReceivedData();
                                 ReadCounter++;
-                                Debug.WriteLine("Receive ok " + ReadCounter);
+                                // Debug.WriteLine("Receive ok " + ReadCounter);
                             }
                             else
                             {
 
-                                Debug.WriteLine("Receive nok " + ReadCounter);
+                                // Debug.WriteLine("Receive nok " + ReadCounter);
                             }
                         }
 
@@ -394,17 +392,17 @@ namespace LIB0000
         [ObservableProperty]
         private Single[] _outputArray;
         [ObservableProperty]
-        private ObservableCollection<bool> _toVsFromPlcBoolCollection = new ObservableCollection<bool>(Enumerable.Repeat(false, 800));
+        private ObservableCollection<bool> _boolToHmi = new ObservableCollection<bool>(Enumerable.Repeat(false, 800));
         [ObservableProperty]
-        private ObservableCollection<bool> _toVsFromPlcBoolCollection2 = new ObservableCollection<bool>(Enumerable.Repeat(false, 800));
+        private ObservableCollection<bool> _boolToHmi02 = new ObservableCollection<bool>(Enumerable.Repeat(false, 800));
         [ObservableProperty]
-        private ObservableCollection<Single> _toVsFromPlcSingleCollection = new ObservableCollection<Single>(Enumerable.Repeat(0.0f, 450));
+        private ObservableCollection<Single> _singleToHmi = new ObservableCollection<Single>(Enumerable.Repeat(0.0f, 450));
         [ObservableProperty]
-        private ObservableCollection<bool> _fromVsToPlcBoolCollection = new ObservableCollection<bool>(Enumerable.Repeat(false, 800));
+        private ObservableCollection<bool> _boolToPlc = new ObservableCollection<bool>(Enumerable.Repeat(false, 800));
         [ObservableProperty]
-        private ObservableCollection<bool> _fromVsToPlcBoolCollection02 = new ObservableCollection<bool>(Enumerable.Repeat(false, 800));
+        private ObservableCollection<bool> _boolToPlc02 = new ObservableCollection<bool>(Enumerable.Repeat(false, 800));
         [ObservableProperty]
-        private ObservableCollection<Single> _fromVsToPlcSingleCollection = new ObservableCollection<Single>(Enumerable.Repeat(0.0f, 450));
+        private ObservableCollection<Single> _singleToPlc = new ObservableCollection<Single>(Enumerable.Repeat(0.0f, 450));
 
 
         [ObservableProperty]

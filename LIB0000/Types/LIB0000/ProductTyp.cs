@@ -4,13 +4,13 @@ using System.Windows.Media.Media3D;
 
 namespace LIB0000
 {
-    public partial class ProductStructureTyp : ObservableObject
+    public partial class ProductTyp : ObservableObject
     {
         #region Commands
         #endregion
 
         #region Constructor
-        public ProductStructureTyp()
+        public ProductTyp()
         {
          
 

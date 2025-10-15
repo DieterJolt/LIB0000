@@ -64,8 +64,6 @@ namespace LIB0000
         public DbSet<SettingHistoryLineModel> SettingsHistoryDbSet { get; set; }
         public DbSet<HardwareModel> HardwareDbSet { get; set; }
         public DbSet<HardwareTypesModel> HardwareTypesDbSet { get; set; }
-        public DbSet<ProductHardwareModel> ProductHardwareDbSet { get; set; }
-        public DbSet<ProductDetailValueModel> ProductDetailValueDbSet { get; set; }
 
         public string DatabasePath;
 

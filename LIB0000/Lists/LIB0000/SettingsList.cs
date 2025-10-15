@@ -42,7 +42,7 @@ namespace LIB0000
 
                         return lSettings;
                     }
-                    else if (hardwareFunction == HardwareFunction.MachineParTab1)
+                    else if (hardwareFunction == HardwareFunction.HmiParTab1)
                     {
                         List<SettingModel> lSettings = new List<SettingModel>
                         {

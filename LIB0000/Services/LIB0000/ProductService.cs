@@ -133,8 +133,6 @@ namespace LIB0000
                     Edit.Name = "";
                     Edit.Description = "";
 
-                    addProductHardwareDatabase(row.Id);
-                    addDefaultSettingsToProductValueSettingsDatabase(row.Id);
                 }
                 else if (row != null)
                 {
@@ -143,49 +141,7 @@ namespace LIB0000
             }
             GetList();
         }
-        private void addProductHardwareDatabase(int productId)
-        {
-            using (var localContext = new LocalDbContext())
-            {
-                // Voor alle hardware de nodige records aanmaken in de tabel ProductHardware, en als default de eerste functie van de hardware kiezen
-                foreach (HardwareModel hardware in localContext.HardwareDbSet)
-                {
-                    ProductHardwareModel productHardware = new ProductHardwareModel();
-                    productHardware.ProductId = productId;
-                    productHardware.HardwareId = hardware.Id;
-                    productHardware.HardwareFunction = HardwareFunctionMapper.GetFunctionsForHardware(hardware.HardwareType).First();
 
-                    localContext.ProductHardwareDbSet.Add(productHardware);
-                    localContext.SaveChanges();
-                }
-            }
-        }
-        private void addDefaultSettingsToProductValueSettingsDatabase(int productId)
-        {
-
-            using (var context = new LocalDbContext())
-            {
-                foreach (ProductDetailModel productDetail in context.ProductDetailsDbSet)
-                {
-                    ProductDetailValueModel productDetailsValue = new ProductDetailValueModel();
-                    productDetailsValue = context.ProductDetailValueDbSet.FirstOrDefault(psv => psv.ProductId == productId && psv.HardwareId == productDetail.HardwareId && psv.HardwareFunction == psv.HardwareFunction && psv.SettingNr == psv.SettingNr);
-
-                    // setting does not exist, create it
-                    if (productDetailsValue == null)
-                    {
-                        productDetailsValue = new ProductDetailValueModel();
-                        productDetailsValue.ProductId = productId;
-                        productDetailsValue.SettingNr = productDetail.Nr;
-                        productDetailsValue.HardwareId = productDetail.HardwareId;
-                        productDetailsValue.HardwareFunction = productDetail.HardwareFunction;
-                        productDetailsValue.SettingValue = productDetail.DefaultValue;
-
-                        context.ProductDetailValueDbSet.Add(productDetailsValue);
-                    }
-                }
-                context.SaveChanges();
-            }
-        }
         public void DeleteRow()
         {
 
@@ -349,7 +305,7 @@ namespace LIB0000
         #region Properties
 
         [ObservableProperty]
-        private ProductStructureTyp _edit = new ProductStructureTyp();
+        private ProductTyp _edit = new ProductTyp();
 
         #endregion
 

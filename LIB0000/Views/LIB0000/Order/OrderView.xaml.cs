@@ -11,26 +11,26 @@ namespace LIB0000
         {
             if (BasicService.OrdersService.Order.Edit.ProductId > 0 || BasicService.OrdersService.Order.Edit.ProductGroupId > 0)
             {
-                BasicService.OrdersService.Order.Edit.WorkstationId = GlobalService.Machine.Par.Workstation.Id;
+                BasicService.OrdersService.Order.Edit.WorkstationId = GlobalService.Hmi.Par.Workstation.Id;
                 BasicService.ProductsService.Product.LoadProduct(BasicService.OrdersService.Order.Edit.ProductId);
                 BasicService.ProductGroupsService.ProductGroup.LoadProductGroup(BasicService.OrdersService.Order.Edit.ProductGroupId);
-                BasicService.ProductDetailService.LoadProductDetails(BasicService.ProductsService.Product.Loaded.Id);
+                //BasicService.ProductDetailService.LoadProductDetails(BasicService.ProductsService.Product.Loaded.Id);
                 BasicService.OrdersService.Order.Load(BasicService.UsersService.Login.ActualUser.Id);
 
-                foreach (HardwareModel hardware in BasicService.HardwareService.Hardware.List)
-                {
-                    switch (hardware.HardwareType)
-                    {
-                        case HardwareType.FHV7:
-                            await BasicService.FhService.Where(f => f.HardwareId == hardware.Id).FirstOrDefault()?.UpdateFunctionSettings(BasicService.ProductDetailService.ListProductDetails.ToList(), hardware.LoadedFunction);
-                            break;
-                        case HardwareType.GigeCam:
-                            break;
-                    }
-                }
-                var list = BasicService.ProductDetailService.ListProductDetails;
+                //foreach (HardwareModel hardware in BasicService.HardwareService.Hardware.List)
+                //{
+                //    switch (hardware.HardwareType)
+                //    {
+                //        case HardwareType.FHV7:
+                //            await BasicService.FhService.Where(f => f.HardwareId == hardware.Id).FirstOrDefault()?.UpdateFunctionSettings(BasicService.ProductDetailService.ListProductDetails.ToList(), hardware.LoadedFunction);
+                //            break;
+                //        case HardwareType.GigeCam:
+                //            break;
+                //    }
+                //}
+                //var list = BasicService.ProductDetailService.ListProductDetails;
 
-                GlobalService.Machine.Cmd.StartOrder = true;
+                GlobalService.Hmi.Cmd.StartOrder = true;
 
                 NavigationService.Navigate(typeof(OrderActualView));
             }
@@ -43,7 +43,7 @@ namespace LIB0000
         [RelayCommand]
         public void cmdCloseOrder()
         {
-            GlobalService.Machine.Cmd.CloseOrder = true;
+            GlobalService.Hmi.Cmd.CloseOrder = true;
         }
 
         [RelayCommand]

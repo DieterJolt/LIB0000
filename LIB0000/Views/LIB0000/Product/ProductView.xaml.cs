@@ -42,7 +42,7 @@ namespace LIB0000
         {
             if ((BasicService.ProductsService.Product.Selected != null) && (BasicService.ProductsService.Product.Selected.Id > 0))
             {
-                BasicService.ProductsService.ProductStructure.Edit = new XmlService().DeserializeXmlToObject<ProductStructureTyp>(BasicService.ProductsService.Product.Selected.Structure);
+                BasicService.ProductsService.ProductStructure.Edit = new XmlService().DeserializeXmlToObject<ProductTyp>(BasicService.ProductsService.Product.Selected.Structure);
                 NavigationService.Navigate(typeof(ProductDetail01));
             }
         }

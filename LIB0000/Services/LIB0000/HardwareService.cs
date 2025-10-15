@@ -93,7 +93,6 @@ namespace LIB0000
                     row.Name = Edit.Name;
                     row.HardwareTypeId = Edit.HardwareTypeId;
                     row.HardwareType = Edit.HardwareType;
-                    row.LoadedFunction = HardwareFunctionMapper.GetFunctionsForHardware(Edit.HardwareType).First();
                     context.HardwareDbSet.Add(row);
                     context.SaveChanges();
                     Edit.Name = "";

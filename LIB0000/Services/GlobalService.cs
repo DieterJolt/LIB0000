@@ -20,8 +20,8 @@ namespace LIB0000
         {
             Settings = new SettingsTyp();
             Machine = new MachineTyp();
-            Invoer = new InvoerTyp();
-            Uitvoer = new UitvoerTyp();
+            Hmi = new HmiTyp();
+            Product = new ProductTyp();
             BasicService = basicService;
             NavigationService = navigationService;
 
@@ -40,19 +40,22 @@ namespace LIB0000
         public void MachineProgram()
         {
             init();
-            getInputs();
-            getCommands();
-            getSettings();
+            getMachineInputs();
+            getHmiCommands();
+            getHmiSettings();
+            getHmiProduct();
+            
+            hmiSequence();
 
-            machineSequence();
-
-            setErrorMessages();
-            setErrors();
-            setStatus();
+            setHmiErrors();
+            setHmiStatus();
             setToggleBits();
-            setOutputs();
+            setMachineOutputs();
         }
 
+        /// <summary>
+        /// Initialisation only once
+        /// </summary>
         private void init()
         {
             if (!executeOnce)
@@ -65,26 +68,40 @@ namespace LIB0000
             }
         }
 
-        private void getInputs()
+        /// <summary>
+        /// Get inputs from Machine(PLC) or other hardware
+        /// </summary>
+        private void getMachineInputs()
         {
-            //Voorbeeld:
-            //Machine.In.InputExample = IoSollaeCieh14AService.Inputs[0];
+            if (BasicService.CommunicationService.Count > 0)
+            {
+                //error
+                int i = 0;
+                for (i = 0; i <= 99; i++)
+                {
+                    Machine.Error[i] = BasicService.CommunicationService[0].BoolToHmi[i];
+                    Machine.ErrorNr[i] = BasicService.CommunicationService[0].SingleToHmi[i];
+                }
+                // Voorbeeld van data uit de PLC halen status die we willen visualiseren op het scherm
+                Machine.Stat.Started = BasicService.CommunicationService[0].BoolToHmi[100];
+            }
         }
 
-        private void getCommands()
-        {
-
-            if (Machine.Cmd.Reset)
+        /// <summary>
+        /// Commandos only on HMI
+        /// </summary>
+        private void getHmiCommands()
+        {           
+            if (Hmi.Cmd.Reset)
             {
-                Machine.Cmd.Reset = false;
+                Hmi.Cmd.Reset = false;
                 // Enkel de errors resetten die niet automatisch gereset worden            
-                Machine.Error.Database = false;
+                Hmi.Error.Database = false;
 
             }
-
-            if (Machine.Cmd.CloseOrder)
+            if (Hmi.Cmd.CloseOrder)
             {
-                Machine.Cmd.CloseOrder = false;
+                Hmi.Cmd.CloseOrder = false;
                 BasicService.OrdersService.Order.AddOrderHistory(OrderHistoryType.OrderClose, BasicService.UsersService.Login.ActualUser.User, BasicService.OrdersService.Order.Loaded.Amount, "Order Closed", BasicService.OrdersService.Order.Loaded.TotalProduct);
 
                 BasicService.OrdersService.Order.CloseOrder();
@@ -107,97 +124,123 @@ namespace LIB0000
             }
         }
 
-        private void getSettings()
+        /// <summary>
+        /// Fix settings for the hmi ( not product dependent )
+        /// These are settings that are used on the hmi and not on the machine
+        /// Also parameters for FH Service or Halcon Service will be set here
+        /// This gets parameters from the list SettingsList
+        /// </summary>
+        private void getHmiSettings()
         {
-            Machine.Par.WorkstationName = Convert.ToString(BasicService.SettingsService.GetSetting("002", 0, HardwareFunction.None));
-            Machine.Par.Workstation = BasicService.WorkstationsService.Workstations.GetWorkstation(Machine.Par.WorkstationName);
+            // General standard settings ( always in this application )
+            Hmi.Par.WorkstationName = Convert.ToString(BasicService.SettingsService.GetSetting("002", 0, HardwareFunction.None));
+            Hmi.Par.Workstation = BasicService.WorkstationsService.Workstations.GetWorkstation(Hmi.Par.WorkstationName);
             string languageCode = Convert.ToString(BasicService.SettingsService.GetSetting("003", 0, HardwareFunction.None));
-            Machine.Par.LoginViaActiveDirectory = Convert.ToBoolean(BasicService.SettingsService.GetSetting("004", 0, HardwareFunction.None));
-            Machine.Par.ExampleOfTextbox = Convert.ToString(BasicService.SettingsService.GetSetting("001", 0, HardwareFunction.MachineParTab1));
-            Machine.Par.ExampleOfFilePicker = Convert.ToString(BasicService.SettingsService.GetSetting("002", 0, HardwareFunction.MachineParTab1));
-            Machine.Par.ExampleOfFolderPicker = Convert.ToString(BasicService.SettingsService.GetSetting("003", 0, HardwareFunction.MachineParTab1));
-            Machine.Par.ExampleOfComboBox = Convert.ToString(BasicService.SettingsService.GetSetting("004", 0, HardwareFunction.MachineParTab1));
-            Machine.Par.ExampleOfToggleSwitch = Convert.ToBoolean(BasicService.SettingsService.GetSetting("005", 0, HardwareFunction.MachineParTab1));
-            Machine.Par.ExampleOfSlider = Convert.ToDouble(BasicService.SettingsService.GetSetting("006", 0, HardwareFunction.MachineParTab1));
+            Hmi.Par.LoginViaActiveDirectory = Convert.ToBoolean(BasicService.SettingsService.GetSetting("004", 0, HardwareFunction.None));
+            // Additional settings for the hmi in a new tab HmiParTab1
+            Hmi.Par.ExampleOfTextbox = Convert.ToString(BasicService.SettingsService.GetSetting("001", 0, HardwareFunction.HmiParTab1));
+            Hmi.Par.ExampleOfFilePicker = Convert.ToString(BasicService.SettingsService.GetSetting("002", 0, HardwareFunction.HmiParTab1));
+            Hmi.Par.ExampleOfFolderPicker = Convert.ToString(BasicService.SettingsService.GetSetting("003", 0, HardwareFunction.HmiParTab1));
+            Hmi.Par.ExampleOfComboBox = Convert.ToString(BasicService.SettingsService.GetSetting("004", 0, HardwareFunction.HmiParTab1));
+            Hmi.Par.ExampleOfToggleSwitch = Convert.ToBoolean(BasicService.SettingsService.GetSetting("005", 0, HardwareFunction.HmiParTab1));
+            Hmi.Par.ExampleOfSlider = Convert.ToDouble(BasicService.SettingsService.GetSetting("006", 0, HardwareFunction.HmiParTab1));     
+            // Example of a parameter send to the Halcon Service
+            //BasicService.HalconService[0].A001Par = Convert.ToString(BasicService.SettingsService.GetSetting("001", 0, HardwareFunction.HalconParTab1));
+            //BasicService.HardwareService[1].A002Par = Convert.ToString(BasicService.SettingsService.GetSetting("001", 0, HardwareFunction.HalconParTab1));
+            
 
-            if (Machine.Par.LanguageCode != languageCode)
+            if (Hmi.Par.LanguageCode != languageCode)
             {
-                Machine.Par.LanguageCode = languageCode;
+                Hmi.Par.LanguageCode = languageCode;
                 // Roep de taalwissel aan
                 (Application.Current as App)?.ChangeLanguage(languageCode);
             }
 
         }
 
-        private void machineSequence()
+        /// <summary>
+        /// Connect the product parameters to the service that needs it
+        /// </summary>
+        private void getHmiProduct()
         {
-            switch (Machine.StepCase)
+            // Example of a product parameter send to the Halcon Service
+            //BasicService.HalconService[0].A001Par.MinScore = Product.ShapeSearchMinScore;
+
+        }
+
+        /// <summary>
+        /// Sequence of the HMI
+        /// The sequence is build up in steps
+        /// </summary>
+        private void hmiSequence()
+        {
+            switch (Hmi.StepCase)
             {
-                case MachineTyp.MachineStepEnum.WaitCommunications:
+                case HmiTyp.HmiStepEnum.WaitCommunications:
                     BasicService.MessagesService.StepMessage.StepStatus = MessageType.Error;
                     BasicService.MessagesService.StepMessage.ActiveStep.Group = "Communicatie";
                     BasicService.MessagesService.StepMessage.ActiveStep.Status = "Wachten op communicatie ok";
 
-                    if (Machine.Stat.CommunicationOk)
+                    if (Hmi.Stat.CommunicationOk)
                     {
-                        Machine.StepCase = MachineTyp.MachineStepEnum.WaitErrors;
+                        Hmi.StepCase = HmiTyp.HmiStepEnum.WaitErrors;
                     }
                     break;
-                case MachineTyp.MachineStepEnum.WaitErrors:
+                case HmiTyp.HmiStepEnum.WaitErrors:
                     BasicService.MessagesService.StepMessage.StepStatus = MessageType.Error;
                     BasicService.MessagesService.StepMessage.ActiveStep.Group = "Algemeen";
                     BasicService.MessagesService.StepMessage.ActiveStep.Status = "Wachten op errors ok";
-                    if (!Machine.Error.Algemeen)
+                    if (!Hmi.Error.Algemeen)
                     {
-                        Machine.StepCase = MachineTyp.MachineStepEnum.WaitSettings;
+                        Hmi.StepCase = HmiTyp.HmiStepEnum.WaitSettings;
                     }
                     break;
-                case MachineTyp.MachineStepEnum.WaitSettings:
+                case HmiTyp.HmiStepEnum.WaitSettings:
                     BasicService.MessagesService.StepMessage.StepStatus = MessageType.Error;
                     BasicService.MessagesService.StepMessage.ActiveStep.Group = "Algemeen";
                     BasicService.MessagesService.StepMessage.ActiveStep.Status = "Wachten op instellingen ok";
-                    if (Machine.Stat.SettingsOk)
+                    if (Hmi.Stat.SettingsOk)
                     {
-                        Machine.StepCase = MachineTyp.MachineStepEnum.WaitLogin;
+                        Hmi.StepCase = HmiTyp.HmiStepEnum.WaitLogin;
                     }
                     break;
-                case MachineTyp.MachineStepEnum.WaitLogin:
+                case HmiTyp.HmiStepEnum.WaitLogin:
                     BasicService.MessagesService.StepMessage.StepStatus = MessageType.Warning;
                     BasicService.MessagesService.StepMessage.ActiveStep.Group = "Algemeen";
                     BasicService.MessagesService.StepMessage.ActiveStep.Status = "Wachten op login";
 
                     if (BasicService.UsersService.Login.IsLoggedIn)
                     {
-                        Machine.StepCase = MachineTyp.MachineStepEnum.WaitOrderLoaded;
+                        Hmi.StepCase = HmiTyp.HmiStepEnum.WaitOrderLoaded;
                     }
                     break;
 
-                case MachineTyp.MachineStepEnum.WaitOrderLoaded:
+                case HmiTyp.HmiStepEnum.WaitOrderLoaded:
                     BasicService.MessagesService.StepMessage.StepStatus = MessageType.Warning;
                     BasicService.MessagesService.StepMessage.ActiveStep.Group = "Algemeen";
                     BasicService.MessagesService.StepMessage.ActiveStep.Status = "Wachten op order geladen";
 
-                    BasicService.OrdersService.Order.GetLastActiveOrder(Machine.Par.Workstation.Id);
+                    BasicService.OrdersService.Order.GetLastActiveOrder(Hmi.Par.Workstation.Id);
                     if (BasicService.OrdersService.Order.IsOrderBusy)
                     {
 
                         BasicService.ProductsService.Product.LoadProduct(BasicService.OrdersService.Order.Loaded.ProductId);
                         BasicService.ProductGroupsService.ProductGroup.LoadProductGroup(BasicService.OrdersService.Order.Loaded.ProductGroupId);
-                        BasicService.ProductDetailService.LoadProductDetails(BasicService.ProductsService.Product.Loaded.Id);
+                        //BasicService.ProductDetailService.LoadProductDetails(BasicService.ProductsService.Product.Loaded.Id);
 
-                        Machine.StepCase = MachineTyp.MachineStepEnum.WaitOrder;
+                        Hmi.StepCase = HmiTyp.HmiStepEnum.WaitOrder;
                         Application.Current.Dispatcher.Invoke(() =>
                         {
                             NavigationService.Navigate(typeof(OrderActualView));
                         });
                     }
                     else
-                    { Machine.StepCase = MachineTyp.MachineStepEnum.WaitOrder; }
+                    { Hmi.StepCase = HmiTyp.HmiStepEnum.WaitOrder; }
 
                     break;
 
 
-                case MachineTyp.MachineStepEnum.WaitOrder:
+                case HmiTyp.HmiStepEnum.WaitOrder:
 
                     switch (BasicService.OrdersService.Order.Loaded.OrderStep)
                     {
@@ -206,9 +249,9 @@ namespace LIB0000
                             BasicService.MessagesService.StepMessage.ActiveStep.Group = "Algemeen";
                             BasicService.MessagesService.StepMessage.ActiveStep.Status = "Vul een order in om te starten";
 
-                            if (Machine.Cmd.StartOrder)
+                            if (Hmi.Cmd.StartOrder)
                             {
-                                Machine.Cmd.StartOrder = false;
+                                Hmi.Cmd.StartOrder = false;
                                 if (BasicService.OrdersService.Order.Loaded.OrderNr != "")
                                 {
                                     BasicService.OrdersService.Order.IsOrderBusy = true;
@@ -251,7 +294,7 @@ namespace LIB0000
                     }
                     break;
 
-                case MachineTyp.MachineStepEnum.WaitForReset:
+                case HmiTyp.HmiStepEnum.WaitForReset:
                     BasicService.MessagesService.StepMessage.StepStatus = MessageType.Error;
                     BasicService.MessagesService.StepMessage.ActiveStep.Group = "Algemeen";
                     BasicService.MessagesService.StepMessage.ActiveStep.Status = "Wachten op reset fout";
@@ -259,9 +302,9 @@ namespace LIB0000
                     break;
             }
 
-            if (Machine.StepCase != Machine.StepBefore)
+            if (Hmi.StepCase != Hmi.StepBefore)
             {
-                Machine.StepBefore = Machine.StepCase;
+                Hmi.StepBefore = Hmi.StepCase;
             }
 
             if (BasicService.OrdersService.Order.Loaded.OrderStep != BasicService.OrdersService.Order.Loaded.OrderStepBefore)
@@ -272,10 +315,21 @@ namespace LIB0000
             }
 
         }
-
-        private void setErrorMessages()
+        /// <summary>
+        /// Set errors on the HMI
+        /// These are all the errors that need to be shown on the HMI
+        /// Errors can come from the PLC or internally on the HMI
+        /// List of this is in MessagesList
+        /// </summary>
+        private void setHmiErrors()
         {
-            if (Machine.Error.Database)
+
+            // Errors set internal on the HMI
+
+            Hmi.Error.Algemeen = BasicService.MessagesService.ActualMessage.List.Any(x => x.Type == MessageType.Error);
+            Hmi.Error.Database = false;
+
+            if (Hmi.Error.Database)
             {
                 BasicService.MessagesService.Set("Database", "001");
             }
@@ -284,26 +338,13 @@ namespace LIB0000
                 BasicService.MessagesService.Reset("Database", "001");
             }
 
-            if (!Machine.Stat.SettingsOk)
+            if (!Hmi.Stat.SettingsOk)
             {
                 BasicService.MessagesService.Set("Machine", "001");
             }
             else
             {
                 BasicService.MessagesService.Reset("Machine", "001");
-            }
-
-            if (Machine.Error.StoppedByCamera)
-            {
-                if (BasicService.MessagesService.ActualMessage.List.Count(x => x.Type == MessageType.Error && x.Group == "Machine" && x.Nr == "005") == 0)
-                {
-                    //BasicService.OrdersService.Order.AddOrderHistory(OrderHistoryType.StoppedByCamera, BasicService.UsersService.Login.ActualUser.User, BasicService.OrdersService.Order.Loaded.Amount, "Camera fout detectie", BasicService.OrdersService.Order.Loaded.TotalProduct);
-                }
-                BasicService.MessagesService.Set("Machine", "005");
-            }
-            else
-            {
-                BasicService.MessagesService.Reset("Machine", "005");
             }
 
             if (BasicService.UsersService.Login.LoginError == 1 && !BasicService.UsersService.Login.IsLoggedIn)
@@ -333,70 +374,68 @@ namespace LIB0000
                 BasicService.MessagesService.Reset("Login", "003");
             }
 
-        }
-        private void setErrors()
-        {
-            Machine.Error.Algemeen = BasicService.MessagesService.ActualMessage.List.Any(x => x.Type == MessageType.Error);
-            Machine.Error.Database = false;
+            // Errors from PLC to HMI
 
-        }
-        private void setStatus()
-        {
-            if (Machine.Error.StoppedByCamera)
+            for (int i = 0; i <= 99; i++)
             {
-                Machine.Cmd.OrCameraNok = false;
-            }
+                string errorCode = i.ToString("D3"); // Zorgt voor nul-prefix zoals "002"
 
-            if (BasicService.FhService.Count > 0)
-            {
-                if (BasicService.FhService[0].AlreadyDataReceivedSinceStartup) // Enkel indien er reeds data is binnengekomen mogen de counters geupdate worden, anders staan deze op nul bij opstart van een geladen order
+                if (Machine.Error[i])
                 {
-                    if (BasicService.FhService[0].CounterBad > BasicService.OrdersService.Order.Loaded.BadProduct)
-                    {
-                        Machine.Cmd.OrCameraNok = true;
-                    }
-
-                    if (BasicService.FhService[0].CounterTotal > BasicService.OrdersService.Order.Loaded.TotalProduct)
-                    {
-                        BasicService.OrdersService.Order.UpdateOrder();
-                    }
-                    BasicService.OrdersService.Order.Loaded.BadProduct = BasicService.FhService[0].CounterBad;
-                    BasicService.OrdersService.Order.Loaded.TotalProduct = BasicService.FhService[0].CounterTotal;
-                    BasicService.OrdersService.Order.Loaded.GoodProduct = BasicService.FhService[0].CounterGood;
+                    BasicService.MessagesService.Set("PLC", errorCode);
+                }
+                else
+                {
+                    BasicService.MessagesService.Reset("PLC", errorCode);
                 }
             }
 
-            /*Machine.Stat.Started = true;*/ // altijd true
-            Machine.Stat.SettingsOk = !Machine.Par.WorkstationName.IsNullOrEmpty() && !(Machine.Par.Workstation == null);
-            Machine.Stat.CommunicationOk = !Machine.Stat.HardwareCom;
 
-            Machine.Stat.ConditionsToStartOk =  !Machine.Error.StoppedByCamera &&
-                                                (Machine.StepCase >= MachineTyp.MachineStepEnum.WaitOrder);
+        }
+        /// <summary>
+        /// Set of hmi status to show on the HMI
+        /// </summary>
+        private void setHmiStatus()
+        {
+            /*Machine.Stat.Started = true;*/ // altijd true
+            Hmi.Stat.SettingsOk = !Hmi.Par.WorkstationName.IsNullOrEmpty() && !(Hmi.Par.Workstation == null);
+            Hmi.Stat.CommunicationOk = !Hmi.Stat.HardwareCom;
+            Hmi.Stat.ConditionsToStartOk =  (Hmi.StepCase >= HmiTyp.HmiStepEnum.WaitOrder);
 
         }
 
-
-        private void setOutputs()
+        /// <summary>
+        /// Set outputs to the machine (PLC) or other hardware
+        /// </summary>
+        private void setMachineOutputs()
         {
             //Voorbeeld:
-            Machine.Out.OutputExample = ((Machine.StepCase == MachineTyp.MachineStepEnum.WaitForStart) || (Machine.StepCase == MachineTyp.MachineStepEnum.WaitForStop));
+            Hmi.Out.OutputExample = ((Hmi.StepCase == HmiTyp.HmiStepEnum.WaitForStart) || (Hmi.StepCase == HmiTyp.HmiStepEnum.WaitForStop));
 
-            if (Machine.Stat.Started)
+            if (Hmi.Stat.Started)
             {
-                Machine.Out.OutputExample = Toggle500ms;
+                Hmi.Out.OutputExample = Toggle500ms;
             }
 
             // Voorbeeld:
 
             if (BasicService.CommunicationService.Count > 0)
             {
-                BasicService.CommunicationService[0].FromVsToPlcBoolCollection[0] = Machine.Cmd.OrCameraNok;
-                BasicService.CommunicationService[0].FromVsToPlcBoolCollection[1] = Machine.Stat.ConditionsToStartOk;
+                BasicService.CommunicationService[0].BoolToHmi[0] = Machine.Cmd.Start;
+                BasicService.CommunicationService[0].BoolToHmi[1] = Hmi.Stat.ConditionsToStartOk;
+
+                BasicService.CommunicationService[0].SingleToHmi[0] = Convert.ToSingle(BasicService.SettingsService.GetSetting("001", 0, HardwareFunction.MachineParTab1));
             }
 
 
 
+            
+
+
         }
+        /// <summary>
+        /// Standard toggle bits for blinking
+        /// </summary>
         private void setToggleBits()
         {
             TimeSpan tS = DateTime.Now - toggle500msOld;
@@ -414,14 +453,6 @@ namespace LIB0000
             }
         }
 
-
-        /// <summary>
-        /// Load recipe to the machine
-        /// Copy the parameters from the recipe to the machine
-        /// Add every machine part to this
-        /// </summary>
-
-
         #endregion
         #region Properties
         [ObservableProperty]
@@ -433,9 +464,9 @@ namespace LIB0000
         [ObservableProperty]
         private MachineTyp _machine;
         [ObservableProperty]
-        private InvoerTyp _invoer;
+        private HmiTyp _hmi;
         [ObservableProperty]
-        private UitvoerTyp _uitvoer;
+        private ProductTyp _product;
         [ObservableProperty]
         private SettingsTyp _settings;
         [ObservableProperty]

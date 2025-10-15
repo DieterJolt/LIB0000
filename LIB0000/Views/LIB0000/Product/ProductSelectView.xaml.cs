@@ -26,7 +26,7 @@ namespace LIB0000
             if (BasicService.ProductsService.Product.Selected is ProductModel)
             {
                 BasicService.ProductsService.Product.Loaded = BasicService.ProductsService.Product.Selected;
-                BasicService.ProductDetailService.LoadedProduct = BasicService.ProductsService.Product.Loaded;
+                //BasicService.ProductDetailService.LoadedProduct = BasicService.ProductsService.Product.Loaded;
                 NavigationService.GoBack();
             }
         }

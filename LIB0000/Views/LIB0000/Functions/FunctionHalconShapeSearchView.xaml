@@ -15,10 +15,10 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ha:HSmartWindowControlWPF Name="WindowControl" 
+        <ha:HSmartWindowControlWPF 
                                                  Grid.Row="1" Grid.Column="1" MouseDoubleClick="WindowControl_MouseDoubleClick">
-            <!--<ha:HIconicDisplayObjectWPF IconicObject="{Binding BasicService.HalconService[0].Grab.Image}"/>-->
-            <!--<ha:HIconicDisplayObjectWPF IconicObject="{Binding BasicService.HalconService[0].ResultOCROverlay}" HColor="green" LineWidth="1" />-->
+            <!--<ha:HIconicDisplayObjectWPF IconicObject="{Binding BasicService.HalconService[0].GrabImage}"/>-->
+            <ha:HIconicDisplayObjectWPF IconicObject="{Binding BasicService.HalconService[0].Contour}" HColor="green" LineWidth="1" />
             <!-- OCR tekstlabels -->
         </ha:HSmartWindowControlWPF>
         
@@ -30,8 +30,6 @@
             <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Content="Test" Command="{Binding BasicService.HalconService[0].cmdTeachCommand }"/>
-            <Button Grid.Column="1" Content="Camera 1" Click="Button_Click"/>
-            <Button Grid.Column="2" Content="Camera 2" Click="Button02_Click"/>
             <TextBlock Grid.Column="3" Foreground="White" Text="{Binding BasicService.HalconService[0].TestCounter}"/>
         </Grid>
 

@@ -150,8 +150,8 @@ namespace LIB0000
                 #region Services
                 services.AddSingleton<INavigationService, NavigationService>();
                 services.AddSingleton<IContentDialogService, ContentDialogService>();
-                services.AddSingleton<GlobalService>();
                 services.AddSingleton<BasicService>();
+                services.AddSingleton<GlobalService>();
                 services.AddSingleton<ImageService>();
 
                 #endregion

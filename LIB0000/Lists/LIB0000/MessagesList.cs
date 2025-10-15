@@ -24,15 +24,6 @@ namespace LIB0000
             });
             lMessages.Add(new MessageModel
             {
-                Nr = "005",
-                Group = "Machine",
-                MessageText = "Camera foutdetectie",
-                Help = "",
-                Type = MessageType.Error
-            });
-
-            lMessages.Add(new MessageModel
-            {
                 Nr = "001",
                 Group = "Login",
                 MessageText = "No connection with domain",
@@ -55,6 +46,48 @@ namespace LIB0000
                 Help = "Check connection",
                 Type = MessageType.Error
             });
+
+            lMessages.Add(new MessageModel
+            {
+                Nr = "001",
+                Group = "PLC",
+                MessageText = "PLC Error 001",
+                Help = "",
+                Type = MessageType.Error
+            });
+            lMessages.Add(new MessageModel
+            {
+                Nr = "002",
+                Group = "PLC",
+                MessageText = "PLC Error 002",
+                Help = "",
+                Type = MessageType.Error
+            });
+            lMessages.Add(new MessageModel
+            {
+                Nr = "003",
+                Group = "PLC",
+                MessageText = "PLC Error 003",
+                Help = "",
+                Type = MessageType.Error
+            });
+            lMessages.Add(new MessageModel
+            {
+                Nr = "004",
+                Group = "PLC",
+                MessageText = "PLC Error 004",
+                Help = "",
+                Type = MessageType.Error
+            });
+            lMessages.Add(new MessageModel
+            {
+                Nr = "005",
+                Group = "PLC",
+                MessageText = "PLC Error 005",
+                Help = "",
+                Type = MessageType.Error
+            });
+
 
             return lMessages;
         }

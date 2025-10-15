@@ -33,7 +33,7 @@ namespace LIB0000
             // Algemene settings worden aangemaakt indien nog dit nog niet bestaat, deze staan in SettingsList.cs
             // 0 = machine settings
             bool result = SettingsService.AddToSettingsDatabase(SettingsList.GetSettings(HardwareType.None, HardwareFunction.None), 0, "Algemeen");
-            result = SettingsService.AddToSettingsDatabase(SettingsList.GetSettings(HardwareType.None, HardwareFunction.MachineParTab1), 0, "MachineTab1");
+            result = SettingsService.AddToSettingsDatabase(SettingsList.GetSettings(HardwareType.None, HardwareFunction.HmiParTab1), 0, "Extra HMI par");
 
 
             if (result == false) { System.Windows.MessageBox.Show("Probleem bij opstart van applicatie : Toevoegen van settings database niet gelukt"); }
@@ -67,7 +67,7 @@ namespace LIB0000
             // Recipes.db
             //
 
-            ProductDetailService = new ProductDetailService(ServerPath);
+            //ProductDetailService = new ProductDetailService(ServerPath);
             ProductsService = new ProductsService(ServerPath);
             UsersService = new UserService(ServerPath);
             OrdersService = new OrderService(ServerPath);
@@ -83,13 +83,6 @@ namespace LIB0000
                 result = SettingsService.AddToSettingsDatabase(SettingsList.GetSettings(hardware.HardwareType, HardwareFunction.None), hardware.Id, hardware.Name); // Toevoegen basissettings
 
 
-                ObservableCollection<HardwareFunction> hardwareFunctionsList = HardwareFunctionMapper.GetFunctionsForHardware(hardware.HardwareType);
-
-                foreach (HardwareFunction hardwareFunction in hardwareFunctionsList)    // Toevoegen hardwarefunctions
-                {
-                    result = ProductDetailService.AddDefaultSettingsToProductDetailDatabase(ProductDetailList.GetSettings(hardware.HardwareType, hardwareFunction), hardware.Id, hardware.Name);
-
-                }
 
                 //Aanmaak services
                 if (hardware.HardwareType == HardwareType.PLC)
@@ -108,6 +101,8 @@ namespace LIB0000
                     string ipAddress = SettingsService.GetSetting("001", hardware.Id, HardwareFunction.None); // Algemene setting IP-adres ophalen
                     HalconService.Add(new HalconService { IpAddress = ipAddress, HardwareId = hardware.Id });
                 }
+
+                
 
             }
         }
@@ -136,7 +131,7 @@ namespace LIB0000
             using (var context = new ServerDbContext(databasePath))
             {
                 bool created = context.Database.EnsureCreated();
-                ProductDetailService = new ProductDetailService(databasePath);
+              //  ProductDetailService = new ProductDetailService(databasePath);
             }
         }
 
@@ -161,8 +156,8 @@ namespace LIB0000
         [ObservableProperty]
         private ProductGroupService _productGroupsService;
 
-        [ObservableProperty]
-        private ProductDetailService _productDetailService;
+        //[ObservableProperty]
+        //private ProductDetailService _productDetailService;
 
         [ObservableProperty]
         private HardwareService _hardwareService;

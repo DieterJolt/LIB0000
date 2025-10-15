@@ -2,8 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Windows.Media;
 using Windows.Media.Ocr;
 
 namespace LIB0000
@@ -17,10 +15,6 @@ namespace LIB0000
 
         private void cmdTeach()
         {
-            GrabFromFile();
-            if (!deepOcrInitialized)
-            {    DeepOcrInit(); deepOcrInitialized = true; }
-            DeepOcrDetect(Grab.Image);
             //action();
             //DetectShape();
             //GrabFromGigE();
@@ -35,13 +29,7 @@ namespace LIB0000
 
         public HalconService()
         {
-            Grab = new Grab();
-            ShapeSearch = new ShapeSearch();
-
-
             Task.Run(() => Cyclic());
-
-
         }
 
         #endregion
@@ -49,6 +37,12 @@ namespace LIB0000
         #region Events
 
         public event EventHandler<bool> OcrCompleted;
+
+        protected virtual void GrabCompleted(object sender, bool e)
+        {
+            OnOcrCompleted(e);
+        }   
+
 
         protected virtual void OnOcrCompleted(bool success)
         {
@@ -81,10 +75,10 @@ namespace LIB0000
         bool busy = false;
         #endregion
 
-        #region Methods
+        #region MethodsHalcon
 
         public void dev_display_deep_ocr_results(HObject ho_Image, HTuple hv_WindowHandle,
-    HTuple hv_DeepOcrResult, HTuple hv_GenParamName, HTuple hv_GenParamValue)
+HTuple hv_DeepOcrResult, HTuple hv_GenParamName, HTuple hv_GenParamValue)
         {
 
 
@@ -870,6 +864,482 @@ namespace LIB0000
             }
         }
 
+        // Short Description: Retrieve a deep learning device to work with. 
+        public void get_inference_dl_device(HTuple hv_UseFastAI2Devices, out HTuple hv_DLDevice)
+        {
+
+
+
+            // Local iconic variables 
+
+            // Local control variables 
+
+            HTuple hv_GenParamName = new HTuple(), hv_GenParamValue = new HTuple();
+            HTuple hv_AIIdx = new HTuple(), hv_DLDevices = new HTuple();
+            HTuple hv_P = new HTuple(), hv_DLDeviceHandles = new HTuple();
+            HTuple hv_DLDeviceAI = new HTuple(), hv_DLDeviceType = new HTuple();
+            // Initialize local and output iconic variables 
+            hv_DLDevice = new HTuple();
+            try
+            {
+                //This procedure retrieves an available deep learning device that can
+                //be used for inference by apply_deep_ocr. It tries to choose the faster
+                //device type following this order: tensorrt, gpu, openvino and cpu.
+                //
+                //Generic parameters for inference devices sorted by speed.
+                hv_GenParamName.Dispose();
+                hv_GenParamName = new HTuple();
+                hv_GenParamName[0] = "ai_accelerator_interface";
+                hv_GenParamName[1] = "runtime";
+                hv_GenParamName[2] = "ai_accelerator_interface";
+                hv_GenParamName[3] = "runtime";
+                hv_GenParamValue.Dispose();
+                hv_GenParamValue = new HTuple();
+                hv_GenParamValue[0] = "tensorrt";
+                hv_GenParamValue[1] = "gpu";
+                hv_GenParamValue[2] = "openvino";
+                hv_GenParamValue[3] = "cpu";
+                if ((int)(new HTuple(hv_UseFastAI2Devices.TupleEqual("false"))) != 0)
+                {
+                    hv_AIIdx.Dispose();
+                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                    {
+                        hv_AIIdx = hv_GenParamName.TupleFind(
+                            "ai_accelerator_interface");
+                    }
+                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                    {
+                        {
+                            HTuple
+                              ExpTmpLocalVar_GenParamName = hv_GenParamName.TupleRemove(
+                                hv_AIIdx);
+                            hv_GenParamName.Dispose();
+                            hv_GenParamName = ExpTmpLocalVar_GenParamName;
+                        }
+                    }
+                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                    {
+                        {
+                            HTuple
+                              ExpTmpLocalVar_GenParamValue = hv_GenParamValue.TupleRemove(
+                                hv_AIIdx);
+                            hv_GenParamValue.Dispose();
+                            hv_GenParamValue = ExpTmpLocalVar_GenParamValue;
+                        }
+                    }
+                }
+                //
+                //Get the deep learning inference device.
+                hv_DLDevices.Dispose();
+                hv_DLDevices = new HTuple();
+                for (hv_P = 0; (int)hv_P <= (int)((new HTuple(hv_GenParamName.TupleLength())) - 1); hv_P = (int)hv_P + 1)
+                {
+                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                    {
+                        hv_DLDeviceHandles.Dispose();
+                        HOperatorSet.QueryAvailableDlDevices(hv_GenParamName.TupleSelect(hv_P), hv_GenParamValue.TupleSelect(
+                            hv_P), out hv_DLDeviceHandles);
+                    }
+                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                    {
+                        {
+                            HTuple
+                              ExpTmpLocalVar_DLDevices = hv_DLDevices.TupleConcat(
+                                hv_DLDeviceHandles);
+                            hv_DLDevices.Dispose();
+                            hv_DLDevices = ExpTmpLocalVar_DLDevices;
+                        }
+                    }
+                    if ((int)(new HTuple(hv_DLDevices.TupleNotEqual(new HTuple()))) != 0)
+                    {
+                        break;
+                    }
+                }
+                if ((int)(new HTuple(hv_DLDevices.TupleEqual(new HTuple()))) != 0)
+                {
+                    throw new HalconException("No supported deep learning device found");
+                }
+                hv_DLDevice.Dispose();
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_DLDevice = hv_DLDevices.TupleSelect(
+                        0);
+                }
+                //
+                //In case of CPU the number of threads impacts the example duration.
+                hv_DLDeviceAI.Dispose();
+                HOperatorSet.GetDlDeviceParam(hv_DLDevice, "ai_accelerator_interface", out hv_DLDeviceAI);
+                hv_DLDeviceType.Dispose();
+                HOperatorSet.GetDlDeviceParam(hv_DLDevice, "type", out hv_DLDeviceType);
+                if ((int)((new HTuple(hv_DLDeviceAI.TupleEqual("none"))).TupleAnd(new HTuple(hv_DLDeviceType.TupleEqual(
+                    "cpu")))) != 0)
+                {
+                    HOperatorSet.SetSystem("thread_num", 4);
+                }
+                //
+
+                hv_GenParamName.Dispose();
+                hv_GenParamValue.Dispose();
+                hv_AIIdx.Dispose();
+                hv_DLDevices.Dispose();
+                hv_P.Dispose();
+                hv_DLDeviceHandles.Dispose();
+                hv_DLDeviceAI.Dispose();
+                hv_DLDeviceType.Dispose();
+
+                return;
+            }
+            catch (HalconException HDevExpDefaultException)
+            {
+
+                hv_GenParamName.Dispose();
+                hv_GenParamValue.Dispose();
+                hv_AIIdx.Dispose();
+                hv_DLDevices.Dispose();
+                hv_P.Dispose();
+                hv_DLDeviceHandles.Dispose();
+                hv_DLDeviceAI.Dispose();
+                hv_DLDeviceType.Dispose();
+
+                throw HDevExpDefaultException;
+            }
+        }
+
+        // Local procedures 
+        public void display_recognition_alphabet(HTuple hv_RecognitionAlphabet, HTuple hv_WindowHandle)
+        {
+
+
+
+            // Local iconic variables 
+
+            // Local control variables 
+
+            HTuple hv_Text = new HTuple(), hv_Number = new HTuple();
+            HTuple hv_Textline = new HTuple(), hv_i = new HTuple();
+            HTuple hv_Minor = new HTuple(), hv_Capital = new HTuple();
+            HTuple hv_Special = new HTuple(), hv_Line = new HTuple();
+            HTuple hv_c = new HTuple(), hv_Char = new HTuple(), hv_Row = new HTuple();
+            HTuple hv_Column = new HTuple(), hv_Width = new HTuple();
+            HTuple hv_Height = new HTuple(), hv_TextWidth = new HTuple();
+            HTuple hv_TextHeight = new HTuple(), hv__ = new HTuple();
+            HTuple hv_LineWidth = new HTuple(), hv_LineHeight = new HTuple();
+            HTuple hv_WindowWidth = new HTuple(), hv_WindowHeight = new HTuple();
+            // Initialize local and output iconic variables 
+            try
+            {
+                //Display the recognition alphabet in the given window handle.
+                //
+                hv_Text.Dispose();
+                hv_Text = "Characters the model can recognize:";
+                if (hv_Text == null)
+                    hv_Text = new HTuple();
+                hv_Text[new HTuple(hv_Text.TupleLength())] = "";
+                //
+                //Sort the characters and set the text to be displayed.
+                //1) 0-9
+                hv_Number.Dispose();
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_Number = ((hv_RecognitionAlphabet.TupleRegexpMatch(
+                        "[0-9]"))).TupleUniq();
+                }
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    {
+                        HTuple
+                          ExpTmpLocalVar_Number = hv_Number.TupleRemove(
+                            hv_Number.TupleFind(""));
+                        hv_Number.Dispose();
+                        hv_Number = ExpTmpLocalVar_Number;
+                    }
+                }
+                hv_Textline.Dispose();
+                hv_Textline = "";
+                for (hv_i = 0; (int)hv_i <= (int)((new HTuple(hv_Number.TupleLength())) - 1); hv_i = (int)hv_i + 1)
+                {
+                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                    {
+                        {
+                            HTuple
+                              ExpTmpLocalVar_Textline = (hv_Textline + (hv_Number.TupleSelect(
+                                hv_i))) + " ";
+                            hv_Textline.Dispose();
+                            hv_Textline = ExpTmpLocalVar_Textline;
+                        }
+                    }
+                }
+                if (hv_Text == null)
+                    hv_Text = new HTuple();
+                hv_Text[new HTuple(hv_Text.TupleLength())] = hv_Textline;
+                //2) a-z
+                hv_Minor.Dispose();
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_Minor = ((hv_RecognitionAlphabet.TupleRegexpMatch(
+                        "[a-z]"))).TupleUniq();
+                }
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    {
+                        HTuple
+                          ExpTmpLocalVar_Minor = hv_Minor.TupleRemove(
+                            hv_Minor.TupleFind(""));
+                        hv_Minor.Dispose();
+                        hv_Minor = ExpTmpLocalVar_Minor;
+                    }
+                }
+                hv_Textline.Dispose();
+                hv_Textline = "";
+                for (hv_i = 0; (int)hv_i <= (int)((new HTuple(hv_Minor.TupleLength())) - 1); hv_i = (int)hv_i + 1)
+                {
+                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                    {
+                        {
+                            HTuple
+                              ExpTmpLocalVar_Textline = (hv_Textline + (hv_Minor.TupleSelect(
+                                hv_i))) + " ";
+                            hv_Textline.Dispose();
+                            hv_Textline = ExpTmpLocalVar_Textline;
+                        }
+                    }
+                }
+                if (hv_Text == null)
+                    hv_Text = new HTuple();
+                hv_Text[new HTuple(hv_Text.TupleLength())] = hv_Textline;
+                //3) A-Z
+                hv_Capital.Dispose();
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_Capital = ((hv_RecognitionAlphabet.TupleRegexpMatch(
+                        "[A-Z]"))).TupleUniq();
+                }
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    {
+                        HTuple
+                          ExpTmpLocalVar_Capital = hv_Capital.TupleRemove(
+                            hv_Capital.TupleFind(""));
+                        hv_Capital.Dispose();
+                        hv_Capital = ExpTmpLocalVar_Capital;
+                    }
+                }
+                hv_Textline.Dispose();
+                hv_Textline = "";
+                for (hv_i = 0; (int)hv_i <= (int)((new HTuple(hv_Capital.TupleLength())) - 1); hv_i = (int)hv_i + 1)
+                {
+                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                    {
+                        {
+                            HTuple
+                              ExpTmpLocalVar_Textline = (hv_Textline + (hv_Capital.TupleSelect(
+                                hv_i))) + " ";
+                            hv_Textline.Dispose();
+                            hv_Textline = ExpTmpLocalVar_Textline;
+                        }
+                    }
+                }
+                if (hv_Text == null)
+                    hv_Text = new HTuple();
+                hv_Text[new HTuple(hv_Text.TupleLength())] = hv_Textline;
+                //4) Further characters
+                hv_Special.Dispose();
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_Special = hv_RecognitionAlphabet.TupleDifference(
+                        ((hv_Minor.TupleConcat(hv_Capital))).TupleConcat(hv_Number));
+                }
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    {
+                        HTuple
+                          ExpTmpLocalVar_Special = hv_Special.TupleRemove(
+                            hv_Special.TupleFind(""));
+                        hv_Special.Dispose();
+                        hv_Special = ExpTmpLocalVar_Special;
+                    }
+                }
+                HTuple end_val33 = (new HTuple(hv_Special.TupleLength()
+                    )) - 1;
+                HTuple step_val33 = new HTuple(hv_Capital.TupleLength());
+                for (hv_Line = 0; hv_Line.Continue(end_val33, step_val33); hv_Line = hv_Line.TupleAdd(step_val33))
+                {
+                    hv_Textline.Dispose();
+                    hv_Textline = "";
+                    HTuple end_val35 = (new HTuple((new HTuple(hv_Capital.TupleLength()
+                        )) - 1)).TupleMin2(((new HTuple(hv_Special.TupleLength())) - 1) - hv_Line);
+                    HTuple step_val35 = 1;
+                    for (hv_c = 0; hv_c.Continue(end_val35, step_val35); hv_c = hv_c.TupleAdd(step_val35))
+                    {
+                        //Some characters need special treatment for correct display.
+                        hv_Char.Dispose();
+                        using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                        {
+                            hv_Char = hv_Special.TupleSelect(
+                                hv_Line + hv_c);
+                        }
+                        if ((int)(new HTuple(hv_Char.TupleEqual("\n"))) != 0)
+                        {
+                            using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                            {
+                                {
+                                    HTuple
+                                      ExpTmpLocalVar_Textline = (hv_Textline + "\\n") + " ";
+                                    hv_Textline.Dispose();
+                                    hv_Textline = ExpTmpLocalVar_Textline;
+                                }
+                            }
+                        }
+                        else if ((int)(new HTuple(hv_Char.TupleEqual("'"))) != 0)
+                        {
+                            using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                            {
+                                {
+                                    HTuple
+                                      ExpTmpLocalVar_Textline = (hv_Textline + "'") + " ";
+                                    hv_Textline.Dispose();
+                                    hv_Textline = ExpTmpLocalVar_Textline;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                            {
+                                {
+                                    HTuple
+                                      ExpTmpLocalVar_Textline = (hv_Textline + hv_Char) + " ";
+                                    hv_Textline.Dispose();
+                                    hv_Textline = ExpTmpLocalVar_Textline;
+                                }
+                            }
+                        }
+                    }
+                    if (hv_Text == null)
+                        hv_Text = new HTuple();
+                    hv_Text[new HTuple(hv_Text.TupleLength())] = hv_Textline;
+                }
+                //
+                //Adapt window size.
+                hv_Row.Dispose(); hv_Column.Dispose(); hv_Width.Dispose(); hv_Height.Dispose();
+                HOperatorSet.GetWindowExtents(hv_WindowHandle, out hv_Row, out hv_Column, out hv_Width,
+                    out hv_Height);
+                set_display_font(hv_WindowHandle, 16, "mono", "true", "false");
+                hv_TextWidth.Dispose();
+                hv_TextWidth = -1;
+                hv_TextHeight.Dispose();
+                hv_TextHeight = -1;
+                for (hv_Line = 0; (int)hv_Line <= (int)((new HTuple(hv_Text.TupleLength())) - 1); hv_Line = (int)hv_Line + 1)
+                {
+                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                    {
+                        hv__.Dispose(); hv__.Dispose(); hv_LineWidth.Dispose(); hv_LineHeight.Dispose();
+                        HOperatorSet.GetStringExtents(hv_WindowHandle, hv_Text.TupleSelect(hv_Line),
+                            out hv__, out hv__, out hv_LineWidth, out hv_LineHeight);
+                    }
+                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                    {
+                        {
+                            HTuple
+                              ExpTmpLocalVar_TextWidth = hv_TextWidth.TupleMax2(
+                                hv_LineWidth);
+                            hv_TextWidth.Dispose();
+                            hv_TextWidth = ExpTmpLocalVar_TextWidth;
+                        }
+                    }
+                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                    {
+                        {
+                            HTuple
+                              ExpTmpLocalVar_TextHeight = hv_TextHeight.TupleMax2(
+                                hv_LineHeight);
+                            hv_TextHeight.Dispose();
+                            hv_TextHeight = ExpTmpLocalVar_TextHeight;
+                        }
+                    }
+                }
+                hv_WindowWidth.Dispose();
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_WindowWidth = hv_TextWidth + 62;
+                }
+                hv_WindowHeight.Dispose();
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_WindowHeight = (hv_TextHeight * ((new HTuple(hv_Text.TupleLength()
+                        )) + 1)) + 150;
+                }
+                if (HDevWindowStack.IsOpen())
+                {
+                    HOperatorSet.SetWindowExtents(HDevWindowStack.GetActive(), 0, 0, hv_WindowWidth,
+                        hv_WindowHeight);
+                }
+                //
+                //Display the text.
+                if (HDevWindowStack.IsOpen())
+                {
+                    HOperatorSet.DispText(HDevWindowStack.GetActive(), hv_Text, "window", "top",
+                        "left", "white", "box", "false");
+                }
+                if (HDevWindowStack.IsOpen())
+                {
+                    HOperatorSet.DispText(HDevWindowStack.GetActive(), "Press Run (F5) to continue",
+                        "window", "bottom", "right", "black", "box", "true");
+                }
+
+                hv_Text.Dispose();
+                hv_Number.Dispose();
+                hv_Textline.Dispose();
+                hv_i.Dispose();
+                hv_Minor.Dispose();
+                hv_Capital.Dispose();
+                hv_Special.Dispose();
+                hv_Line.Dispose();
+                hv_c.Dispose();
+                hv_Char.Dispose();
+                hv_Row.Dispose();
+                hv_Column.Dispose();
+                hv_Width.Dispose();
+                hv_Height.Dispose();
+                hv_TextWidth.Dispose();
+                hv_TextHeight.Dispose();
+                hv__.Dispose();
+                hv_LineWidth.Dispose();
+                hv_LineHeight.Dispose();
+                hv_WindowWidth.Dispose();
+                hv_WindowHeight.Dispose();
+
+                return;
+            }
+            catch (HalconException HDevExpDefaultException)
+            {
+
+                hv_Text.Dispose();
+                hv_Number.Dispose();
+                hv_Textline.Dispose();
+                hv_i.Dispose();
+                hv_Minor.Dispose();
+                hv_Capital.Dispose();
+                hv_Special.Dispose();
+                hv_Line.Dispose();
+                hv_c.Dispose();
+                hv_Char.Dispose();
+                hv_Row.Dispose();
+                hv_Column.Dispose();
+                hv_Width.Dispose();
+                hv_Height.Dispose();
+                hv_TextWidth.Dispose();
+                hv_TextHeight.Dispose();
+                hv__.Dispose();
+                hv_LineWidth.Dispose();
+                hv_LineHeight.Dispose();
+                hv_WindowWidth.Dispose();
+                hv_WindowHeight.Dispose();
+
+                throw HDevExpDefaultException;
+            }
+        }
+
         // Chapter: Develop
         // Short Description: Switch dev_update_pc, dev_update_var, and dev_update_window to 'off'. 
         public void dev_update_off()
@@ -1531,341 +2001,6 @@ namespace LIB0000
             }
         }
 
-        // Local procedures 
-        public void display_recognition_alphabet(HTuple hv_RecognitionAlphabet, HTuple hv_WindowHandle)
-        {
-
-
-
-            // Local iconic variables 
-
-            // Local control variables 
-
-            HTuple hv_Text = new HTuple(), hv_Number = new HTuple();
-            HTuple hv_Textline = new HTuple(), hv_i = new HTuple();
-            HTuple hv_Minor = new HTuple(), hv_Capital = new HTuple();
-            HTuple hv_Special = new HTuple(), hv_Line = new HTuple();
-            HTuple hv_c = new HTuple(), hv_Char = new HTuple(), hv_Row = new HTuple();
-            HTuple hv_Column = new HTuple(), hv_Width = new HTuple();
-            HTuple hv_Height = new HTuple(), hv_TextWidth = new HTuple();
-            HTuple hv_TextHeight = new HTuple(), hv__ = new HTuple();
-            HTuple hv_LineWidth = new HTuple(), hv_LineHeight = new HTuple();
-            HTuple hv_WindowWidth = new HTuple(), hv_WindowHeight = new HTuple();
-            // Initialize local and output iconic variables 
-            try
-            {
-                //Display the recognition alphabet in the given window handle.
-                //
-                hv_Text.Dispose();
-                hv_Text = "Characters the model can recognize:";
-                if (hv_Text == null)
-                    hv_Text = new HTuple();
-                hv_Text[new HTuple(hv_Text.TupleLength())] = "";
-                //
-                //Sort the characters and set the text to be displayed.
-                //1) 0-9
-                hv_Number.Dispose();
-                using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                {
-                    hv_Number = ((hv_RecognitionAlphabet.TupleRegexpMatch(
-                        "[0-9]"))).TupleUniq();
-                }
-                using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                {
-                    {
-                        HTuple
-                          ExpTmpLocalVar_Number = hv_Number.TupleRemove(
-                            hv_Number.TupleFind(""));
-                        hv_Number.Dispose();
-                        hv_Number = ExpTmpLocalVar_Number;
-                    }
-                }
-                hv_Textline.Dispose();
-                hv_Textline = "";
-                for (hv_i = 0; (int)hv_i <= (int)((new HTuple(hv_Number.TupleLength())) - 1); hv_i = (int)hv_i + 1)
-                {
-                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                    {
-                        {
-                            HTuple
-                              ExpTmpLocalVar_Textline = (hv_Textline + (hv_Number.TupleSelect(
-                                hv_i))) + " ";
-                            hv_Textline.Dispose();
-                            hv_Textline = ExpTmpLocalVar_Textline;
-                        }
-                    }
-                }
-                if (hv_Text == null)
-                    hv_Text = new HTuple();
-                hv_Text[new HTuple(hv_Text.TupleLength())] = hv_Textline;
-                //2) a-z
-                hv_Minor.Dispose();
-                using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                {
-                    hv_Minor = ((hv_RecognitionAlphabet.TupleRegexpMatch(
-                        "[a-z]"))).TupleUniq();
-                }
-                using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                {
-                    {
-                        HTuple
-                          ExpTmpLocalVar_Minor = hv_Minor.TupleRemove(
-                            hv_Minor.TupleFind(""));
-                        hv_Minor.Dispose();
-                        hv_Minor = ExpTmpLocalVar_Minor;
-                    }
-                }
-                hv_Textline.Dispose();
-                hv_Textline = "";
-                for (hv_i = 0; (int)hv_i <= (int)((new HTuple(hv_Minor.TupleLength())) - 1); hv_i = (int)hv_i + 1)
-                {
-                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                    {
-                        {
-                            HTuple
-                              ExpTmpLocalVar_Textline = (hv_Textline + (hv_Minor.TupleSelect(
-                                hv_i))) + " ";
-                            hv_Textline.Dispose();
-                            hv_Textline = ExpTmpLocalVar_Textline;
-                        }
-                    }
-                }
-                if (hv_Text == null)
-                    hv_Text = new HTuple();
-                hv_Text[new HTuple(hv_Text.TupleLength())] = hv_Textline;
-                //3) A-Z
-                hv_Capital.Dispose();
-                using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                {
-                    hv_Capital = ((hv_RecognitionAlphabet.TupleRegexpMatch(
-                        "[A-Z]"))).TupleUniq();
-                }
-                using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                {
-                    {
-                        HTuple
-                          ExpTmpLocalVar_Capital = hv_Capital.TupleRemove(
-                            hv_Capital.TupleFind(""));
-                        hv_Capital.Dispose();
-                        hv_Capital = ExpTmpLocalVar_Capital;
-                    }
-                }
-                hv_Textline.Dispose();
-                hv_Textline = "";
-                for (hv_i = 0; (int)hv_i <= (int)((new HTuple(hv_Capital.TupleLength())) - 1); hv_i = (int)hv_i + 1)
-                {
-                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                    {
-                        {
-                            HTuple
-                              ExpTmpLocalVar_Textline = (hv_Textline + (hv_Capital.TupleSelect(
-                                hv_i))) + " ";
-                            hv_Textline.Dispose();
-                            hv_Textline = ExpTmpLocalVar_Textline;
-                        }
-                    }
-                }
-                if (hv_Text == null)
-                    hv_Text = new HTuple();
-                hv_Text[new HTuple(hv_Text.TupleLength())] = hv_Textline;
-                //4) Further characters
-                hv_Special.Dispose();
-                using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                {
-                    hv_Special = hv_RecognitionAlphabet.TupleDifference(
-                        ((hv_Minor.TupleConcat(hv_Capital))).TupleConcat(hv_Number));
-                }
-                using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                {
-                    {
-                        HTuple
-                          ExpTmpLocalVar_Special = hv_Special.TupleRemove(
-                            hv_Special.TupleFind(""));
-                        hv_Special.Dispose();
-                        hv_Special = ExpTmpLocalVar_Special;
-                    }
-                }
-                HTuple end_val33 = (new HTuple(hv_Special.TupleLength()
-                    )) - 1;
-                HTuple step_val33 = new HTuple(hv_Capital.TupleLength());
-                for (hv_Line = 0; hv_Line.Continue(end_val33, step_val33); hv_Line = hv_Line.TupleAdd(step_val33))
-                {
-                    hv_Textline.Dispose();
-                    hv_Textline = "";
-                    HTuple end_val35 = (new HTuple((new HTuple(hv_Capital.TupleLength()
-                        )) - 1)).TupleMin2(((new HTuple(hv_Special.TupleLength())) - 1) - hv_Line);
-                    HTuple step_val35 = 1;
-                    for (hv_c = 0; hv_c.Continue(end_val35, step_val35); hv_c = hv_c.TupleAdd(step_val35))
-                    {
-                        //Some characters need special treatment for correct display.
-                        hv_Char.Dispose();
-                        using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                        {
-                            hv_Char = hv_Special.TupleSelect(
-                                hv_Line + hv_c);
-                        }
-                        if ((int)(new HTuple(hv_Char.TupleEqual("\n"))) != 0)
-                        {
-                            using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                            {
-                                {
-                                    HTuple
-                                      ExpTmpLocalVar_Textline = (hv_Textline + "\\n") + " ";
-                                    hv_Textline.Dispose();
-                                    hv_Textline = ExpTmpLocalVar_Textline;
-                                }
-                            }
-                        }
-                        else if ((int)(new HTuple(hv_Char.TupleEqual("'"))) != 0)
-                        {
-                            using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                            {
-                                {
-                                    HTuple
-                                      ExpTmpLocalVar_Textline = (hv_Textline + "'") + " ";
-                                    hv_Textline.Dispose();
-                                    hv_Textline = ExpTmpLocalVar_Textline;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                            {
-                                {
-                                    HTuple
-                                      ExpTmpLocalVar_Textline = (hv_Textline + hv_Char) + " ";
-                                    hv_Textline.Dispose();
-                                    hv_Textline = ExpTmpLocalVar_Textline;
-                                }
-                            }
-                        }
-                    }
-                    if (hv_Text == null)
-                        hv_Text = new HTuple();
-                    hv_Text[new HTuple(hv_Text.TupleLength())] = hv_Textline;
-                }
-                //
-                //Adapt window size.
-                hv_Row.Dispose(); hv_Column.Dispose(); hv_Width.Dispose(); hv_Height.Dispose();
-                HOperatorSet.GetWindowExtents(hv_WindowHandle, out hv_Row, out hv_Column, out hv_Width,
-                    out hv_Height);
-                set_display_font(hv_WindowHandle, 16, "mono", "true", "false");
-                hv_TextWidth.Dispose();
-                hv_TextWidth = -1;
-                hv_TextHeight.Dispose();
-                hv_TextHeight = -1;
-                for (hv_Line = 0; (int)hv_Line <= (int)((new HTuple(hv_Text.TupleLength())) - 1); hv_Line = (int)hv_Line + 1)
-                {
-                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                    {
-                        hv__.Dispose(); hv__.Dispose(); hv_LineWidth.Dispose(); hv_LineHeight.Dispose();
-                        HOperatorSet.GetStringExtents(hv_WindowHandle, hv_Text.TupleSelect(hv_Line),
-                            out hv__, out hv__, out hv_LineWidth, out hv_LineHeight);
-                    }
-                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                    {
-                        {
-                            HTuple
-                              ExpTmpLocalVar_TextWidth = hv_TextWidth.TupleMax2(
-                                hv_LineWidth);
-                            hv_TextWidth.Dispose();
-                            hv_TextWidth = ExpTmpLocalVar_TextWidth;
-                        }
-                    }
-                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                    {
-                        {
-                            HTuple
-                              ExpTmpLocalVar_TextHeight = hv_TextHeight.TupleMax2(
-                                hv_LineHeight);
-                            hv_TextHeight.Dispose();
-                            hv_TextHeight = ExpTmpLocalVar_TextHeight;
-                        }
-                    }
-                }
-                hv_WindowWidth.Dispose();
-                using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                {
-                    hv_WindowWidth = hv_TextWidth + 62;
-                }
-                hv_WindowHeight.Dispose();
-                using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                {
-                    hv_WindowHeight = (hv_TextHeight * ((new HTuple(hv_Text.TupleLength()
-                        )) + 1)) + 150;
-                }
-                if (HDevWindowStack.IsOpen())
-                {
-                    HOperatorSet.SetWindowExtents(HDevWindowStack.GetActive(), 0, 0, hv_WindowWidth,
-                        hv_WindowHeight);
-                }
-                //
-                //Display the text.
-                if (HDevWindowStack.IsOpen())
-                {
-                    HOperatorSet.DispText(HDevWindowStack.GetActive(), hv_Text, "window", "top",
-                        "left", "white", "box", "false");
-                }
-                if (HDevWindowStack.IsOpen())
-                {
-                    HOperatorSet.DispText(HDevWindowStack.GetActive(), "Press Run (F5) to continue",
-                        "window", "bottom", "right", "black", "box", "true");
-                }
-
-                hv_Text.Dispose();
-                hv_Number.Dispose();
-                hv_Textline.Dispose();
-                hv_i.Dispose();
-                hv_Minor.Dispose();
-                hv_Capital.Dispose();
-                hv_Special.Dispose();
-                hv_Line.Dispose();
-                hv_c.Dispose();
-                hv_Char.Dispose();
-                hv_Row.Dispose();
-                hv_Column.Dispose();
-                hv_Width.Dispose();
-                hv_Height.Dispose();
-                hv_TextWidth.Dispose();
-                hv_TextHeight.Dispose();
-                hv__.Dispose();
-                hv_LineWidth.Dispose();
-                hv_LineHeight.Dispose();
-                hv_WindowWidth.Dispose();
-                hv_WindowHeight.Dispose();
-
-                return;
-            }
-            catch (HalconException HDevExpDefaultException)
-            {
-
-                hv_Text.Dispose();
-                hv_Number.Dispose();
-                hv_Textline.Dispose();
-                hv_i.Dispose();
-                hv_Minor.Dispose();
-                hv_Capital.Dispose();
-                hv_Special.Dispose();
-                hv_Line.Dispose();
-                hv_c.Dispose();
-                hv_Char.Dispose();
-                hv_Row.Dispose();
-                hv_Column.Dispose();
-                hv_Width.Dispose();
-                hv_Height.Dispose();
-                hv_TextWidth.Dispose();
-                hv_TextHeight.Dispose();
-                hv__.Dispose();
-                hv_LineWidth.Dispose();
-                hv_LineHeight.Dispose();
-                hv_WindowWidth.Dispose();
-                hv_WindowHeight.Dispose();
-
-                throw HDevExpDefaultException;
-            }
-        }
-
         // Short Description: Display tile regions of the example image. 
         public void display_tiles(HTuple hv_WindowHandle)
         {
@@ -1993,146 +2128,9 @@ namespace LIB0000
             }
         }
 
-        // Short Description: Retrieve a deep learning device to work with. 
-        public void get_inference_dl_device(HTuple hv_UseFastAI2Devices, out HTuple hv_DLDevice)
-        {
+        #endregion
 
-
-
-            // Local iconic variables 
-
-            // Local control variables 
-
-            HTuple hv_GenParamName = new HTuple(), hv_GenParamValue = new HTuple();
-            HTuple hv_AIIdx = new HTuple(), hv_DLDevices = new HTuple();
-            HTuple hv_P = new HTuple(), hv_DLDeviceHandles = new HTuple();
-            HTuple hv_DLDeviceAI = new HTuple(), hv_DLDeviceType = new HTuple();
-            // Initialize local and output iconic variables 
-            hv_DLDevice = new HTuple();
-            try
-            {
-                //This procedure retrieves an available deep learning device that can
-                //be used for inference by apply_deep_ocr. It tries to choose the faster
-                //device type following this order: tensorrt, gpu, openvino and cpu.
-                //
-                //Generic parameters for inference devices sorted by speed.
-                hv_GenParamName.Dispose();
-                hv_GenParamName = new HTuple();
-                hv_GenParamName[0] = "ai_accelerator_interface";
-                hv_GenParamName[1] = "runtime";
-                hv_GenParamName[2] = "ai_accelerator_interface";
-                hv_GenParamName[3] = "runtime";
-                hv_GenParamValue.Dispose();
-                hv_GenParamValue = new HTuple();
-                hv_GenParamValue[0] = "tensorrt";
-                hv_GenParamValue[1] = "gpu";
-                hv_GenParamValue[2] = "openvino";
-                hv_GenParamValue[3] = "cpu";
-                if ((int)(new HTuple(hv_UseFastAI2Devices.TupleEqual("false"))) != 0)
-                {
-                    hv_AIIdx.Dispose();
-                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                    {
-                        hv_AIIdx = hv_GenParamName.TupleFind(
-                            "ai_accelerator_interface");
-                    }
-                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                    {
-                        {
-                            HTuple
-                              ExpTmpLocalVar_GenParamName = hv_GenParamName.TupleRemove(
-                                hv_AIIdx);
-                            hv_GenParamName.Dispose();
-                            hv_GenParamName = ExpTmpLocalVar_GenParamName;
-                        }
-                    }
-                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                    {
-                        {
-                            HTuple
-                              ExpTmpLocalVar_GenParamValue = hv_GenParamValue.TupleRemove(
-                                hv_AIIdx);
-                            hv_GenParamValue.Dispose();
-                            hv_GenParamValue = ExpTmpLocalVar_GenParamValue;
-                        }
-                    }
-                }
-                //
-                //Get the deep learning inference device.
-                hv_DLDevices.Dispose();
-                hv_DLDevices = new HTuple();
-                for (hv_P = 0; (int)hv_P <= (int)((new HTuple(hv_GenParamName.TupleLength())) - 1); hv_P = (int)hv_P + 1)
-                {
-                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                    {
-                        hv_DLDeviceHandles.Dispose();
-                        HOperatorSet.QueryAvailableDlDevices(hv_GenParamName.TupleSelect(hv_P), hv_GenParamValue.TupleSelect(
-                            hv_P), out hv_DLDeviceHandles);
-                    }
-                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                    {
-                        {
-                            HTuple
-                              ExpTmpLocalVar_DLDevices = hv_DLDevices.TupleConcat(
-                                hv_DLDeviceHandles);
-                            hv_DLDevices.Dispose();
-                            hv_DLDevices = ExpTmpLocalVar_DLDevices;
-                        }
-                    }
-                    if ((int)(new HTuple(hv_DLDevices.TupleNotEqual(new HTuple()))) != 0)
-                    {
-                        break;
-                    }
-                }
-                if ((int)(new HTuple(hv_DLDevices.TupleEqual(new HTuple()))) != 0)
-                {
-                    throw new HalconException("No supported deep learning device found");
-                }
-                hv_DLDevice.Dispose();
-                using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                {
-                    hv_DLDevice = hv_DLDevices.TupleSelect(
-                        0);
-                }
-                //
-                //In case of CPU the number of threads impacts the example duration.
-                hv_DLDeviceAI.Dispose();
-                HOperatorSet.GetDlDeviceParam(hv_DLDevice, "ai_accelerator_interface", out hv_DLDeviceAI);
-                hv_DLDeviceType.Dispose();
-                HOperatorSet.GetDlDeviceParam(hv_DLDevice, "type", out hv_DLDeviceType);
-                if ((int)((new HTuple(hv_DLDeviceAI.TupleEqual("none"))).TupleAnd(new HTuple(hv_DLDeviceType.TupleEqual(
-                    "cpu")))) != 0)
-                {
-                    HOperatorSet.SetSystem("thread_num", 4);
-                }
-                //
-
-                hv_GenParamName.Dispose();
-                hv_GenParamValue.Dispose();
-                hv_AIIdx.Dispose();
-                hv_DLDevices.Dispose();
-                hv_P.Dispose();
-                hv_DLDeviceHandles.Dispose();
-                hv_DLDeviceAI.Dispose();
-                hv_DLDeviceType.Dispose();
-
-                return;
-            }
-            catch (HalconException HDevExpDefaultException)
-            {
-
-                hv_GenParamName.Dispose();
-                hv_GenParamValue.Dispose();
-                hv_AIIdx.Dispose();
-                hv_DLDevices.Dispose();
-                hv_P.Dispose();
-                hv_DLDeviceHandles.Dispose();
-                hv_DLDeviceAI.Dispose();
-                hv_DLDeviceType.Dispose();
-
-                throw HDevExpDefaultException;
-            }
-        }
+        #region Methods
 
         public void Cyclic()
         {
@@ -2141,14 +2139,14 @@ namespace LIB0000
 
                 if (Type == 0)
                 {
-                    if (TestCounter > 0)
-                    { TestCounter = 0; }
-                    GrabFromGigE();
+                    if (G001Gige("d47c4431528b_OMRONSENTECH_STCMCS122BPOE",true, 90)==true)
+                    {
+                       A001GenericShapeTeach(GrabImage);
+                    }
                 }
                 else
                 {
-                    if (TestCounter > 500)
-                    { TestCounter = 0; }
+
 
 
                 }
@@ -2157,7 +2155,105 @@ namespace LIB0000
             }
 
         }
-        public void DetectShape()
+
+        public bool G001Gige(string id, bool updateParameters, int rotation)
+        {
+            bool success = false;
+            HObject image = null;
+            HOperatorSet.GenEmptyObj(out image);
+            try
+            {
+                if (framegrabber == null)
+                {
+                    framegrabber = new HFramegrabber(
+                    "GigEVision2", 0, 0, 0, 0, 0, 0, "progressive", -1, "default", -1, "false", "default", id, 0, -1
+                );  // d47c443154af_OMRONSENTECH_STCMBS122BPOE kaartenteller
+
+                }
+                if (updateParameters)
+                {
+                    framegrabber.SetFramegrabberParam("ExposureMode", "Timed");
+                    framegrabber.SetFramegrabberParam("ExposureTime", 20000);
+                }
+                HOperatorSet.GrabImage(out image, framegrabber);
+                HOperatorSet.RotateImage(image, out image, rotation, "constant");
+                GrabImage = image;
+                success = true;
+            }
+            catch (Exception ex)
+            {
+                image = null;
+            }
+            return success;
+        }
+        public bool G002Usb3(bool updateParameters,int rotation)
+        {
+            bool success = false;
+            HObject image = null;
+            HOperatorSet.GenEmptyObj(out image);
+            try
+            {
+                if (framegrabber == null)
+                {
+                    framegrabber = new HFramegrabber(
+                    "USB3Vision", 0, 0, 0, 0, 0, 0, "progressive",
+                    -1, "default", -1, "false", "default",
+                "User Defined Name", 0, -1
+                );
+                }
+                framegrabber.SetFramegrabberParam("ExposureMode", "Timed");
+                framegrabber.SetFramegrabberParam("ExposureTime", 3000);
+
+
+                HOperatorSet.GrabImage(out image, framegrabber);
+                HOperatorSet.RotateImage(image, out image, rotation, "constant");
+                GrabImage = image;
+                success = true;
+            }
+            catch (Exception ex)
+            {
+                image = null;
+            }
+            return success;
+        }
+        public bool G003FromFile(string pathFolder, string filter, int rotation)
+        {
+            bool success = false;
+            HObject image = new HObject();
+            HOperatorSet.GenEmptyObj(out image);
+
+            try
+            {
+
+                string[] _imageFiles = Directory.GetFiles(pathFolder, filter); // *.bmp *.jpg *.png
+
+                if (_imageFiles.Length > 0)
+                {
+
+                    // Als we aan het einde zijn: opnieuw beginnen (optioneel)
+                    if (fileIndex >= _imageFiles.Length)
+                        fileIndex = 0;
+
+                    // Bestandspad ophalen
+                    string imagePath = _imageFiles[fileIndex];
+                    fileIndex++;
+
+                    // HALCON-image inlezen
+                    HOperatorSet.ReadImage(out image, imagePath);
+                    HOperatorSet.RotateImage(image, out image, rotation, "constant");
+                    GrabImage = image;
+                    success = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                image = null;
+            }
+            
+            return success;
+        }
+
+        public void A001GenericShapeDetect(HObject image)
         {
             // Stack for temporary objects 
             HObject[] OTemp = new HObject[20];
@@ -2184,19 +2280,9 @@ namespace LIB0000
             HOperatorSet.GenEmptyObj(out ho_ModelContours);
             HOperatorSet.GenEmptyObj(out ho_TransContours);
             HOperatorSet.GenEmptyObj(out ho_MatchContour);
-            //Image Acquisition 01: Code generated by Image Acquisition 01
-            ho_Image.Dispose();
-            //
-            Type = 1;
-            if (Type == 0)
-            {
-                HOperatorSet.ReadImage(out ho_Image, "C:/JOLT/FHV7.jpg");
-            }
-            else
-            {
-                HOperatorSet.ReadImage(out ho_Image, "C:/Users/joltm/OneDrive/Afbeeldingen/1_TEACH 001.jpg");
-            }
 
+
+            HOperatorSet.CopyObj(image, out ho_Image, 1, 1);
             //
             //Matching 01: ************************************************
             //Matching 01: BEGIN of generated code for model initialization
@@ -2214,7 +2300,7 @@ namespace LIB0000
             //
             //Matching 01: Build the ROI from basic regions
             ho_ModelRegion.Dispose();
-            HOperatorSet.GenRectangle1(out ho_ModelRegion, 400, 400, 600, 600);
+            HOperatorSet.GenRectangle1(out ho_ModelRegion, 400, 500, 800, 700);
             //
             //Matching 01: Reduce the model template
             ho_TemplateImage.Dispose();
@@ -2300,9 +2386,13 @@ namespace LIB0000
                 {
                     HOperatorSet.DispObj(ho_MatchContour, HDevWindowStack.GetActive());
                 }
-                ShapeSearch.ResultImage = ho_Image;
-                ShapeSearch.ResultRegion = ho_MatchContour;
-                //ResultTransform = ho_TransContours;
+                if (ho_MatchContour != null)
+                {
+                    A001Stat.resultMatchContour = ho_MatchContour;
+                }
+
+
+                
                 //
                 //Matching 01: Retrieve parameters of the detected match
                 hv_Row.Dispose();
@@ -2351,476 +2441,13 @@ namespace LIB0000
             hv_ScaleColumn.Dispose();
             hv_Score.Dispose();
         }
-        public void GrabFromUSB3()
-        {
-            if (framegrabber == null)
-            {
-                framegrabber = new HFramegrabber(
-                "USB3Vision", 0, 0, 0, 0, 0, 0, "progressive",
-                -1, "default", -1, "false", "default",
-            "User Defined Name", 0, -1
-            );
-            }
-            framegrabber.SetFramegrabberParam("ExposureMode", "Timed");
-            framegrabber.SetFramegrabberParam("ExposureTime", 3000);
-
-
-            HObject ho_Image = new HObject();
-            HOperatorSet.GenEmptyObj(out ho_Image);
-            HOperatorSet.GrabImage(out ho_Image, framegrabber);
-            HOperatorSet.RotateImage(ho_Image, out ho_Image, 180, "constant");
-
-            Grab.Image = ho_Image;
-
-        }
-        public void GrabFromGigE()
-        {
-            if (busy == true)
-            {
-                return;
-            }
-            try
-            {
-                if (framegrabber == null)
-                {
-                    framegrabber = new HFramegrabber(
-                    "GigEVision2", 0, 0, 0, 0, 0, 0, "progressive", -1, "default", -1, "false", "default", "d47c4431528b_OMRONSENTECH_STCMCS122BPOE", 0, -1
-                );  // d47c443154af_OMRONSENTECH_STCMBS122BPOE kaartenteller
-
-                }
-                framegrabber.SetFramegrabberParam("ExposureMode", "Timed");
-                framegrabber.SetFramegrabberParam("ExposureTime", 10000);
-                
-
-                HObject ho_Image = new HObject();
-                HOperatorSet.GenEmptyObj(out ho_Image);
-                try
-                {
-
-                    HOperatorSet.GrabImage(out ho_Image, framegrabber);
-                    HOperatorSet.RotateImage(ho_Image, out ho_Image, 90, "constant");
-                    Grab.Image = ho_Image;
-                    busy = true;
-
-                    if (deepOcrInitialized == true)
-                    {
-                        DeepOcrDetect(ho_Image);
-
-                    }
-                    else
-                    {
-                        DeepOcrInit();
-                        DeepOcrDetect(ho_Image);
-
-                    }
-                    busy = false;
-                    
-                }
-                catch (Exception ex)
-                {
-
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);                
-            }
-        }
-
-        private void action()
-        {
-
-
-            // Local iconic variables 
-
-            HObject ho_Image = null;
-
-            // Local control variables 
-
-            HTuple hv_PathExample = new HTuple(), hv_ImagesPath = new HTuple();
-            HTuple hv_UseFastAI2Devices = new HTuple(), hv_DLDevice = new HTuple();
-            HTuple hv_DeepOcrHandle = new HTuple(), hv_RecognitionAlphabet = new HTuple();
-            HTuple hv_DisplaySize = new HTuple(), hv_WindowHandleAlphabet = new HTuple();
-            HTuple hv_PreprocessedDisplayWidth = new HTuple(), hv_PreprocessedDisplayHeight = new HTuple();
-            HTuple hv_ScoreMapsDisplayWidth = new HTuple(), hv_ScoreMapsDisplayHeight = new HTuple();
-            HTuple hv_WindowHandle = new HTuple(), hv_WindowPreprocessed = new HTuple();
-            HTuple hv_WindowScoreMaps = new HTuple(), hv_Index = new HTuple();
-            HTuple hv_StartTime = new HTuple(), hv_Width = new HTuple();
-            HTuple hv_Height = new HTuple(), hv_DeepOcrResult = new HTuple();
-            HTuple hv_EndTime = new HTuple(), hv_TimeTaken = new HTuple();
-            // Initialize local and output iconic variables 
-            HOperatorSet.GenEmptyObj(out ho_Image);
-            try
-            {
-                //
-                //This example shows the usage of the Deep OCR:
-                //- Part 1: Detection and recognition of the words within an image.
-                //- Part 2: Recognition of the words only.
-                //- Part 3: Detection of the words only.
-                //- Part 4: Detection and recognition on a large image with automatic tiling.
-                //
-                dev_update_off();
-                if (HDevWindowStack.IsOpen())
-                {
-                    HOperatorSet.CloseWindow(HDevWindowStack.Pop());
-                }
-                //
-                //Set path for images.
-                hv_PathExample.Dispose();
-                hv_PathExample = "ocr/";
-                hv_ImagesPath.Dispose();
-                using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                {
-                    hv_ImagesPath = hv_PathExample + (((((((((
-                        (new HTuple("card01.bmp")).TupleConcat("card02.bmp")).TupleConcat("card03.bmp")).TupleConcat(
-                        "card04.bmp")).TupleConcat("card05")).TupleConcat("card06")).TupleConcat(
-                        "card07")).TupleConcat("card08")).TupleConcat("card09")).TupleConcat("card10"));
-                }
-                //
-                //In general, optimal runtime performance and minimal memory usage is
-                //obtained by using an AI² device for inference (e.g. TensorRT/OpenVINO).
-                //Note, however the initialization time increases if this is set to 'true'.
-                hv_UseFastAI2Devices.Dispose();
-                hv_UseFastAI2Devices = "true";
-
-                //
-                //Get the inference deep learning device.
-                hv_DLDevice.Dispose();
-                get_inference_dl_device(hv_UseFastAI2Devices, out hv_DLDevice);
-
-
-                //*************************************************************
-                //Part 1: Detection and recognition of words within an image.
-                //*************************************************************
-                //Create the model.
-                hv_DeepOcrHandle.Dispose();
-                HOperatorSet.CreateDeepOcr(new HTuple(), new HTuple(), out hv_DeepOcrHandle);
-                //
-                //Return the list of characters for which the model has been trained.
-                hv_RecognitionAlphabet.Dispose();
-                HOperatorSet.GetDeepOcrParam(hv_DeepOcrHandle, "recognition_alphabet", out hv_RecognitionAlphabet);
-                //
-                //Set the inference deep learning device after the model is configurated.
-
-                HOperatorSet.SetDeepOcrParam(hv_DeepOcrHandle, "device", hv_DLDevice);
-
-                //
-                hv_DisplaySize.Dispose();
-                hv_DisplaySize = 480;
-                //
-                HOperatorSet.SetWindowAttr("background_color", "black");
-                HOperatorSet.OpenWindow(0, 0, hv_DisplaySize, hv_DisplaySize, 0, "visible", "", out hv_WindowHandleAlphabet);
-                HDevWindowStack.Push(hv_WindowHandleAlphabet);
-                display_recognition_alphabet(hv_RecognitionAlphabet, hv_WindowHandleAlphabet);
-                // stop(...); only in hdevelop
-                if (HDevWindowStack.IsOpen())
-                {
-                    HOperatorSet.CloseWindow(HDevWindowStack.Pop());
-                }
-                //
-                //For a prettier visualization, the preprocessed images and scores are
-                //shown with a reduced size.
-                hv_PreprocessedDisplayWidth.Dispose();
-                using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                {
-                    hv_PreprocessedDisplayWidth = 0.5 * hv_DisplaySize;
-                }
-                hv_PreprocessedDisplayHeight.Dispose();
-                using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                {
-                    hv_PreprocessedDisplayHeight = 0.5 * hv_DisplaySize;
-                }
-                hv_ScoreMapsDisplayWidth.Dispose();
-                using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                {
-                    hv_ScoreMapsDisplayWidth = 2 * hv_PreprocessedDisplayWidth;
-                }
-                hv_ScoreMapsDisplayHeight.Dispose();
-                hv_ScoreMapsDisplayHeight = new HTuple(hv_PreprocessedDisplayHeight);
-                //
-                HOperatorSet.SetWindowAttr("background_color", "black");
-                HOperatorSet.OpenWindow(0, 0, hv_DisplaySize, hv_DisplaySize, 0, "visible", "", out hv_WindowHandle);
-                HDevWindowStack.Push(hv_WindowHandle);
-                HOperatorSet.SetWindowAttr("background_color", "black");
-                HOperatorSet.OpenWindow(0, 10 + hv_DisplaySize, hv_PreprocessedDisplayWidth, hv_PreprocessedDisplayHeight, 0, "visible", "", out hv_WindowPreprocessed);
-                HDevWindowStack.Push(hv_WindowPreprocessed);
-                HOperatorSet.SetWindowAttr("background_color", "black");
-                HOperatorSet.OpenWindow(0, (20 + hv_DisplaySize) + hv_PreprocessedDisplayWidth, hv_ScoreMapsDisplayWidth, hv_ScoreMapsDisplayHeight, 0, "visible", "", out hv_WindowScoreMaps);
-                HDevWindowStack.Push(hv_WindowScoreMaps);
-                //
-                //Apply Deep OCR on different images.
-                for (hv_Index = 0; (int)hv_Index <= (int)((new HTuple(hv_ImagesPath.TupleLength()
-                    )) - 1); hv_Index = (int)hv_Index + 1)
-                {
-                    hv_StartTime.Dispose();
-                    HOperatorSet.CountSeconds(out hv_StartTime);
-                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                    {
-                        ho_Image.Dispose();
-                        HOperatorSet.ReadImage(out ho_Image, hv_ImagesPath.TupleSelect(hv_Index));
-                    }
-                    hv_Width.Dispose(); hv_Height.Dispose();
-                    HOperatorSet.GetImageSize(ho_Image, out hv_Width, out hv_Height);
-                    HDevWindowStack.SetActive(hv_WindowHandle);
-                    if (HDevWindowStack.IsOpen())
-                    {
-                        using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                        {
-                            HOperatorSet.SetWindowExtents(HDevWindowStack.GetActive(), 0, 0, hv_DisplaySize,
-                                (hv_DisplaySize * hv_Height) / hv_Width);
-                        }
-                    }
-                    if (HDevWindowStack.IsOpen())
-                    {
-                        HOperatorSet.DispObj(ho_Image, HDevWindowStack.GetActive());
-                    }
-                    //
-                    //Detect and recognize the words.
-                    hv_DeepOcrResult.Dispose();
-                    HOperatorSet.ApplyDeepOcr(ho_Image, hv_DeepOcrHandle, "auto", out hv_DeepOcrResult);
-                    //
-                    //
-                    //Visualize the results on the original image.
-                    //The detections are shown as oriented rectangles, where an arrow indicates the reading direction.
-                    //The recognized words are shown at a corner of the detection rectangles. For further information,
-                    //please see also the documentation of the procedure "dev_display_deep_ocr_results".
-                    dev_display_deep_ocr_results(ho_Image, hv_WindowHandle, hv_DeepOcrResult,
-                        new HTuple(), new HTuple());
-                    
-                    if (HDevWindowStack.IsOpen())
-                    {
-                        HOperatorSet.DispText(HDevWindowStack.GetActive(), "Original image", "window",
-                            "top", "left", "black", new HTuple(), new HTuple());
-                    }
-                    //
-                    //Visualize the preprocessed image with the localized words as well as the
-                    //respective character and link score maps.
-                    dev_display_deep_ocr_results_preprocessed(hv_WindowPreprocessed, hv_DeepOcrResult,
-                        new HTuple(), new HTuple());
-                    dev_display_deep_ocr_score_maps(hv_WindowScoreMaps, hv_DeepOcrResult, new HTuple(),
-                        new HTuple());
-                    if (HDevWindowStack.IsOpen())
-                    {
-                        HOperatorSet.DispText(HDevWindowStack.GetActive(), "Press Run (F5) to continue",
-                            "window", "bottom", "right", "black", new HTuple(), new HTuple());
-                    }
-                    hv_EndTime.Dispose();
-                    HOperatorSet.CountSeconds(out hv_EndTime);
-                    Grab.Image = ho_Image;
-                    hv_TimeTaken.Dispose();
-                    using (HDevDisposeHelper dh = new HDevDisposeHelper())
-                    {
-                        hv_TimeTaken = hv_EndTime - hv_StartTime;
-                    }
-                    // stop(...); only in hdevelop
-                    //
-                    if (HDevWindowStack.IsOpen())
-                    {
-                        HOperatorSet.ClearWindow(HDevWindowStack.GetActive());
-                    }
-                    HDevWindowStack.SetActive(hv_WindowPreprocessed);
-                    if (HDevWindowStack.IsOpen())
-                    {
-                        HOperatorSet.ClearWindow(HDevWindowStack.GetActive());
-                    }
-                    HDevWindowStack.SetActive(hv_WindowScoreMaps);
-                    if (HDevWindowStack.IsOpen())
-                    {
-                        HOperatorSet.ClearWindow(HDevWindowStack.GetActive());
-                    }
-                    if (HDevWindowStack.IsOpen())
-                    {
-                        HOperatorSet.SetLut(HDevWindowStack.GetActive(), "default");
-                    }
-                }
-                //
-                HDevWindowStack.SetActive(hv_WindowScoreMaps);
-                if (HDevWindowStack.IsOpen())
-                {
-                    HOperatorSet.CloseWindow(HDevWindowStack.Pop());
-                }
-                HDevWindowStack.SetActive(hv_WindowPreprocessed);
-                if (HDevWindowStack.IsOpen())
-                {
-                    HOperatorSet.CloseWindow(HDevWindowStack.Pop());
-                }
-                HDevWindowStack.SetActive(hv_WindowHandle);
-                if (HDevWindowStack.IsOpen())
-                {
-                    HOperatorSet.CloseWindow(HDevWindowStack.Pop());
-                }
-                HOperatorSet.ClearHandle(hv_DeepOcrHandle);
-
-            }
-            catch (HalconException HDevExpDefaultException)
-            {
-                ho_Image.Dispose();
-
-                hv_PathExample.Dispose();
-                hv_ImagesPath.Dispose();
-                hv_UseFastAI2Devices.Dispose();
-                hv_DLDevice.Dispose();
-                hv_DeepOcrHandle.Dispose();
-                hv_RecognitionAlphabet.Dispose();
-                hv_DisplaySize.Dispose();
-                hv_WindowHandleAlphabet.Dispose();
-                hv_PreprocessedDisplayWidth.Dispose();
-                hv_PreprocessedDisplayHeight.Dispose();
-                hv_ScoreMapsDisplayWidth.Dispose();
-                hv_ScoreMapsDisplayHeight.Dispose();
-                hv_WindowHandle.Dispose();
-                hv_WindowPreprocessed.Dispose();
-                hv_WindowScoreMaps.Dispose();
-                hv_Index.Dispose();
-                hv_StartTime.Dispose();
-                hv_Width.Dispose();
-                hv_Height.Dispose();
-                hv_DeepOcrResult.Dispose();
-                hv_EndTime.Dispose();
-                hv_TimeTaken.Dispose();
-
-                throw HDevExpDefaultException;
-            }
-            ho_Image.Dispose();
-
-            hv_PathExample.Dispose();
-            hv_ImagesPath.Dispose();
-            hv_UseFastAI2Devices.Dispose();
-            hv_DLDevice.Dispose();
-            hv_DeepOcrHandle.Dispose();
-            hv_RecognitionAlphabet.Dispose();
-            hv_DisplaySize.Dispose();
-            hv_WindowHandleAlphabet.Dispose();
-            hv_PreprocessedDisplayWidth.Dispose();
-            hv_PreprocessedDisplayHeight.Dispose();
-            hv_ScoreMapsDisplayWidth.Dispose();
-            hv_ScoreMapsDisplayHeight.Dispose();
-            hv_WindowHandle.Dispose();
-            hv_WindowPreprocessed.Dispose();
-            hv_WindowScoreMaps.Dispose();
-            hv_Index.Dispose();
-            hv_StartTime.Dispose();
-            hv_Width.Dispose();
-            hv_Height.Dispose();
-            hv_DeepOcrResult.Dispose();
-            hv_EndTime.Dispose();
-            hv_TimeTaken.Dispose();
-
-        }
-
-        public void DeepOcrInit()
-        {
-            hv_UseFastAI2Devices = "false";
-            get_inference_dl_device(hv_UseFastAI2Devices, out hv_DLDevice);
-            Debug.WriteLine("Fast AI Device : " + hv_DLDevice.ToString());
-            //Create the model.
-            hv_DeepOcrHandle.Dispose();
-            HOperatorSet.CreateDeepOcr(new HTuple(), new HTuple(), out hv_DeepOcrHandle);
-            //
-            Debug.WriteLine("Deep OCR model created ");
-            //Return the list of characters for which the model has been trained.
-            hv_RecognitionAlphabet.Dispose();
-            HOperatorSet.GetDeepOcrParam(hv_DeepOcrHandle, "recognition_alphabet", out hv_RecognitionAlphabet);
-            Debug.WriteLine("Deep OCR model : " + hv_RecognitionAlphabet.ToString());
-            //
-            //Set the inference deep learning device after the model is configurated.
-
-            HOperatorSet.SetDeepOcrParam(hv_DeepOcrHandle, "device", hv_DLDevice);
-
-            deepOcrInitialized = true;
-            Debug.WriteLine("Deep OCR model is initialised");
-        }
-        public void DeepOcrDetect(HObject image)
-        {
-
-            // 1) Apply Deep OCR
-            hv_DeepOcrResult.Dispose();
-            HOperatorSet.ApplyDeepOcr(image, hv_DeepOcrHandle, "auto", out hv_DeepOcrResult);
-
-            hv_ResultKey = "word_boxes_on_image";
-
-            //get_deep_ocr_detection_word_boxes(hv_DeepOcrResult,hv_ResultKey, out hv_WordBoxRow, out hv_WordBoxColumn,out hv_WordBoxPhi,out hv_WordBoxLength1,out hv_WordBoxLength2);
-
-            // Eerste resultaat (meestal 1 dict per image)
-            HTuple hv_ResultDict = hv_DeepOcrResult.TupleSelect(0);
-
-            // Woorden dictionary ophalen
-            HTuple hv_Words;
-            HOperatorSet.GetDictTuple(hv_ResultDict, "words", out hv_Words);
-
-            // Parameters voor elke tekstregel
-            HTuple hv_Texts, hv_Row, hv_Col, hv_Phi, hv_L1, hv_L2;
-            HOperatorSet.GetDictTuple(hv_Words, "word", out hv_Texts);
-            HOperatorSet.GetDictTuple(hv_Words, "row", out hv_Row);
-            HOperatorSet.GetDictTuple(hv_Words, "col", out hv_Col);
-            HOperatorSet.GetDictTuple(hv_Words, "phi", out hv_Phi);
-            HOperatorSet.GetDictTuple(hv_Words, "length1", out hv_L1);
-            HOperatorSet.GetDictTuple(hv_Words, "length2", out hv_L2);
-
-            // Eén HObject maken met alle OCR-boxen
-            HObject ho_AllRects;
-            HOperatorSet.GenEmptyObj(out ho_AllRects);
-
-
-            // 3️⃣ Vul de woordenlijst voor tekstlabels
-            ResultOCRWords.Clear();
-
-            for (int i = 0; i < hv_Texts.Length; i++)
-            {
-                HObject ho_Rect;
-                HOperatorSet.GenRectangle2(out ho_Rect,
-                    hv_Row[i], hv_Col[i], hv_Phi[i], hv_L1[i], hv_L2[i]);
-                HOperatorSet.ConcatObj(ho_AllRects, ho_Rect, out ho_AllRects);
-                ho_Rect.Dispose();
-
-                ResultOCRWords.Add(new OcrWord
-                {
-                    Word = hv_Texts[i].S,
-                    Row = hv_Row[i].D - hv_L2[i].D - 10,   // een beetje boven het boxje
-                    Column = hv_Col[i].D - hv_L1[i].D
-                });
-
-                OnOcrCompleted(true);
-
-            }
-
-
-
-
-        }
-
-        public void GrabFromFile()
-        {
-            HObject ho_Image = new HObject();
-            HOperatorSet.GenEmptyObj(out ho_Image);
-
-            string[] _imageFiles = Directory.GetFiles("C:/JOLT/", "*.bmp");
-
-            if (_imageFiles.Length > 0)
-            {
-
-                // Als we aan het einde zijn: opnieuw beginnen (optioneel)
-                if (fileIndex >= _imageFiles.Length)
-                    fileIndex = 0;
-
-                // Bestandspad ophalen
-                string imagePath = _imageFiles[fileIndex];
-                fileIndex++;
-
-                // HALCON-image inlezen
-                HOperatorSet.ReadImage(out ho_Image, imagePath);
-
-
-                Grab.Image = ho_Image;
-            }
-        }
-        public void TeachShape()
+        public void A001GenericShapeTeach(HObject image)
         {
             //GrabFromFile();
 
             // Stack for temporary objects 
             HObject[] OTemp = new HObject[20];
-
+            
             // Local iconic variables 
 
             HObject ho_Image, ho_ModelRegion, ho_TemplateImage;
@@ -2842,19 +2469,8 @@ namespace LIB0000
             HOperatorSet.GenEmptyObj(out ho_ModelContours);
             HOperatorSet.GenEmptyObj(out ho_TransContours);
             HOperatorSet.GenEmptyObj(out ho_MatchContour);
-            //Image Acquisition 01: Code generated by Image Acquisition 01
-            ho_Image.Dispose();
-            Type = 1;
-            if (Type == 0)
-            {
-                ho_Image = Grab.Image;
-                //HOperatorSet.ReadImage(out ho_Image, "C:/JOLT/FHV7.jpg");
-            }
-            else
-            {
-                HOperatorSet.ReadImage(out ho_Image, "C:/Users/joltm/OneDrive/Afbeeldingen/1_TEACH 001.jpg");
-            }
-            Grab.Image = ho_Image;
+
+            HOperatorSet.CopyObj(image, out ho_Image, 1, 1);
             //
             //Matching 01: ************************************************
             //Matching 01: BEGIN of generated code for model initialization
@@ -2958,8 +2574,8 @@ namespace LIB0000
                 {
                     HOperatorSet.DispObj(ho_MatchContour, HDevWindowStack.GetActive());
                 }
-                ShapeSearch.ResultImage = ho_Image;
-                ShapeSearch.ResultRegion = ho_MatchContour;
+                A001Stat.resultImage = ho_Image;
+                Contour = ho_MatchContour;
                 //ResultTransform = ho_TransContours;
                 //
                 //Matching 01: Retrieve parameters of the detected match
@@ -3009,10 +2625,113 @@ namespace LIB0000
             hv_ScaleColumn.Dispose();
             hv_Score.Dispose();
         }
+     
+        public void A002DeepOcrInit()
+        {
+            hv_UseFastAI2Devices = "false";
+            get_inference_dl_device(hv_UseFastAI2Devices, out hv_DLDevice);
+            Debug.WriteLine("Fast AI Device : " + hv_DLDevice.ToString());
+            //Create the model.
+            hv_DeepOcrHandle.Dispose();
+            HOperatorSet.CreateDeepOcr(new HTuple(), new HTuple(), out hv_DeepOcrHandle);
+            //
+            Debug.WriteLine("Deep OCR model created ");
+            //Return the list of characters for which the model has been trained.
+            hv_RecognitionAlphabet.Dispose();
+            HOperatorSet.GetDeepOcrParam(hv_DeepOcrHandle, "recognition_alphabet", out hv_RecognitionAlphabet);
+            Debug.WriteLine("Deep OCR model : " + hv_RecognitionAlphabet.ToString());
+            //
+            //Set the inference deep learning device after the model is configurated.
+
+            HOperatorSet.SetDeepOcrParam(hv_DeepOcrHandle, "device", hv_DLDevice);
+
+            deepOcrInitialized = true;
+            Debug.WriteLine("Deep OCR model is initialised");
+        }
+        public void A002DeepOcrDetect(HObject image)
+        {
+
+            // 1) Apply Deep OCR
+            hv_DeepOcrResult.Dispose();
+            HOperatorSet.ApplyDeepOcr(image, hv_DeepOcrHandle, "auto", out hv_DeepOcrResult);
+
+            hv_ResultKey = "word_boxes_on_image";
+
+            //get_deep_ocr_detection_word_boxes(hv_DeepOcrResult,hv_ResultKey, out hv_WordBoxRow, out hv_WordBoxColumn,out hv_WordBoxPhi,out hv_WordBoxLength1,out hv_WordBoxLength2);
+
+            // Eerste resultaat (meestal 1 dict per image)
+            HTuple hv_ResultDict = hv_DeepOcrResult.TupleSelect(0);
+
+            // Woorden dictionary ophalen
+            HTuple hv_Words;
+            HOperatorSet.GetDictTuple(hv_ResultDict, "words", out hv_Words);
+
+            // Parameters voor elke tekstregel
+            HTuple hv_Texts, hv_Row, hv_Col, hv_Phi, hv_L1, hv_L2;
+            HOperatorSet.GetDictTuple(hv_Words, "word", out hv_Texts);
+            HOperatorSet.GetDictTuple(hv_Words, "row", out hv_Row);
+            HOperatorSet.GetDictTuple(hv_Words, "col", out hv_Col);
+            HOperatorSet.GetDictTuple(hv_Words, "phi", out hv_Phi);
+            HOperatorSet.GetDictTuple(hv_Words, "length1", out hv_L1);
+            HOperatorSet.GetDictTuple(hv_Words, "length2", out hv_L2);
+
+            // Eén HObject maken met alle OCR-boxen
+            HObject ho_AllRects;
+            HOperatorSet.GenEmptyObj(out ho_AllRects);
+
+
+            // 3️⃣ Vul de woordenlijst voor tekstlabels
+            ResultOCRWords.Clear();
+
+            for (int i = 0; i < hv_Texts.Length; i++)
+            {
+                HObject ho_Rect;
+                HOperatorSet.GenRectangle2(out ho_Rect,
+                    hv_Row[i], hv_Col[i], hv_Phi[i], hv_L1[i], hv_L2[i]);
+                HOperatorSet.ConcatObj(ho_AllRects, ho_Rect, out ho_AllRects);
+                ho_Rect.Dispose();
+
+                //ResultOCRWords.Add(new OcrWord
+                //{
+                //    Word = hv_Texts[i].S,
+                //    Row = hv_Row[i].D - hv_L2[i].D - 10,   // een beetje boven het boxje
+                //    Column = hv_Col[i].D - hv_L1[i].D
+                //});
+
+                OnOcrCompleted(true);
+
+            }
+
+
+
+
+        }
+
+
+
 
         #endregion
 
         #region Properties
+
+        [ObservableProperty]
+        HObject _grabImage;
+
+        [ObservableProperty]
+        HObject _contour;
+
+
+        [ObservableProperty]
+        A001GenericShapeParTyp _a001Par = new A001GenericShapeParTyp();
+
+        [ObservableProperty]
+        A001GenericShapeStatTyp _a001Stat = new A001GenericShapeStatTyp();
+
+        [ObservableProperty]
+        A002DeepOcrParTyp _a002Par = new A002DeepOcrParTyp();
+
+        [ObservableProperty]
+        A002DeepOcrStatTyp _a002Stat = new A002DeepOcrStatTyp();
 
         [ObservableProperty]
         ObservableCollection<OcrWord> _resultOCRWords = new ObservableCollection<OcrWord>();
@@ -3023,11 +2742,7 @@ namespace LIB0000
         [ObservableProperty]
         private bool _closingApplication;
 
-        [ObservableProperty]
-        ShapeSearch _shapeSearch;
 
-        [ObservableProperty]
-        Grab _grab = new Grab();
 
         [ObservableProperty]
         int _type;
@@ -3047,91 +2762,12 @@ namespace LIB0000
 
         #endregion
     }
-    public partial class Grab : ObservableObject
-    {
-
-        #region Commands
-        #endregion
-
-        #region Constructor
-        #endregion
-
-        #region Events
-        #endregion
-
-        #region Fields
 
 
 
-        #endregion
-
-        #region Methods
-        #endregion
-
-        #region Properties
-
-        [ObservableProperty]
-        HObject _image = new HObject();
-
-
-        [ObservableProperty]
-        int _testCounter;
-        #endregion
-
-
-    }
-    public partial class ShapeSearch : ObservableObject
-    {
-
-        #region Commands
 
 
 
-        #endregion
-
-        #region Constructor
-
-        public ShapeSearch()
-        {
-
-        }
-
-        #endregion
-
-        #region Events
-        #endregion
-
-        #region Fields
 
 
-
-        #endregion
-
-        #region Methods
-
-
-        #endregion
-
-        #region Properties
-
-        [ObservableProperty]
-        HObject _resultImage = new HObject();
-
-        [ObservableProperty]
-        HObject _resultRegion = new HObject();
-
-        [ObservableProperty]
-        HObject _resultTransform = new HObject();
-
-        #endregion
-
-
-
-    }
-    public class OcrWord
-    {
-        public string Word { get; set; }
-        public double Row { get; set; }
-        public double Column { get; set; }
-    }
 }
