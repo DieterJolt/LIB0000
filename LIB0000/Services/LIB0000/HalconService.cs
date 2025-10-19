@@ -36,17 +36,11 @@ namespace LIB0000
 
         #region Events
 
-        public event EventHandler<bool> OcrCompleted;
+        public event EventHandler<bool> A002DeepOcrEventHandler;
 
-        protected virtual void GrabCompleted(object sender, bool e)
+        protected virtual void A002DeepOcrEventCompleted(bool success)
         {
-            OnOcrCompleted(e);
-        }   
-
-
-        protected virtual void OnOcrCompleted(bool success)
-        {
-            OcrCompleted?.Invoke(this, success);
+            A002DeepOcrEventHandler?.Invoke(this, success);
         }
 
         #endregion
@@ -2134,6 +2128,9 @@ HTuple hv_DeepOcrResult, HTuple hv_GenParamName, HTuple hv_GenParamValue)
 
         public void Cyclic()
         {
+            Type = 2;
+            A002DeepOcrInit();
+
             while (!ClosingApplication)
             {
 
@@ -2144,6 +2141,20 @@ HTuple hv_DeepOcrResult, HTuple hv_GenParamName, HTuple hv_GenParamValue)
                        A001GenericShapeTeach(GrabImage);
                     }
                 }
+                else if (Type ==1)
+                {
+                    if (G002Usb3(true, 90) == true)
+                    {
+                        A001GenericShapeTeach(GrabImage);
+                    }
+                }
+                else if (Type == 2)
+                {
+                    if (G003FromFile("C:/JOLT/", "*.bmp", 0) == true)
+                    {
+                        A002DeepOcrDetect(GrabImage);
+                    }
+                }
                 else
                 {
 
@@ -2151,7 +2162,7 @@ HTuple hv_DeepOcrResult, HTuple hv_GenParamName, HTuple hv_GenParamValue)
 
                 }
                 TestCounter++;
-                Thread.Sleep(1);
+                Thread.Sleep(5000);
             }
 
         }
@@ -2691,6 +2702,11 @@ HTuple hv_DeepOcrResult, HTuple hv_GenParamName, HTuple hv_GenParamValue)
                 HOperatorSet.ConcatObj(ho_AllRects, ho_Rect, out ho_AllRects);
                 ho_Rect.Dispose();
 
+                A002DeepOcrStat.ResultsWords[i] = hv_Texts[i].S;
+                A002DeepOcrStat.ResultsRow[i] = hv_Row[i].D;
+                A002DeepOcrStat.ResultsColumn[i] = hv_Col[i].D;
+                //A002DeepOcrStat
+
                 //ResultOCRWords.Add(new OcrWord
                 //{
                 //    Word = hv_Texts[i].S,
@@ -2698,7 +2714,7 @@ HTuple hv_DeepOcrResult, HTuple hv_GenParamName, HTuple hv_GenParamValue)
                 //    Column = hv_Col[i].D - hv_L1[i].D
                 //});
 
-                OnOcrCompleted(true);
+                A002DeepOcrEventCompleted(true);
 
             }
 
@@ -2728,10 +2744,10 @@ HTuple hv_DeepOcrResult, HTuple hv_GenParamName, HTuple hv_GenParamValue)
         A001GenericShapeStatTyp _a001Stat = new A001GenericShapeStatTyp();
 
         [ObservableProperty]
-        A002DeepOcrParTyp _a002Par = new A002DeepOcrParTyp();
+        A002DeepOcrParTyp _a002DeepOcrPar = new A002DeepOcrParTyp();
 
         [ObservableProperty]
-        A002DeepOcrStatTyp _a002Stat = new A002DeepOcrStatTyp();
+        A002DeepOcrStatTyp _a002DeepOcrStat = new A002DeepOcrStatTyp();
 
         [ObservableProperty]
         ObservableCollection<OcrWord> _resultOCRWords = new ObservableCollection<OcrWord>();

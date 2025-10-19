@@ -15,10 +15,10 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ha:HSmartWindowControlWPF 
+        <ha:HSmartWindowControlWPF x:Name="HSmartWindow01"
                                                  Grid.Row="1" Grid.Column="1" MouseDoubleClick="WindowControl_MouseDoubleClick">
-            <!--<ha:HIconicDisplayObjectWPF IconicObject="{Binding BasicService.HalconService[0].GrabImage}"/>-->
-            <ha:HIconicDisplayObjectWPF IconicObject="{Binding BasicService.HalconService[0].Contour}" HColor="green" LineWidth="1" />
+            <!--<ha:HIconicDisplayObjectWPF IconicObject="{Binding BasicService.HalconService[0].GrabImage}"/>
+            <ha:HIconicDisplayObjectWPF IconicObject="{Binding BasicService.HalconService[0].Contour}" HColor="green" LineWidth="1" />-->
             <!-- OCR tekstlabels -->
         </ha:HSmartWindowControlWPF>
         
