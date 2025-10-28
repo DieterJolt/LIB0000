@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace LIB0000
+namespace VAN0001
 {
     public partial class ParameterUserControl : UserControl
     {
@@ -9,32 +9,32 @@ namespace LIB0000
             InitializeComponent();
         }
 
-        //Parameter Name
-        public string ParameterName
+        //Label Name
+        public string LabelName
         {
-            get { return (string)GetValue(ParameterNameProperty); }
-            set { SetValue(ParameterNameProperty, value); }
+            get { return (string)GetValue(LabelNameProperty); }
+            set { SetValue(LabelNameProperty, value); }
         }
 
-        public static readonly DependencyProperty ParameterNameProperty = DependencyProperty.Register("ParameterName", typeof(string), typeof(ParameterUserControl));
+        public static readonly DependencyProperty LabelNameProperty = DependencyProperty.Register("LabelName", typeof(string), typeof(ParameterUserControl));
 
         //Label Text
-        public string ParameterValue
+        public string LabelText
         {
-            get { return (string)GetValue(ParameterValueProperty); }
-            set { SetValue(ParameterValueProperty, value); }
+            get { return (string)GetValue(LabelTextProperty); }
+            set { SetValue(LabelTextProperty, value); }
         }
 
-        public static readonly DependencyProperty ParameterValueProperty = DependencyProperty.Register("ParameterValue", typeof(string), typeof(ParameterUserControl));
+        public static readonly DependencyProperty LabelTextProperty = DependencyProperty.Register("LabelText", typeof(string), typeof(ParameterUserControl));
 
-        //Parameter Text
-        public string ParameterUnitText
+        //Label Text
+        public string LabelUnitText
         {
-            get { return (string)GetValue(ParameterUnitTextProperty); }
-            set { SetValue(ParameterUnitTextProperty, value); }
+            get { return (string)GetValue(LabelUnitTextProperty); }
+            set { SetValue(LabelUnitTextProperty, value); }
         }
 
-        public static readonly DependencyProperty ParameterUnitTextProperty = DependencyProperty.Register("ParameterUnitText", typeof(string), typeof(ParameterUserControl));
+        public static readonly DependencyProperty LabelUnitTextProperty = DependencyProperty.Register("LabelUnitText", typeof(string), typeof(ParameterUserControl));
 
         //LabelPlusCommand
         public RelayCommand LabelPlusCommand
@@ -55,43 +55,43 @@ namespace LIB0000
         public static readonly DependencyProperty LabelMinusCommandProperty = DependencyProperty.Register("LabelMinusCommand", typeof(RelayCommand), typeof(ParameterUserControl));
 
         //Button Minvalue
-        public int MinValue
+        public float MinValue
         {
-            get { return (int)GetValue(ButtonMinValueProperty); }
+            get { return (float)GetValue(ButtonMinValueProperty); }
             set { SetValue(ButtonMinValueProperty, value); }
         }
 
-        public static readonly DependencyProperty ButtonMinValueProperty = DependencyProperty.Register("MinValue", typeof(int), typeof(ParameterUserControl)
+        public static readonly DependencyProperty ButtonMinValueProperty = DependencyProperty.Register("MinValue", typeof(float), typeof(ParameterUserControl)
         );
 
         //Button Maxvalue
-        public int MaxValue
+        public float MaxValue
         {
-            get { return (int)GetValue(ButtonMaxValueProperty); }
+            get { return (float)GetValue(ButtonMaxValueProperty); }
             set { SetValue(ButtonMaxValueProperty, value); }
         }
 
-        public static readonly DependencyProperty ButtonMaxValueProperty = DependencyProperty.Register("MaxValue", typeof(int), typeof(ParameterUserControl)
+        public static readonly DependencyProperty ButtonMaxValueProperty = DependencyProperty.Register("MaxValue", typeof(float), typeof(ParameterUserControl)
         );
 
-        //Button StepValue
-        public int StepValue
+        //Button Setvalue
+        public float Value
         {
-            get { return (int)GetValue(ButtonSetStepValueProperty); }
-            set { SetValue(ButtonSetStepValueProperty, value); }
+            get { return (float)GetValue(ButtonSetValueProperty); }
+            set { SetValue(ButtonSetValueProperty, value); }
         }
 
-        public static readonly DependencyProperty ButtonSetStepValueProperty = DependencyProperty.Register("StepValue", typeof(int), typeof(ParameterUserControl)
+        public static readonly DependencyProperty ButtonSetValueProperty = DependencyProperty.Register("Value", typeof(float), typeof(ParameterUserControl)
         );
 
         //Button StepBigvalue
-        public int StepBigValue
+        public float StepBigValue
         {
-            get { return (int)GetValue(ButtonStepBigValueProperty); }
+            get { return (float)GetValue(ButtonStepBigValueProperty); }
             set { SetValue(ButtonStepBigValueProperty, value); }
         }
 
-        public static readonly DependencyProperty ButtonStepBigValueProperty = DependencyProperty.Register("StepBigValue", typeof(int), typeof(ParameterUserControl)
+        public static readonly DependencyProperty ButtonStepBigValueProperty = DependencyProperty.Register("StepBigValue", typeof(float), typeof(ParameterUserControl)
         );
 
         //Button StepBigTime
@@ -120,12 +120,12 @@ namespace LIB0000
                 }
                 else
                 {
-                    StepValue = value;
+                    txt.Text = value.ToString();
                 }
             }
             else
             {
-                txt.Text = StepValue.ToString();
+                txt.Text = Value.ToString();
             }
         }
     }
