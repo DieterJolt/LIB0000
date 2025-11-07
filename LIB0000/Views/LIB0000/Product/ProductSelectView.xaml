@@ -57,7 +57,7 @@
 
         </Grid>
         <Grid x:Name="gridButtons" Grid.Row="2">
-
+            
             <local:Footer5ButtonsUserControl VerticalAlignment="Center"
 
                     Button1Text="{DynamicResource Ok}"

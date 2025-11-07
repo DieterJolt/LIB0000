@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace VAN0001
+namespace LIB0000
 {
     public partial class ParameterUserControl : UserControl
     {
