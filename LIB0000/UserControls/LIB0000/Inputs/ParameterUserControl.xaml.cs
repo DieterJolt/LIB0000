@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace LIB0000
 {
@@ -9,32 +10,32 @@ namespace LIB0000
             InitializeComponent();
         }
 
-        //Label Name
-        public string LabelName
+        //Parameter Name
+        public string ParameterName
         {
-            get { return (string)GetValue(LabelNameProperty); }
-            set { SetValue(LabelNameProperty, value); }
+            get { return (string)GetValue(ParameterNameProperty); }
+            set { SetValue(ParameterNameProperty, value); }
         }
 
-        public static readonly DependencyProperty LabelNameProperty = DependencyProperty.Register("LabelName", typeof(string), typeof(ParameterUserControl));
+        public static readonly DependencyProperty ParameterNameProperty = DependencyProperty.Register("ParameterName", typeof(string), typeof(ParameterUserControl));
 
         //Label Text
-        public string LabelText
+        public string ParameterValue
         {
-            get { return (string)GetValue(LabelTextProperty); }
-            set { SetValue(LabelTextProperty, value); }
+            get { return (string)GetValue(ParameterValueProperty); }
+            set { SetValue(ParameterValueProperty, value); }
         }
 
-        public static readonly DependencyProperty LabelTextProperty = DependencyProperty.Register("LabelText", typeof(string), typeof(ParameterUserControl));
+        public static readonly DependencyProperty ParameterValueProperty = DependencyProperty.Register("ParameterValue", typeof(string), typeof(ParameterUserControl));
 
-        //Label Text
-        public string LabelUnitText
+        //ParameterUnitText
+        public string ParameterUnitText
         {
-            get { return (string)GetValue(LabelUnitTextProperty); }
-            set { SetValue(LabelUnitTextProperty, value); }
+            get { return (string)GetValue(ParameterUnitTextProperty); }
+            set { SetValue(ParameterUnitTextProperty, value); }
         }
 
-        public static readonly DependencyProperty LabelUnitTextProperty = DependencyProperty.Register("LabelUnitText", typeof(string), typeof(ParameterUserControl));
+        public static readonly DependencyProperty ParameterUnitTextProperty = DependencyProperty.Register("ParameterUnitText", typeof(string), typeof(ParameterUserControl));
 
         //LabelPlusCommand
         public RelayCommand LabelPlusCommand
@@ -75,13 +76,13 @@ namespace LIB0000
         );
 
         //Button Setvalue
-        public float Value
+        public float StepValue
         {
-            get { return (float)GetValue(ButtonSetValueProperty); }
-            set { SetValue(ButtonSetValueProperty, value); }
+            get { return (float)GetValue(StepValueProperty); }
+            set { SetValue(StepValueProperty, value); }
         }
 
-        public static readonly DependencyProperty ButtonSetValueProperty = DependencyProperty.Register("Value", typeof(float), typeof(ParameterUserControl)
+        public static readonly DependencyProperty StepValueProperty = DependencyProperty.Register("StepValue", typeof(float), typeof(ParameterUserControl)
         );
 
         //Button StepBigvalue
@@ -125,7 +126,7 @@ namespace LIB0000
             }
             else
             {
-                txt.Text = Value.ToString();
+                txt.Text = StepValue.ToString();
             }
         }
     }

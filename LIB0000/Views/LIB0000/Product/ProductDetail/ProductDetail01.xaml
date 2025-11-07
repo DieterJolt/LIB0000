@@ -42,8 +42,8 @@
                      ParameterUnitText="stuks"
                      MinValue="1" MaxValue="10000" 
                      StepValue="1" 
-                     StepBigValue="1" 
-                     StepBigTime="250"
+                     StepBigValue="100" 
+                     StepBigTime="150"
                      PreviewMouseLeftButtonDown="ParameterUserControl_PreviewMouseLeftButtonDown"
                     />
 
@@ -54,7 +54,7 @@
                      MinValue="1" MaxValue="250" 
                      StepValue="1" 
                      StepBigValue="1"
-                     StepBigTime="250"
+                     StepBigTime="150"
                      PreviewMouseLeftButtonDown="ParameterUserControl_PreviewMouseLeftButtonDown"
                     />
 
@@ -65,7 +65,7 @@
                      MinValue="1" MaxValue="250" 
                      StepValue="1" 
                      StepBigValue="1" 
-                     StepBigTime="250"
+                     StepBigTime="150"
                      PreviewMouseLeftButtonDown="ParameterUserControl_PreviewMouseLeftButtonDown"
                     />
 
@@ -76,7 +76,7 @@
                     MinValue="1" MaxValue="250" 
                     StepValue="1" 
                     StepBigValue="1" 
-                    StepBigTime="250"
+                    StepBigTime="150"
                     PreviewMouseLeftButtonDown="ParameterUserControl_PreviewMouseLeftButtonDown"
                     />
 
@@ -87,7 +87,7 @@
                      MinValue="1" MaxValue="250" 
                      StepValue="1" 
                      StepBigValue="1" 
-                     StepBigTime="250"
+                     StepBigTime="150"
                      PreviewMouseLeftButtonDown="ParameterUserControl_PreviewMouseLeftButtonDown"
                     />
 
@@ -99,7 +99,7 @@
                      MinValue="1" MaxValue="250" 
                      StepValue="1" 
                      StepBigValue="1" 
-                     StepBigTime="250"
+                     StepBigTime="150"
                      PreviewMouseLeftButtonDown="ParameterUserControl_PreviewMouseLeftButtonDown"
                     />
 
@@ -114,8 +114,8 @@
 
                         <Label Grid.Column="0" Margin="10,0,10,0" Content="Totaal gewicht" 
                 Foreground="White"  VerticalAlignment="Center" Grid.ColumnSpan="2" />
-                        <TextBox Grid.Column="2" MinWidth="75" MaxWidth="185" IsReadOnly="True" IsEnabled="False" Text="{Binding BasicService.ProductsService.ProductStructure.Edit.TotalWeight, UpdateSourceTrigger=PropertyChanged}" 
-            Foreground="White"  VerticalAlignment="Center" Margin="10,10,10,10" />
+                        <TextBox Grid.Column="2" MinWidth="100" MaxWidth="100" IsReadOnly="True" IsEnabled="False" Text="{Binding BasicService.ProductsService.ProductStructure.Edit.TotalWeight, UpdateSourceTrigger=PropertyChanged}" 
+            Foreground="White"  VerticalAlignment="Center" Margin="10,10,20,10" HorizontalAlignment="Right" />
                         <Label Grid.Column="3" Content="g"
                 Foreground="White"  VerticalAlignment="Center" HorizontalAlignment="Left" />
                     </Grid>
