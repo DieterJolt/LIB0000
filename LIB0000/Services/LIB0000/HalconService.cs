@@ -28,6 +28,27 @@ namespace LIB0000
             }
         }
 
+        [RelayCommand]
+        private void cmdTeachA003()
+        {
+            if (G003FromFile("D:/OneDrive - jolt.be.co-telenet.be/ServerShared/MACHINES/CAR0014 POC Bovenste kaart controle + kaarten tellen + snitcontrole/300 FOTOS/Counting cards images/Yu-Gi-Oh/", "*.bmp", 0) == true)
+            {
+                A003CardCountingPar.NumbersOfCardsToTeach = 10;
+                A003CardCountingTeach(GrabImage);
+            }
+        }
+
+        [RelayCommand]
+        private void cmdDetectA003()
+        {
+            if (G003FromFile("D:/OneDrive - jolt.be.co-telenet.be/ServerShared/MACHINES/CAR0014 POC Bovenste kaart controle + kaarten tellen + snitcontrole/300 FOTOS/Counting cards images/Yu-Gi-Oh/", "*.bmp", 0) == true)
+            {
+                A003CardCountingPar.AmplitudeThreshold = 2;
+                A003CardCountingPar.Sigma = 0.4;
+                A003CardCountingDetect(GrabImage);
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -36,7 +57,7 @@ namespace LIB0000
         {
            //Task.Run(() => Cyclic());
             Type = 2;
-            A002DeepOcrInit();
+            //A002DeepOcrInit();
         }
 
         #endregion
@@ -48,6 +69,13 @@ namespace LIB0000
         protected virtual void A002DeepOcrEventCompleted(bool success)
         {
             A002DeepOcrEventHandler?.Invoke(this, success);
+        }
+
+        public event EventHandler<bool> A003CardCountingEventHandler;
+
+        protected virtual void A003CardCountingEventCompleted(bool success)
+        {
+            A003CardCountingEventHandler?.Invoke(this, success);
         }
 
         #endregion
@@ -2366,7 +2394,7 @@ HTuple hv_DeepOcrResult, HTuple hv_GenParamName, HTuple hv_GenParamValue)
             if (HDevWindowStack.IsOpen())
             {
                 HOperatorSet.DispObj(ho_TransContours, HDevWindowStack.GetActive());
-            }
+            } 
             // stop(...); only in hdevelop
             //
             //Matching 01: END of generated code for model initialization
@@ -2738,7 +2766,318 @@ HTuple hv_DeepOcrResult, HTuple hv_GenParamName, HTuple hv_GenParamValue)
 
         }
 
+        public void A003CardCountingTeach(HObject image)
+        {                                    
+            HTuple hv_RoiWidthLen2 = new HTuple(),hv_File = new HTuple();
+            HTuple hv_MsrHandles = new HTuple(), hv_i = new HTuple();
+            HTuple hv_TmpCtrlRow = new HTuple(), hv_TmpCtrlColumn = new HTuple();
+            HTuple hv_TmpCtrlDrow = new HTuple(), hv_TmpCtrlDcolumn = new HTuple();
+            HTuple hv_TmpCtrlPhi = new HTuple(), hv_TmpCtrlLen1 = new HTuple();
+            HTuple hv_TmpCtrlLen2 = new HTuple(), hv_MsrHandleTemp = new HTuple();
+            HTuple hv_ResultAmp = new HTuple(), hv_ResultSigma = new HTuple();
+            HTuple hv_ResultCount = new HTuple(), hv_AmplitudeThreshold = new HTuple();
+            HTuple hv_Sigma = new HTuple(), hv_CorrectCount = new HTuple();
+            HTuple hv_Row1 = new HTuple(), hv_Column1 = new HTuple();
+            HTuple hv_Amp1 = new HTuple(), hv_Row2 = new HTuple();
+            HTuple hv_Column2 = new HTuple(), hv_Amp2 = new HTuple();
+            HTuple hv_TmpCtrl_RowCenter = new HTuple(), hv_TmpCtrl_ColumnCenter = new HTuple();
+            HTuple hv_Score = new HTuple(), hv_Width = new HTuple();
+            HTuple hv_Dist = new HTuple(), hv_NumberOfPairs = new HTuple();
+            HTuple hv_Indices = new HTuple(), hv_SortedIndices = new HTuple();
+            HTuple hv_SortedAmp = new HTuple(), hv_SortedSigma = new HTuple();
+            HTuple hv_SortedCount = new HTuple(), hv_Height = new HTuple();            
+            HTuple hv_Msg = new HTuple(), hv_RowOffset = new HTuple();
+            HTuple hv_Lines = new HTuple(), hv_IndicesLines = new HTuple();
+            HTuple hv_NumLinesStr = new HTuple(), hv_NumLinesStrStr = new HTuple();
+            HTuple hv_LineMsg = new HTuple(), hv_ThStr = new HTuple();
+            HTuple hv_SiStr = new HTuple(), hv_CntStr = new HTuple();
+            HTuple hv_RowPos = new HTuple();
+            
+            //-------------------------------------------------------------
+            //Teach procedure voor AmplitudeTreshold en Sigma zoeken
+            //Controle over 5 lijnen
+            //-------------------------------------------------------------
+                                                                       
+            hv_MsrHandles.Dispose();
+            hv_MsrHandles = new HTuple();
+            //--- Meet-handles aanmaken voor de 5 lijnen ---
+            for (hv_i = 0; (int)hv_i <= (int)((new HTuple(A003CardCountingPar.LineRowsStart.Count())) - 1); hv_i = (int)hv_i + 1)
+            {
+                hv_TmpCtrlRow.Dispose();
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_TmpCtrlRow = 0.5 * ((A003CardCountingPar.LineRowsStart[hv_i]) + (A003CardCountingPar.LineRowsEnd[hv_i]));
+                }
+                hv_TmpCtrlColumn.Dispose();
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_TmpCtrlColumn = 0.5 * (A003CardCountingPar.LineColumnsStart + A003CardCountingPar.LineColumnsEnd);
+                }
+                hv_TmpCtrlDrow.Dispose();
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_TmpCtrlDrow = (A003CardCountingPar.LineRowsStart[hv_i]) - (A003CardCountingPar.LineRowsEnd[hv_i]);
+                }
+                hv_TmpCtrlDcolumn.Dispose();
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_TmpCtrlDcolumn = A003CardCountingPar.LineColumnsEnd - A003CardCountingPar.LineColumnsStart;
+                }
+                hv_TmpCtrlPhi.Dispose();
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_TmpCtrlPhi = hv_TmpCtrlDrow.TupleAtan2(hv_TmpCtrlDcolumn);
+                }
+                hv_TmpCtrlLen1.Dispose();
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_TmpCtrlLen1 = 0.5 * ((((hv_TmpCtrlDrow * hv_TmpCtrlDrow) + (hv_TmpCtrlDcolumn * hv_TmpCtrlDcolumn))).TupleSqrt());
+                }
+                hv_TmpCtrlLen2.Dispose();
+                hv_TmpCtrlLen2 = new HTuple(A003CardCountingPar.RoiWidth);
+                hv_MsrHandleTemp.Dispose();
 
+                HOperatorSet.GetImageSize(image, out HTuple imageWidth, out HTuple imageHeight);
+                HOperatorSet.GenMeasureRectangle2(hv_TmpCtrlRow, hv_TmpCtrlColumn, hv_TmpCtrlPhi, hv_TmpCtrlLen1, hv_TmpCtrlLen2, imageWidth, imageHeight, "nearest_neighbor", out hv_MsrHandleTemp);
+                if (hv_MsrHandles == null) hv_MsrHandles = new HTuple();
+                hv_MsrHandles[hv_i] = hv_MsrHandleTemp;
+            }
+
+            //--- Resultaten initialiseren ---
+            hv_ResultAmp.Dispose();
+            hv_ResultAmp = new HTuple();
+            hv_ResultSigma.Dispose();
+            hv_ResultSigma = new HTuple();
+            hv_ResultCount.Dispose();
+            hv_ResultCount = new HTuple();
+
+            //--- Loops over alle combinaties ---
+            for (hv_AmplitudeThreshold = (double)(0); (double)hv_AmplitudeThreshold <= 10; hv_AmplitudeThreshold = (double)hv_AmplitudeThreshold + 0.1)
+            {
+                for (hv_Sigma = 0.4; (double)hv_Sigma <= 6; hv_Sigma = (double)hv_Sigma + 0.1)
+                {
+                    hv_CorrectCount.Dispose();
+                    hv_CorrectCount = 0;
+
+                    for (hv_i = 0; (int)hv_i <= (int)((new HTuple(hv_MsrHandles.TupleLength())) - 1); hv_i = (int)hv_i + 1)
+                    {
+                        using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                        {
+                            hv_Row1.Dispose(); hv_Column1.Dispose(); hv_Amp1.Dispose(); hv_Row2.Dispose(); hv_Column2.Dispose(); hv_Amp2.Dispose(); hv_TmpCtrl_RowCenter.Dispose(); hv_TmpCtrl_ColumnCenter.Dispose(); hv_Score.Dispose(); hv_Width.Dispose(); hv_Dist.Dispose();
+                            HOperatorSet.FuzzyMeasurePairs(image, hv_MsrHandles.TupleSelect(hv_i),
+                                hv_Sigma, hv_AmplitudeThreshold, 0.6, "all", out hv_Row1, out hv_Column1,
+                                out hv_Amp1, out hv_Row2, out hv_Column2, out hv_Amp2, out hv_TmpCtrl_RowCenter,
+                                out hv_TmpCtrl_ColumnCenter, out hv_Score, out hv_Width, out hv_Dist);
+                        }
+
+                        hv_NumberOfPairs.Dispose();
+                        HOperatorSet.TupleLength(hv_Row1, out hv_NumberOfPairs);
+                        if ((int)(new HTuple(hv_NumberOfPairs.TupleEqual(A003CardCountingPar.NumbersOfCardsToTeach))) != 0)
+                        {
+                            using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                            {
+                                {
+                                    HTuple
+                                      ExpTmpLocalVar_CorrectCount = hv_CorrectCount + 1;
+                                    hv_CorrectCount.Dispose();
+                                    hv_CorrectCount = ExpTmpLocalVar_CorrectCount;
+                                }
+                            }
+                        }
+                    }
+
+                    //Indien minstens 1 lijn correct, opslaan
+                    if ((int)(new HTuple(hv_CorrectCount.TupleGreater(0))) != 0)
+                    {
+                        A003CardCountingStat.TeachResult.Add(new A003CardCountingTeachResultTyp()
+                        {
+                            AmplitudeThreshold = hv_AmplitudeThreshold.D,
+                            Sigma = hv_Sigma.D,
+                            CorrectLines = hv_CorrectCount.I
+                        });                       
+                    }                    
+                }
+            }
+                                    
+            hv_RoiWidthLen2.Dispose();            
+            hv_File.Dispose();
+            hv_MsrHandles.Dispose();
+            hv_i.Dispose();
+            hv_TmpCtrlRow.Dispose();
+            hv_TmpCtrlColumn.Dispose();
+            hv_TmpCtrlDrow.Dispose();
+            hv_TmpCtrlDcolumn.Dispose();
+            hv_TmpCtrlPhi.Dispose();
+            hv_TmpCtrlLen1.Dispose();
+            hv_TmpCtrlLen2.Dispose();
+            hv_MsrHandleTemp.Dispose();
+            hv_ResultAmp.Dispose();
+            hv_ResultSigma.Dispose();
+            hv_ResultCount.Dispose();
+            hv_AmplitudeThreshold.Dispose();
+            hv_Sigma.Dispose();
+            hv_CorrectCount.Dispose();
+            hv_Row1.Dispose();
+            hv_Column1.Dispose();
+            hv_Amp1.Dispose();
+            hv_Row2.Dispose();
+            hv_Column2.Dispose();
+            hv_Amp2.Dispose();
+            hv_TmpCtrl_RowCenter.Dispose();
+            hv_TmpCtrl_ColumnCenter.Dispose();
+            hv_Score.Dispose();
+            hv_Width.Dispose();
+            hv_Dist.Dispose();
+            hv_NumberOfPairs.Dispose();
+            hv_Indices.Dispose();
+            hv_SortedIndices.Dispose();
+            hv_SortedAmp.Dispose();
+            hv_SortedSigma.Dispose();
+            hv_SortedCount.Dispose();
+            hv_Height.Dispose();            
+            hv_Msg.Dispose();
+            hv_RowOffset.Dispose();
+            hv_Lines.Dispose();
+            hv_IndicesLines.Dispose();
+            hv_NumLinesStr.Dispose();
+            hv_NumLinesStrStr.Dispose();
+            hv_LineMsg.Dispose();
+            hv_ThStr.Dispose();
+            hv_SiStr.Dispose();
+            hv_CntStr.Dispose();
+            hv_RowPos.Dispose();
+
+            A003CardCountingEventCompleted(true);
+        }
+
+        public void A003CardCountingDetect(HObject image)
+        {
+            HTuple hv_RoiWidthLen2 = new HTuple(), hv_File = new HTuple();
+            HTuple hv_MsrHandles = new HTuple(), hv_i = new HTuple();
+            HTuple hv_TmpCtrlRow = new HTuple(), hv_TmpCtrlColumn = new HTuple();
+            HTuple hv_TmpCtrlDrow = new HTuple(), hv_TmpCtrlDcolumn = new HTuple();
+            HTuple hv_TmpCtrlPhi = new HTuple(), hv_TmpCtrlLen1 = new HTuple();
+            HTuple hv_TmpCtrlLen2 = new HTuple(), hv_MsrHandleTemp = new HTuple();            
+            HTuple hv_Row1 = new HTuple(), hv_Column1 = new HTuple();
+            HTuple hv_Amp1 = new HTuple(), hv_Row2 = new HTuple();
+            HTuple hv_Column2 = new HTuple(), hv_Amp2 = new HTuple();
+            HTuple hv_TmpCtrl_RowCenter = new HTuple(), hv_TmpCtrl_ColumnCenter = new HTuple();
+            HTuple hv_Score = new HTuple(), hv_Width = new HTuple();
+            HTuple hv_Dist = new HTuple(), hv_NumberOfPairs = new HTuple();                        
+            HTuple hv_Msg = new HTuple(), hv_RowOffset = new HTuple();
+            HTuple hv_Lines = new HTuple(), hv_IndicesLines = new HTuple();
+            HTuple hv_NumLinesStr = new HTuple(), hv_NumLinesStrStr = new HTuple();
+            HTuple hv_LineMsg = new HTuple(), hv_ThStr = new HTuple();
+            HTuple hv_SiStr = new HTuple(), hv_CntStr = new HTuple();
+            HTuple hv_RowPos = new HTuple();
+            // Initialize local and output iconic variables             
+            
+            hv_MsrHandles.Dispose();
+            hv_MsrHandles = new HTuple();
+            //--- Meet-handles aanmaken voor de 5 lijnen ---
+            for (hv_i = 0; (int)hv_i <= (int)((new HTuple(A003CardCountingPar.LineRowsStart.Count())) - 1); hv_i = (int)hv_i + 1)
+            {
+                hv_TmpCtrlRow.Dispose();
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_TmpCtrlRow = 0.5 * ((A003CardCountingPar.LineRowsStart[hv_i]) + (A003CardCountingPar.LineRowsEnd[hv_i]));
+                }
+                hv_TmpCtrlColumn.Dispose();
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_TmpCtrlColumn = 0.5 * (A003CardCountingPar.LineColumnsStart + A003CardCountingPar.LineColumnsEnd);
+                }
+                hv_TmpCtrlDrow.Dispose();
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_TmpCtrlDrow = (A003CardCountingPar.LineRowsStart[hv_i]) - (A003CardCountingPar.LineRowsEnd[hv_i]);
+                }
+                hv_TmpCtrlDcolumn.Dispose();
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_TmpCtrlDcolumn = A003CardCountingPar.LineColumnsEnd - A003CardCountingPar.LineColumnsStart;
+                }
+                hv_TmpCtrlPhi.Dispose();
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_TmpCtrlPhi = hv_TmpCtrlDrow.TupleAtan2(hv_TmpCtrlDcolumn);
+                }
+                hv_TmpCtrlLen1.Dispose();
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_TmpCtrlLen1 = 0.5 * ((((hv_TmpCtrlDrow * hv_TmpCtrlDrow) + (hv_TmpCtrlDcolumn * hv_TmpCtrlDcolumn))).TupleSqrt());
+                }
+                hv_TmpCtrlLen2.Dispose();
+                hv_TmpCtrlLen2 = new HTuple(A003CardCountingPar.RoiWidth);
+                hv_MsrHandleTemp.Dispose();
+
+                HOperatorSet.GetImageSize(image, out HTuple imageWidth, out HTuple imageHeight);
+                HOperatorSet.GenMeasureRectangle2(hv_TmpCtrlRow, hv_TmpCtrlColumn, hv_TmpCtrlPhi, hv_TmpCtrlLen1, hv_TmpCtrlLen2, imageWidth, imageHeight, "nearest_neighbor", out hv_MsrHandleTemp);
+                if (hv_MsrHandles == null) hv_MsrHandles = new HTuple();
+                hv_MsrHandles[hv_i] = hv_MsrHandleTemp;
+            }
+
+            A003CardCountingStat.CardsCounted.Clear();
+            //--- Resultaten initialiseren ---            
+            for (hv_i = 0; (int)hv_i <= (int)((new HTuple(hv_MsrHandles.TupleLength())) - 1); hv_i = (int)hv_i + 1)
+            {
+                using (HDevDisposeHelper dh = new HDevDisposeHelper())
+                {
+                    hv_Row1.Dispose(); hv_Column1.Dispose(); hv_Amp1.Dispose(); hv_Row2.Dispose(); hv_Column2.Dispose(); hv_Amp2.Dispose(); hv_TmpCtrl_RowCenter.Dispose(); hv_TmpCtrl_ColumnCenter.Dispose(); hv_Score.Dispose(); hv_Width.Dispose(); hv_Dist.Dispose();
+                    HOperatorSet.FuzzyMeasurePairs(image, hv_MsrHandles.TupleSelect(hv_i),
+                        A003CardCountingPar.Sigma, A003CardCountingPar.AmplitudeThreshold, 0.6, "all", out hv_Row1, out hv_Column1,
+                        out hv_Amp1, out hv_Row2, out hv_Column2, out hv_Amp2, out hv_TmpCtrl_RowCenter,
+                        out hv_TmpCtrl_ColumnCenter, out hv_Score, out hv_Width, out hv_Dist);
+                }
+                HOperatorSet.TupleLength(hv_Row1, out hv_NumberOfPairs);
+                A003CardCountingStat.CardsCounted.Add(hv_NumberOfPairs.I);
+                A003CardCountingStat.CardsCountedResult = A003CardCountingStat.CardsCounted.GroupBy(x => x)                 
+                                                                                           .OrderByDescending(g => g.Count()) 
+                                                                                           .First()
+                                                                                           .Key;
+            }
+
+            hv_NumberOfPairs.Dispose();                                    
+                                                
+            hv_RoiWidthLen2.Dispose();
+            hv_File.Dispose();
+            hv_MsrHandles.Dispose();
+            hv_i.Dispose();
+            hv_TmpCtrlRow.Dispose();
+            hv_TmpCtrlColumn.Dispose();
+            hv_TmpCtrlDrow.Dispose();
+            hv_TmpCtrlDcolumn.Dispose();
+            hv_TmpCtrlPhi.Dispose();
+            hv_TmpCtrlLen1.Dispose();
+            hv_TmpCtrlLen2.Dispose();
+            hv_MsrHandleTemp.Dispose();            
+            hv_Row1.Dispose();
+            hv_Column1.Dispose();
+            hv_Amp1.Dispose();
+            hv_Row2.Dispose();
+            hv_Column2.Dispose();
+            hv_Amp2.Dispose();
+            hv_TmpCtrl_RowCenter.Dispose();
+            hv_TmpCtrl_ColumnCenter.Dispose();
+            hv_Score.Dispose();
+            hv_Width.Dispose();
+            hv_Dist.Dispose();
+            hv_NumberOfPairs.Dispose();            
+            hv_Height.Dispose();
+            hv_Msg.Dispose();
+            hv_RowOffset.Dispose();
+            hv_Lines.Dispose();
+            hv_IndicesLines.Dispose();
+            hv_NumLinesStr.Dispose();
+            hv_NumLinesStrStr.Dispose();
+            hv_LineMsg.Dispose();
+            hv_ThStr.Dispose();
+            hv_SiStr.Dispose();
+            hv_CntStr.Dispose();
+            hv_RowPos.Dispose();
+
+            A003CardCountingEventCompleted(true);
+        }
 
 
         #endregion
@@ -2746,7 +3085,7 @@ HTuple hv_DeepOcrResult, HTuple hv_GenParamName, HTuple hv_GenParamValue)
         #region Properties
 
         [ObservableProperty]
-        HObject _grabImage;
+        HObject _grabImage;        
 
         [ObservableProperty]
         HObject _contour;
@@ -2763,6 +3102,12 @@ HTuple hv_DeepOcrResult, HTuple hv_GenParamName, HTuple hv_GenParamValue)
 
         [ObservableProperty]
         A002DeepOcrStatTyp _a002DeepOcrStat = new A002DeepOcrStatTyp();
+
+        [ObservableProperty]
+        A003CardCountingParTyp _a003CardCountingPar = new A003CardCountingParTyp();
+
+        [ObservableProperty]
+        A003CardCountingStatTyp _a003CardCountingStat = new A003CardCountingStatTyp();
 
         [ObservableProperty]
         ObservableCollection<OcrWord> _resultOCRWords = new ObservableCollection<OcrWord>();
