@@ -15,12 +15,17 @@ namespace LIB0000
 
         private void cmdTeach()
         {
+
             //action();
             //DetectShape();
             //GrabFromGigE();
             //DetectShape();
             //GrabFromUSB3();
             //TeachShape();
+            if (G003FromFile("C:/JOLT/", "*.bmp", 0) == true)
+            {
+                A002DeepOcrDetect(GrabImage);
+            }
         }
 
         #endregion
@@ -29,7 +34,9 @@ namespace LIB0000
 
         public HalconService()
         {
-            Task.Run(() => Cyclic());
+           //Task.Run(() => Cyclic());
+            Type = 2;
+            A002DeepOcrInit();
         }
 
         #endregion
@@ -2136,12 +2143,12 @@ HTuple hv_DeepOcrResult, HTuple hv_GenParamName, HTuple hv_GenParamValue)
 
                 if (Type == 0)
                 {
-                    if (G001Gige("d47c4431528b_OMRONSENTECH_STCMCS122BPOE",true, 90)==true)
+                    if (G001Gige("d47c4431528b_OMRONSENTECH_STCMCS122BPOE", true, 90) == true)
                     {
-                       A001GenericShapeTeach(GrabImage);
+                        A001GenericShapeTeach(GrabImage);
                     }
                 }
-                else if (Type ==1)
+                else if (Type == 1)
                 {
                     if (G002Usb3(true, 90) == true)
                     {
@@ -2693,6 +2700,14 @@ HTuple hv_DeepOcrResult, HTuple hv_GenParamName, HTuple hv_GenParamValue)
 
             // 3️⃣ Vul de woordenlijst voor tekstlabels
             ResultOCRWords.Clear();
+
+            for (int i = 0; i < A002DeepOcrStat.ResultsWords.Count; i++)
+            {
+                A002DeepOcrStat.ResultsWords[i] = "";
+                A002DeepOcrStat.ResultsRow[i] = 0;
+                A002DeepOcrStat.ResultsColumn[i] = 0;
+            }
+
 
             for (int i = 0; i < hv_Texts.Length; i++)
             {

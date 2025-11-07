@@ -40,17 +40,17 @@ namespace LIB0000
         public void MachineProgram()
         {
             init();
-            getMachineInputs();
-            getHmiCommands();
-            getHmiSettings();
-            getHmiProduct();
-            
+            getMachineInputs(); 
+            getHmiCommands(); 
+            getHmiSettings(); 
+            getHmiProduct(); 
+
             hmiSequence();
 
             setHmiErrors();
             setHmiStatus();
             setToggleBits();
-            setMachineOutputs();
+            setMachineOutputs(); // HMI > PLC
         }
 
         /// <summary>
@@ -73,6 +73,7 @@ namespace LIB0000
         /// </summary>
         private void getMachineInputs()
         {
+
             if (BasicService.CommunicationService.Count > 0)
             {
                 //error

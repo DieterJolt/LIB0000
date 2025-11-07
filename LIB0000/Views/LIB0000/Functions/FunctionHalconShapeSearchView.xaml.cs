@@ -33,24 +33,18 @@ namespace LIB0000
 
         private void A002DeepOcrCompletedEvent(object sender, bool e)
         {
-            var window = HSmartWindow01.HalconWindow;
-            window.ClearWindow();
-            window.DispObj(BasicService.HalconService[0].GrabImage); 
+            updateImage();
+        }
+        private void WindowControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ActualLayer++;
+            if (ActualLayer > 2) ActualLayer = 0;
+            updateImage();
+        }
 
-            if ((ActualLayer == 0) || (ActualLayer == 2))
-            {
-                for (int i = 0; i < BasicService.HalconService[0].A002DeepOcrStat.ResultsWords.Count(); i++)
-                {
-                    double row = BasicService.HalconService[0].A002DeepOcrStat.ResultsRow[i];
-                    double col = BasicService.HalconService[0].A002DeepOcrStat.ResultsColumn[i];
-                    string word = BasicService.HalconService[0].A002DeepOcrStat.ResultsWords[i];
-
-                    HOperatorSet.SetColor(window, "red");
-                    HOperatorSet.SetTposition(window, row, col);
-                    HOperatorSet.WriteString(window, word);
-                    HSmartWindow01.HZoomFactor = 1;
-                }
-            }
+        private void HSmartWindow01_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            updateImage();
         }
 
         #endregion
@@ -67,9 +61,27 @@ namespace LIB0000
 
         #region Methods
 
-        private void UpdateImage()
+        private void updateImage()
         {
+            var window = HSmartWindow01.HalconWindow;
+            window.ClearWindow();
+            window.DispObj(BasicService.HalconService[0].GrabImage);
 
+
+            if ((ActualLayer == 0) || (ActualLayer == 2))
+            {
+                for (int i = 0; i < BasicService.HalconService[0].A002DeepOcrStat.ResultsWords.Count(); i++)
+                {
+                    double row = BasicService.HalconService[0].A002DeepOcrStat.ResultsRow[i];
+                    double col = BasicService.HalconService[0].A002DeepOcrStat.ResultsColumn[i];
+                    string word = BasicService.HalconService[0].A002DeepOcrStat.ResultsWords[i];
+
+                    HOperatorSet.SetColor(window, "red");
+                    HOperatorSet.SetTposition(window, row, col);
+                    HOperatorSet.WriteString(window, word);
+                    //HSmartWindow01.HZoomFactor = 1;
+                }
+            }
         }
 
         #endregion
@@ -81,11 +93,8 @@ namespace LIB0000
         #endregion
 
 
-        private void WindowControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            ActualLayer++;
-            if (ActualLayer > 2) ActualLayer = 0;
-            UpdateImage();
-        }
+
+
+
     }
 }
