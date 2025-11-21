@@ -22,7 +22,8 @@ namespace LIB0000
             BasicService = basicService;
             DataContext = this;
 
-            BasicService.HalconService[0].A002DeepOcrEventHandler += A002DeepOcrCompletedEvent;
+            //BasicService.HalconService[0].A002DeepOcrEventHandler += A002DeepOcrCompletedEvent;
+            BasicService.HalconService[0].A003CardCountingEventHandler += A003CardCountingCompletedEvent;
 
             InitializeComponent();
         }
@@ -35,11 +36,16 @@ namespace LIB0000
         {
             updateImage();
         }
+
+        private void A003CardCountingCompletedEvent(object sender, bool e)
+        {
+            updateImage();
+        }
         private void WindowControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ActualLayer++;
-            if (ActualLayer > 2) ActualLayer = 0;
-            updateImage();
+            //ActualLayer++;
+            //if (ActualLayer > 2) ActualLayer = 0;
+            //updateImage();
         }
 
         private void HSmartWindow01_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -68,20 +74,20 @@ namespace LIB0000
             window.DispObj(BasicService.HalconService[0].GrabImage);
 
 
-            if ((ActualLayer == 0) || (ActualLayer == 2))
-            {
-                for (int i = 0; i < BasicService.HalconService[0].A002DeepOcrStat.ResultsWords.Count(); i++)
-                {
-                    double row = BasicService.HalconService[0].A002DeepOcrStat.ResultsRow[i];
-                    double col = BasicService.HalconService[0].A002DeepOcrStat.ResultsColumn[i];
-                    string word = BasicService.HalconService[0].A002DeepOcrStat.ResultsWords[i];
+            //if ((ActualLayer == 0) || (ActualLayer == 2))
+            //{
+            //    for (int i = 0; i < BasicService.HalconService[0].A002DeepOcrStat.ResultsWords.Count(); i++)
+            //    {
+            //        double row = BasicService.HalconService[0].A002DeepOcrStat.ResultsRow[i];
+            //        double col = BasicService.HalconService[0].A002DeepOcrStat.ResultsColumn[i];
+            //        string word = BasicService.HalconService[0].A002DeepOcrStat.ResultsWords[i];
 
-                    HOperatorSet.SetColor(window, "red");
-                    HOperatorSet.SetTposition(window, row, col);
-                    HOperatorSet.WriteString(window, word);
-                    //HSmartWindow01.HZoomFactor = 1;
-                }
-            }
+            //        HOperatorSet.SetColor(window, "red");
+            //        HOperatorSet.SetTposition(window, row, col);
+            //        HOperatorSet.WriteString(window, word);
+            //        //HSmartWindow01.HZoomFactor = 1;
+            //    }
+            //}
         }
 
         #endregion
