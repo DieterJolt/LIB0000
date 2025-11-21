@@ -220,6 +220,10 @@ namespace LIB0000
                 //EmptyView
                 services.AddSingleton<EmptyIndexView>();
 
+                //Turck
+                services.AddSingleton<TBEN_S1_4DXP>();
+                services.AddSingleton<TBEN_S1_8DXP>();
+
                 #endregion
 
                 #region Viewmodels

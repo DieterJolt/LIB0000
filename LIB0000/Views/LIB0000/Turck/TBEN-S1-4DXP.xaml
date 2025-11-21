@@ -1,0 +1,105 @@
+﻿<Page x:Class="LIB0000.TBEN_S1_4DXP"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LIB0000"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="TBEN_S1_4DXP">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+
+
+        <Image Source="/Assets/Devices/Turck1.png" Width="600" Grid.Row="1"/>
+
+        <Grid Grid.Row="2">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+
+            <Grid Grid.Row="1" Grid.Column="1">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Rij 0 -->
+                <Border Grid.Row="0" Grid.Column="0" BorderBrush="Gray" BorderThickness="1"/>
+                <Border Grid.Row="0" Grid.Column="1" BorderBrush="Gray" BorderThickness="1"/>
+                <Border Grid.Row="0" Grid.Column="2" BorderBrush="Gray" BorderThickness="1"/>
+                <Border Grid.Row="0" Grid.Column="3" BorderBrush="Gray" BorderThickness="1"/>
+
+                <TextBlock Text="C0" FontSize="18" Grid.Row="0" Grid.Column="0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="0" Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="C1" FontSize="18" Grid.Row="0" Grid.Column="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="0" Grid.Column="3" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+
+                <!-- Rij 1 -->
+                <Border Grid.Row="1" Grid.Column="0" BorderBrush="Gray" BorderThickness="1"/>
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush="Gray" BorderThickness="1"/>
+                <Border Grid.Row="1" Grid.Column="2" BorderBrush="Gray" BorderThickness="1"/>
+                <Border Grid.Row="1" Grid.Column="3" BorderBrush="Gray" BorderThickness="1"/>
+
+                <TextBlock Text="C2" FontSize="18" Grid.Row="1" Grid.Column="0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="1" Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="C3" FontSize="18" Grid.Row="1" Grid.Column="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="1" Grid.Column="3" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+
+                <!-- Rij 2 -->
+                <Border Grid.Row="2" Grid.Column="0" BorderBrush="Gray" BorderThickness="1"/>
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush="Gray" BorderThickness="1"/>
+                <Border Grid.Row="2" Grid.Column="2" BorderBrush="Gray" BorderThickness="1"/>
+                <Border Grid.Row="2" Grid.Column="3" BorderBrush="Gray" BorderThickness="1"/>
+
+                <TextBlock Text="C4" FontSize="18" Grid.Row="2" Grid.Column="0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="2" Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="C5" FontSize="18" Grid.Row="2" Grid.Column="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="2" Grid.Column="3" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+
+                <!-- Rij 3 -->
+                <Border Grid.Row="3" Grid.Column="0" BorderBrush="Gray" BorderThickness="1"/>
+                <Border Grid.Row="3" Grid.Column="1" BorderBrush="Gray" BorderThickness="1"/>
+                <Border Grid.Row="3" Grid.Column="2" BorderBrush="Gray" BorderThickness="1"/>
+                <Border Grid.Row="3" Grid.Column="3" BorderBrush="Gray" BorderThickness="1"/>
+
+                <TextBlock Text="C6" FontSize="18" Grid.Row="3" Grid.Column="0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="3" Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="C7" FontSize="18" Grid.Row="3" Grid.Column="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="3" Grid.Column="3" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+</Page>
