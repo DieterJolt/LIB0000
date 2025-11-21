@@ -57,9 +57,9 @@
                 <Border Grid.Row="0" Grid.Column="3" BorderBrush="Gray" BorderThickness="1"/>
 
                 <TextBlock Text="C0" FontSize="18" Grid.Row="0" Grid.Column="0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="0" Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!--<TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="0" Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
                 <TextBlock Text="C1" FontSize="18" Grid.Row="0" Grid.Column="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="0" Grid.Column="3" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!--<TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="0" Grid.Column="3" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
 
 
                 <!-- Rij 1 -->
@@ -69,9 +69,9 @@
                 <Border Grid.Row="1" Grid.Column="3" BorderBrush="Gray" BorderThickness="1"/>
 
                 <TextBlock Text="C2" FontSize="18" Grid.Row="1" Grid.Column="0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="1" Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!--<TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="1" Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
                 <TextBlock Text="C3" FontSize="18" Grid.Row="1" Grid.Column="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="1" Grid.Column="3" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!--<TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="1" Grid.Column="3" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
 
 
                 <!-- Rij 2 -->
@@ -81,9 +81,9 @@
                 <Border Grid.Row="2" Grid.Column="3" BorderBrush="Gray" BorderThickness="1"/>
 
                 <TextBlock Text="C4" FontSize="18" Grid.Row="2" Grid.Column="0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="2" Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!--<TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="2" Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
                 <TextBlock Text="C5" FontSize="18" Grid.Row="2" Grid.Column="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="2" Grid.Column="3" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!--<TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="2" Grid.Column="3" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
 
 
                 <!-- Rij 3 -->
@@ -93,9 +93,9 @@
                 <Border Grid.Row="3" Grid.Column="3" BorderBrush="Gray" BorderThickness="1"/>
 
                 <TextBlock Text="C6" FontSize="18" Grid.Row="3" Grid.Column="0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="3" Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!--<TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="3" Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
                 <TextBlock Text="C7" FontSize="18" Grid.Row="3" Grid.Column="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="3" Grid.Column="3" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!--<TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="3" Grid.Column="3" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
 
             </Grid>
 

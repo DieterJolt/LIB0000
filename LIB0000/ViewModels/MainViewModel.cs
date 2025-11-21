@@ -135,6 +135,15 @@ namespace LIB0000
                 new NavigationViewItem("Pagina's / gebruiker", typeof(UserPagesView))
             }
             },
+
+            new NavigationViewItem("Turck", new BitmapImage(new Uri("pack://application:,,,/Assets/Images/Ethernet.png")), typeof(EmptyIndexView))
+            {
+            MenuItemsSource = new object[]
+            {
+                new NavigationViewItem("TBEN-S1-8DXP", typeof(TBEN_S1_4DXP)),
+                new NavigationViewItem("TBEN-S1-8DXP", typeof(TBEN_S1_8DXP)),
+            }
+            },
         };
 
         [ObservableProperty]
