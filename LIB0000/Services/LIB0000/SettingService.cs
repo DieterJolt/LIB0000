@@ -617,6 +617,8 @@ namespace LIB0000
         FHV7 = 2,
         V430 = 3,
         PLC = 4,
+        Turck_4DXP = 5,
+        Turck_8DXP = 6,
     }
 
     public enum HardwareFunction

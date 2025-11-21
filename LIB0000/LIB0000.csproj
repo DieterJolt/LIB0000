@@ -21,31 +21,26 @@
   <ItemGroup>
     <Compile Remove="Assets\Videos\**" />
     <Compile Remove="Dictionaries\LIB1000\**" />
-    <Compile Remove="Pdfium\**" />
     <Compile Remove="ViewModels\LIB1000\**" />
     <EmbeddedResource Remove="Assets\Videos\**" />
     <EmbeddedResource Remove="Dictionaries\LIB1000\**" />
-    <EmbeddedResource Remove="Pdfium\**" />
     <EmbeddedResource Remove="ViewModels\LIB1000\**" />
     <None Remove="Assets\Videos\**" />
     <None Remove="Dictionaries\LIB1000\**" />
-    <None Remove="Pdfium\**" />
     <None Remove="ViewModels\LIB1000\**" />
     <Page Remove="Assets\Videos\**" />
     <Page Remove="Dictionaries\LIB1000\**" />
-    <Page Remove="Pdfium\**" />
     <Page Remove="ViewModels\LIB1000\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Remove="C:\Users\louis\.nuget\packages\LIB1000\1.1.23\contentFiles\any\net8.0-windows10.0.17763\pdfium.dll" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Remove="Assets\Devices\FHV7.jpg" />
     <None Remove="Assets\Devices\FHV7.png" />
     <None Remove="Assets\Devices\PLC.jpg" />
     <None Remove="Assets\Devices\PLC.png" />
+    <None Remove="Assets\Devices\Turck1.png" />
+    <None Remove="Assets\Devices\Turck2.png" />
     <None Remove="Assets\Devices\V430.jpg" />
     <None Remove="Assets\Devices\V430.png" />
     <None Remove="Assets\Images\ArrowDown.png" />
@@ -104,6 +99,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="EEIP" Version="1.6.0.26419" />
     <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -348,6 +344,12 @@
     <Content Include="Assets\Devices\PLC.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Devices\Turck1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Devices\Turck2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Devices\V430.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -374,52 +376,6 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Remove="C:\Users\louis\.nuget\packages\syncfusion.pdftoimageconverter.wpf\28.2.11\build\net8.0-windows7.0\..\..\Pdfium\win-arm64\native\**" />
-  </ItemGroup>
 
-  <ItemGroup>
-    <Content Remove="C:\Users\louis\.nuget\packages\syncfusion.pdftoimageconverter.wpf\28.2.11\build\net8.0-windows7.0\..\..\Pdfium\win-x64\native\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="C:\Users\louis\.nuget\packages\syncfusion.pdftoimageconverter.wpf\28.2.11\build\net8.0-windows7.0\..\..\Pdfium\win-x86\native\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="C:\Users\louis\.nuget\packages\syncfusion.pdftoimageconverter.wpf\28.2.11\build\net8.0-windows7.0\..\..\Pdfium\win-arm64\native\pdfium.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="C:\Users\louis\.nuget\packages\syncfusion.pdftoimageconverter.wpf\28.2.11\build\net8.0-windows7.0\..\..\Pdfium\win-x86\native\pdfium.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="C:\Users\louis\.nuget\packages\syncfusion.pdftoimageconverter.wpf\28.2.11\build\net8.0-windows7.0\..\..\Pdfium\win-x64\native\pdfium.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="C:\Users\joltm\.nuget\packages\syncfusion.pdftoimageconverter.wpf\28.2.11\build\net8.0-windows7.0\..\..\Pdfium\win-arm64\native\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="C:\Users\joltm\.nuget\packages\syncfusion.pdftoimageconverter.wpf\28.2.11\build\net8.0-windows7.0\..\..\Pdfium\win-x64\native\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="C:\Users\joltm\.nuget\packages\syncfusion.pdftoimageconverter.wpf\28.2.11\build\net8.0-windows7.0\..\..\Pdfium\win-x86\native\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="C:\Users\joltm\.nuget\packages\syncfusion.pdftoimageconverter.wpf\28.2.11\build\net8.0-windows7.0\..\..\Pdfium\win-arm64\native\pdfium.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="C:\Users\joltm\.nuget\packages\syncfusion.pdftoimageconverter.wpf\28.2.11\build\net8.0-windows7.0\..\..\Pdfium\win-x86\native\pdfium.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="C:\Users\joltm\.nuget\packages\syncfusion.pdftoimageconverter.wpf\28.2.11\build\net8.0-windows7.0\..\..\Pdfium\win-x64\native\pdfium.dll" />
-  </ItemGroup>
 
 </Project>

@@ -55,6 +55,22 @@ namespace LIB0000.Lists
                 Image = "pack://application:,,,/Assets/Devices/V430.png",
                 HardwareType = HardwareType.GigeCam
             });
+            lTypes.Add(new HardwareTypesModel
+            {
+                Id = 6,
+                Name = "Turck 4DXP",
+                Description = "TBEN-S1-4DXP",
+                Image = "pack://application:,,,/Assets/Devices/Turck1.png",
+                HardwareType = HardwareType.Turck_4DXP
+            });
+            lTypes.Add(new HardwareTypesModel
+            {
+                Id = 7,
+                Name = "Turck 8DXP",
+                Description = "TBEN-S1-8DXP",
+                Image = "pack://application:,,,/Assets/Devices/Turck2.png",
+                HardwareType = HardwareType.Turck_8DXP
+            });
 
             return lTypes;
         }

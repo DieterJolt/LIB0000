@@ -87,6 +87,14 @@ namespace LIB0000
                 Help = "",
                 Type = MessageType.Error
             });
+            lMessages.Add(new MessageModel
+            {
+                Nr = "001",
+                Group = "Turck",
+                MessageText = "Connection lost",
+                Help = "Check connection",
+                Type = MessageType.Error
+            });
 
 
             return lMessages;

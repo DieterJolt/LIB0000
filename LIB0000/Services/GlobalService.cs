@@ -40,10 +40,10 @@ namespace LIB0000
         public void MachineProgram()
         {
             init();
-            getMachineInputs(); 
-            getHmiCommands(); 
-            getHmiSettings(); 
-            getHmiProduct(); 
+            getMachineInputs();
+            getHmiCommands();
+            getHmiSettings();
+            getHmiProduct();
 
             hmiSequence();
 
@@ -92,7 +92,7 @@ namespace LIB0000
         /// Commandos only on HMI
         /// </summary>
         private void getHmiCommands()
-        {           
+        {
             if (Hmi.Cmd.Reset)
             {
                 Hmi.Cmd.Reset = false;
@@ -144,11 +144,11 @@ namespace LIB0000
             Hmi.Par.ExampleOfFolderPicker = Convert.ToString(BasicService.SettingsService.GetSetting("003", 0, HardwareFunction.HmiParTab1));
             Hmi.Par.ExampleOfComboBox = Convert.ToString(BasicService.SettingsService.GetSetting("004", 0, HardwareFunction.HmiParTab1));
             Hmi.Par.ExampleOfToggleSwitch = Convert.ToBoolean(BasicService.SettingsService.GetSetting("005", 0, HardwareFunction.HmiParTab1));
-            Hmi.Par.ExampleOfSlider = Convert.ToDouble(BasicService.SettingsService.GetSetting("006", 0, HardwareFunction.HmiParTab1));     
+            Hmi.Par.ExampleOfSlider = Convert.ToDouble(BasicService.SettingsService.GetSetting("006", 0, HardwareFunction.HmiParTab1));
             // Example of a parameter send to the Halcon Service
             //BasicService.HalconService[0].A001Par = Convert.ToString(BasicService.SettingsService.GetSetting("001", 0, HardwareFunction.HalconParTab1));
             //BasicService.HardwareService[1].A002Par = Convert.ToString(BasicService.SettingsService.GetSetting("001", 0, HardwareFunction.HalconParTab1));
-            
+
 
             if (Hmi.Par.LanguageCode != languageCode)
             {
@@ -391,6 +391,17 @@ namespace LIB0000
                 }
             }
 
+            if (BasicService.TurckService[0] != null)
+            {
+                if (BasicService.TurckService[0].IsConnected)
+                {
+                    BasicService.MessagesService.Reset("Turck", "001");
+                }
+                else
+                {
+                    BasicService.MessagesService.Set("Turck", "001");
+                }
+            }
 
         }
         /// <summary>
@@ -401,7 +412,7 @@ namespace LIB0000
             /*Machine.Stat.Started = true;*/ // altijd true
             Hmi.Stat.SettingsOk = !Hmi.Par.WorkstationName.IsNullOrEmpty() && !(Hmi.Par.Workstation == null);
             Hmi.Stat.CommunicationOk = !Hmi.Stat.HardwareCom;
-            Hmi.Stat.ConditionsToStartOk =  (Hmi.StepCase >= HmiTyp.HmiStepEnum.WaitOrder);
+            Hmi.Stat.ConditionsToStartOk = (Hmi.StepCase >= HmiTyp.HmiStepEnum.WaitOrder);
 
         }
 
@@ -430,7 +441,7 @@ namespace LIB0000
 
 
 
-            
+
 
 
         }

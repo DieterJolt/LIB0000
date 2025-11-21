@@ -175,6 +175,42 @@ namespace LIB0000
                         return null;
                     }
 
+                case HardwareType.Turck_4DXP:
+
+                    if (hardwareFunction == HardwareFunction.None)
+                    {
+                        List<SettingModel> lSettings = new List<SettingModel>
+                        {
+                            new SettingModel { Nr = "001", HardwareFunction = hardwareFunction, SettingName = "Ip adress",
+                                SettingText = "Ip adress camera", ControlType = ControlType.TextBox,
+                                VariableType = VariableType.String, MinValue = "", MaxValue = "", DefaultValue = "10.5.6.100",
+                                PossibleComboBoxValues = "", UserVisible = true},
+                        };
+                        return lSettings;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
+                case HardwareType.Turck_8DXP:
+
+                    if (hardwareFunction == HardwareFunction.None)
+                    {
+                        List<SettingModel> lSettings = new List<SettingModel>
+                        {
+                            new SettingModel { Nr = "001", HardwareFunction = hardwareFunction, SettingName = "Ip adress",
+                                SettingText = "Ip adress camera", ControlType = ControlType.TextBox,
+                                VariableType = VariableType.String, MinValue = "", MaxValue = "", DefaultValue = "10.5.6.100",
+                                PossibleComboBoxValues = "", UserVisible = true},
+                        };
+                        return lSettings;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
                 default:
                     return null;
 

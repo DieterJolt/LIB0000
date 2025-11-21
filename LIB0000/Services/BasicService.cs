@@ -101,8 +101,16 @@ namespace LIB0000
                     string ipAddress = SettingsService.GetSetting("001", hardware.Id, HardwareFunction.None); // Algemene setting IP-adres ophalen
                     HalconService.Add(new HalconService { IpAddress = ipAddress, HardwareId = hardware.Id });
                 }
-
-                
+                if (hardware.HardwareType == HardwareType.Turck_4DXP)
+                {
+                    string ipAddress = SettingsService.GetSetting("001", hardware.Id, HardwareFunction.None); // Algemene setting IP-adres ophalen
+                    TurckService.Add(new TurckService { IpAddress = ipAddress, HardwareId = hardware.Id });
+                }
+                if (hardware.HardwareType == HardwareType.Turck_8DXP)
+                {
+                    string ipAddress = SettingsService.GetSetting("001", hardware.Id, HardwareFunction.None); // Algemene setting IP-adres ophalen
+                    TurckService.Add(new TurckService { IpAddress = ipAddress, HardwareId = hardware.Id });
+                }
 
             }
         }
@@ -177,6 +185,9 @@ namespace LIB0000
 
         [ObservableProperty]
         private OrderService _ordersService;
+
+        [ObservableProperty]
+        private ObservableCollection<TurckService> _turckService = new();
 
         [ObservableProperty]
         private string _localPath;
