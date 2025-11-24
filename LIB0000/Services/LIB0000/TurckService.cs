@@ -14,126 +14,144 @@ namespace LIB0000
 {
     public partial class TurckService : ObservableObject
     {
-
-        #region Commands
+        #region Commands 
         #endregion
 
         #region Constructor
-
-        public TurckService()
+        public TurckService(string ipAddress, int hardwareId)
         {
-            // TBEN-S1-4DXP IP-adres
-            eeip.IPAddress = "10.5.6.150";
+            IpAddress = ipAddress;
+            HardwareId = hardwareId;
+
+            eeip.IPAddress = ipAddress;
 
             // INPUT (Target → Originator)
             eeip.T_O_InstanceID = INPUT_ASSEMBLY;
             eeip.T_O_RealTimeFormat = RealTimeFormat.Modeless;
             eeip.T_O_ConnectionType = ConnectionType.Point_to_Point;
             eeip.T_O_Priority = Priority.Scheduled;
-
-            eeip.RequestedPacketRate_T_O = 10000;  // 10 ms
+            eeip.RequestedPacketRate_T_O = 10000; // 10 ms 
 
             // OUTPUT (Originator → Target)
             eeip.O_T_InstanceID = OUTPUT_ASSEMBLY;
             eeip.O_T_RealTimeFormat = RealTimeFormat.Modeless;
             eeip.O_T_ConnectionType = ConnectionType.Point_to_Point;
             eeip.O_T_Priority = Priority.Scheduled;
-            eeip.RequestedPacketRate_O_T = 10000;  // 10 ms                       
+            eeip.RequestedPacketRate_O_T = 10000; // 10 ms
 
             MonitorEthernetThread = new Thread(MonitorEthernet);
-            MonitorEthernetThread.Start();;
-
-             //SetOutput(2);
+            MonitorEthernetThread.Start();
         }
 
         #endregion
 
-        #region Events
+        #region Events 
         #endregion
 
-        #region Fields
+        #region Fields 
 
         private Thread MonitorEthernetThread;
-
         private readonly EEIPClient eeip = new EEIPClient();
         private Thread cyclicThread;
-        //private bool running = false;
+        private CancellationTokenSource cyclicCts;
 
         // TBEN-S1-4DXP Assembly numbers (confirmed)
-        private const int INPUT_ASSEMBLY = 103;   // T->O
-        private const int OUTPUT_ASSEMBLY = 104;  // O->T
+
+        private const int INPUT_ASSEMBLY = 103; // T->O
+        private const int OUTPUT_ASSEMBLY = 104; // O->T
 
         public byte[] Inputs { get; private set; } = new byte[0];
         public byte[] Outputs { get; private set; } = new byte[0];
 
         #endregion
 
-        #region Methods
-
+        #region Methods 
         public void Start()
         {
             if (IsConnected) return;
 
             Connect();
-
             IsConnected = true;
-            cyclicThread = new Thread(CyclicTask);
+
+            cyclicCts = new CancellationTokenSource();
+            var token = cyclicCts.Token;
+
+            cyclicThread = new Thread(() => CyclicTask(token));
             cyclicThread.IsBackground = true;
             cyclicThread.Start();
 
-            Debug.WriteLine("TBEN-S1-4DXP thread started.");
+            Debug.WriteLine("Turck thread started.");
         }
 
         public void Stop()
         {
+            if (!IsConnected) return;
+
             IsConnected = false;
-            Thread.Sleep(50);
+
+            // Vraag thread netjes te stoppen
+            cyclicCts?.Cancel();
+
+            // Wacht tot thread klaar is
+            cyclicThread?.Join();
 
             try { eeip.ForwardClose(); } catch { }
             try { eeip.UnRegisterSession(); } catch { }
 
-            Debug.WriteLine("TBEN-S1-4DXP connection closed.");
+            Debug.WriteLine("Turck thread closed.");
         }
 
+        private void CyclicTask(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                lock (eeip)
+                {
+                    Array.Copy(eeip.T_O_IOData, Inputs, Inputs.Length);
+                    Debug.WriteLine($"Input byte 2: {Inputs[2]}");
 
-        /// <summary>
-        /// Zet een digitale uitgang (0..3) HIGH
-        /// </summary>
+                    Array.Copy(Outputs, eeip.O_T_IOData, Outputs.Length);
+                    Debug.WriteLine($"Output byte 2: {Outputs[2]}");
+                }
+                Thread.Sleep(10);
+            }
+        }
+
+        /// <summary> /// 
+        /// Zet een digitale uitgang (0..3) HIGH 
+        /// /// </summary> 
         public void SetOutput(int channel)
         {
             lock (eeip)
             {
-                Outputs[0] |= (byte)(1 << 0); //wel  
-                Outputs[6] |= (byte)(1 << channel); //wel              
+                Outputs[0] |= (byte)(1 << 0); //wel
+                Outputs[6] |= (byte)(1 << channel); //wel
             }
         }
 
-        /// <summary>
-        /// Zet een digitale uitgang (0..3) LOW
-        /// </summary>
+        /// <summary> /// 
+        /// Zet een digitale uitgang (0..3) LOW 
+        /// /// </summary> 
         public void ClearOutput(int channel)
         {
             lock (eeip)
             {
-                Outputs[2] &= (byte)~(1 << channel);
+                Outputs[6] &= (byte)~(1 << channel);
             }
         }
 
-        /// <summary>
-        /// Leest de status van digitale ingang (0..3)
-        /// </summary>
+        /// <summary> /// 
+        /// Leest de status van digitale ingang (0..3) 
+        /// /// </summary> 
         public bool GetInput(int channel)
         {
             lock (eeip)
             {
-                return (Inputs[2] & (1 << channel)) != 0;
+                return (Inputs[0] & (1 << channel)) != 0;
             }
         }
 
-        // ------------------------------------------------------------------------------------------
-        // INTERNAL IMPLEMENTATION
-        // ------------------------------------------------------------------------------------------
-
+        // ------------------// INTERNAL IMPLEMENTATION // --------------------------
         private void Connect()
         {
             eeip.RegisterSession();
@@ -145,74 +163,40 @@ namespace LIB0000
             // Detect input length
             eeip.T_O_Length = eeip.Detect_T_O_Length();
             Inputs = new byte[eeip.T_O_Length];
-
             eeip.ForwardOpen();
-
             Debug.WriteLine($"Connected. InputLen={Inputs.Length}, OutputLen={Outputs.Length}");
-        }
-
-        private void CyclicTask()
-        {
-            while (IsConnected)
-            {
-                lock (eeip)
-                {
-                    // Read inputs
-                    Array.Copy(eeip.T_O_IOData, Inputs, Inputs.Length);
-                    Debug.WriteLine($"Input byte 2: {Inputs[2]}");
-
-
-                    // Write outputs                    
-                    Array.Copy(Outputs, eeip.O_T_IOData, Outputs.Length);
-                    Debug.WriteLine($"Output byte 2: {Outputs[2]}");
-                }
-
-                Thread.Sleep(10); // 10 ms cyclic
-            }
-        }
-
-        static NetworkInterface GetEthernet()
-        {
-            foreach (var nic in NetworkInterface.GetAllNetworkInterfaces())
-                if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
-                    return nic;
-
-            return null;
         }
 
         private void MonitorEthernet()
         {
             while (true)
             {
-                var nic = GetEthernet();
+                bool canReach = false;
 
-                if (nic != null && nic.OperationalStatus != lastStatus)
+                using (var ping = new Ping())
                 {
-                    lastStatus = nic.OperationalStatus;
+                    var reply = ping.Send(IpAddress, 200);
+                    canReach = (reply?.Status == IPStatus.Success);
+                }
 
-                    if (lastStatus == OperationalStatus.Up)
-                    {
-                        Debug.WriteLine("Ethernet is VERBONDEN");
-                        Start();
-                    }
-                    else
-                    {
-                        Debug.WriteLine("Ethernet is VERBROKEN");
-                        Stop();
-                    }
+                if (canReach && !IsConnected)
+                {
+                    Debug.WriteLine("Connected");
+                    Start();
+                }
+                else if (!canReach && IsConnected)
+                {
+                    Debug.WriteLine("Connection lost");
+                    Stop();
                 }
 
                 Thread.Sleep(1000);
             }
         }
 
-
-
-
-
         #endregion
 
-        #region Properties
+        #region Properties 
 
         [ObservableProperty]
         private string _ipAddress;
@@ -223,10 +207,6 @@ namespace LIB0000
         [ObservableProperty]
         private bool _isConnected;
 
-        static OperationalStatus lastStatus = OperationalStatus.Unknown;
-
-        #endregion
-
-
+        #endregion 
     }
 }

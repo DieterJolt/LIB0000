@@ -91,7 +91,7 @@ namespace LIB0000
             {
                 Nr = "001",
                 Group = "Turck",
-                MessageText = "Connection lost",
+                MessageText = "Lost Connection with Turck module",
                 Help = "Check connection",
                 Type = MessageType.Error
             });

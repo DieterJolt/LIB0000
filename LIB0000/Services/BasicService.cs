@@ -104,12 +104,12 @@ namespace LIB0000
                 if (hardware.HardwareType == HardwareType.Turck_4DXP)
                 {
                     string ipAddress = SettingsService.GetSetting("001", hardware.Id, HardwareFunction.None); // Algemene setting IP-adres ophalen
-                    TurckService.Add(new TurckService { IpAddress = ipAddress, HardwareId = hardware.Id });
+                    TurckService.Add(new TurckService(ipAddress, hardware.Id));
                 }
                 if (hardware.HardwareType == HardwareType.Turck_8DXP)
                 {
                     string ipAddress = SettingsService.GetSetting("001", hardware.Id, HardwareFunction.None); // Algemene setting IP-adres ophalen
-                    TurckService.Add(new TurckService { IpAddress = ipAddress, HardwareId = hardware.Id });
+                    TurckService.Add(new TurckService(ipAddress, hardware.Id));
                 }
 
             }
