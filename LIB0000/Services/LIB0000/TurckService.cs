@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
@@ -20,10 +21,22 @@ namespace LIB0000
 
         #region Constructor
 
-        public TurckService()
+        public TurckService(string ipAddress, int hardwareId)
         {
             // TBEN-S1-4DXP IP-adres
-            eeip.IPAddress = "10.5.6.150";
+            //eeip.IPAddress = "10.5.6.150";
+            IpAddress = ipAddress;
+            HardwareId = hardwareId;
+
+            eeip.IPAddress = ipAddress;
+
+
+            //if (IpAddress == null)
+            //{
+            //    return;
+            //}
+            //eeip.IPAddress = IpAddress;
+
 
             // INPUT (Target → Originator)
             eeip.T_O_InstanceID = INPUT_ASSEMBLY;
@@ -43,7 +56,6 @@ namespace LIB0000
             MonitorEthernetThread = new Thread(MonitorEthernet);
             MonitorEthernetThread.Start();;
 
-             //SetOutput(2);
         }
 
         #endregion
@@ -57,7 +69,8 @@ namespace LIB0000
 
         private readonly EEIPClient eeip = new EEIPClient();
         private Thread cyclicThread;
-        //private bool running = false;
+        //test
+        private CancellationTokenSource cyclicCts;
 
         // TBEN-S1-4DXP Assembly numbers (confirmed)
         private const int INPUT_ASSEMBLY = 103;   // T->O
@@ -72,27 +85,59 @@ namespace LIB0000
 
         public void Start()
         {
+            //if (IsConnected) return;
+
+            //Connect();
+
+            //IsConnected = true;
+            //cyclicThread = new Thread(CyclicTask);
+            //cyclicThread.IsBackground = true;
+            //cyclicThread.Start();
+
+            //Debug.WriteLine("TBEN-S1-4DXP thread started.");
+
             if (IsConnected) return;
 
             Connect();
-
             IsConnected = true;
-            cyclicThread = new Thread(CyclicTask);
+
+            cyclicCts = new CancellationTokenSource();
+            var token = cyclicCts.Token;
+
+            cyclicThread = new Thread(() => CyclicTask(token));
             cyclicThread.IsBackground = true;
             cyclicThread.Start();
 
-            Debug.WriteLine("TBEN-S1-4DXP thread started.");
+            //Debug.WriteLine("TBEN-S1-4DXP thread started.");
+            Debug.WriteLine($"{IpAddress}: thread started.");
+
         }
 
         public void Stop()
         {
+            //IsConnected = false;
+            //Thread.Sleep(50);
+
+            //try { eeip.ForwardClose(); } catch { }
+            //try { eeip.UnRegisterSession(); } catch { }
+
+            //Debug.WriteLine("TBEN-S1-4DXP connection closed.");
+
+            if (!IsConnected) return;
+
             IsConnected = false;
-            Thread.Sleep(50);
+
+            // Vraag thread netjes te stoppen
+            cyclicCts?.Cancel();
+
+            // Wacht tot thread klaar is
+            cyclicThread?.Join();
 
             try { eeip.ForwardClose(); } catch { }
             try { eeip.UnRegisterSession(); } catch { }
 
-            Debug.WriteLine("TBEN-S1-4DXP connection closed.");
+            //Debug.WriteLine("TBEN-S1-4DXP connection closed.");
+            Debug.WriteLine($"{IpAddress}: connection closed.");
         }
 
 
@@ -148,26 +193,42 @@ namespace LIB0000
 
             eeip.ForwardOpen();
 
-            Debug.WriteLine($"Connected. InputLen={Inputs.Length}, OutputLen={Outputs.Length}");
+            Debug.WriteLine($"{IpAddress}:Connected. InputLen={Inputs.Length}, OutputLen={Outputs.Length}");
         }
 
-        private void CyclicTask()
+        //private void CyclicTask()
+        //{
+        //    while (IsConnected)
+        //    {
+        //        lock (eeip)
+        //        {
+        //            // Read inputs
+        //            Array.Copy(eeip.T_O_IOData, Inputs, Inputs.Length);
+        //            Debug.WriteLine($"Input byte 2: {Inputs[2]}");
+
+
+        //            // Write outputs                    
+        //            Array.Copy(Outputs, eeip.O_T_IOData, Outputs.Length);
+        //            Debug.WriteLine($"Output byte 2: {Outputs[2]}");
+        //        }
+
+        //        Thread.Sleep(10); // 10 ms cyclic
+        //    }
+        //}
+
+        private void CyclicTask(CancellationToken token)
         {
-            while (IsConnected)
+            while (!token.IsCancellationRequested)
             {
                 lock (eeip)
                 {
-                    // Read inputs
                     Array.Copy(eeip.T_O_IOData, Inputs, Inputs.Length);
-                    Debug.WriteLine($"Input byte 2: {Inputs[2]}");
+                    Debug.WriteLine($"{IpAddress}:Input byte 2: {Inputs[2]}");
 
-
-                    // Write outputs                    
                     Array.Copy(Outputs, eeip.O_T_IOData, Outputs.Length);
-                    Debug.WriteLine($"Output byte 2: {Outputs[2]}");
+                    Debug.WriteLine($"{IpAddress}:Output byte 2: {Outputs[2]}");
                 }
-
-                Thread.Sleep(10); // 10 ms cyclic
+                Thread.Sleep(10);
             }
         }
 
@@ -192,12 +253,14 @@ namespace LIB0000
 
                     if (lastStatus == OperationalStatus.Up)
                     {
-                        Debug.WriteLine("Ethernet is VERBONDEN");
+                        //Debug.WriteLine("Ethernet is VERBONDEN");
+                        Debug.WriteLine($"{IpAddress}: Ethernet is VERBONDEN");
                         Start();
                     }
                     else
                     {
-                        Debug.WriteLine("Ethernet is VERBROKEN");
+                        //Debug.WriteLine("Ethernet is VERBROKEN");
+                        Debug.WriteLine($"{IpAddress}: Ethernet is VERBROKEN");
                         Stop();
                     }
                 }
