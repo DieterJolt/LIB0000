@@ -33,9 +33,6 @@ namespace LIB0000
 
         #region Properties
 
-        bool C0;
-        bool C1;
-
         #endregion
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -60,8 +57,8 @@ namespace LIB0000
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            C0 = BasicService.TurckService[0].GetInput(0);
-            C1 = BasicService.TurckService[0].GetInput(1);
+           C0.Content = BasicService.TurckService[0].GetInput(0);
+
 
         }
     }

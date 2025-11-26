@@ -25,6 +25,7 @@ namespace LIB0000
 
             eeip.IPAddress = ipAddress;
 
+
             // INPUT (Target → Originator)
             eeip.T_O_InstanceID = INPUT_ASSEMBLY;
             eeip.T_O_RealTimeFormat = RealTimeFormat.Modeless;
@@ -140,14 +141,27 @@ namespace LIB0000
             }
         }
 
+
         /// <summary> /// 
         /// Leest de status van digitale ingang (0..3) 
         /// /// </summary> 
+        //public bool GetInput(int channel)
+        //{
+        //    lock (eeip)
+        //    {
+        //        return (Inputs[0] & (1 << channel)) != 0;
+        //    }
+        //}
+
         public bool GetInput(int channel)
         {
+            if (channel < 0 || channel > 7)
+                throw new ArgumentOutOfRangeException(nameof(channel), "Channel moet tussen 0 en 7 zijn.");
+
             lock (eeip)
             {
-                return (Inputs[0] & (1 << channel)) != 0;
+                // Lees uit dezelfde byte als je SetOutput doet
+                return (Inputs[6] & (1 << channel)) != 0;
             }
         }
 
@@ -206,6 +220,9 @@ namespace LIB0000
 
         [ObservableProperty]
         private bool _isConnected;
+
+        [ObservableProperty]
+        private int _inputCount;
 
         #endregion 
     }

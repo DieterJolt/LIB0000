@@ -34,7 +34,7 @@
         <Button Click="Button_Click3" Grid.Column="0" Grid.Row="1">Zet Output C3 hoog</Button>
         <Button Click="Button_Click4" Grid.Column="1" Grid.Row="1">Zet Output C3 laag</Button>
 
-        <Button Grid.Column="0" Grid.Row="2" Background="{Binding C1, Converter={StaticResource ConverterBoolToColor0Red1Green}, UpdateSourceTrigger=PropertyChanged}">Input C0</Button>
+        <Button Grid.Column="0" Grid.Row="2" x:Name="C0"></Button>
 
         <Button Grid.Column="0" Grid.Row="3">Input C1</Button>
 
