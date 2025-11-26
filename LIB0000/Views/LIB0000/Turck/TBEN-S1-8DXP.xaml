@@ -33,6 +33,8 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
+            <!--<TextBlock FontSize="18" Grid.Row="0" Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding BasicService.TurckService[0].IsConnected, Converter={StaticResource ConverterBoolToString}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>-->
+
 
             <Grid Grid.Row="1" Grid.Column="1">
 

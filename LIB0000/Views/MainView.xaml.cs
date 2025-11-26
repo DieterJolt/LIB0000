@@ -174,6 +174,11 @@ namespace LIB0000
                 halconService.ClosingApplication = true;
             }
 
+            foreach (TurckService turckService in BasicService.TurckService)
+            {
+                turckService.ClosingApplication = true;
+            }
+
         }
 
         #region BasicService

@@ -17,9 +17,37 @@ namespace LIB0000
 {
     public partial class TBEN_S1_4DXP
     {
-        public TBEN_S1_4DXP()
+
+        #region Commands
+        #endregion
+
+        #region Constructor
+
+        public TBEN_S1_4DXP(BasicService basicService)
         {
+            BasicService = basicService;
+            DataContext = this;
             InitializeComponent();
         }
+
+        #endregion
+
+        #region Events
+        #endregion
+
+        #region Fields
+
+        public BasicService BasicService { get; set; }
+
+        #endregion
+
+        #region Methods
+        #endregion
+
+        #region Properties
+        #endregion
+
+
+
     }
 }

@@ -140,7 +140,7 @@ namespace LIB0000
             {
             MenuItemsSource = new object[]
             {
-                new NavigationViewItem("TBEN-S1-8DXP", typeof(TBEN_S1_4DXP)),
+                new NavigationViewItem("TBEN-S1-4DXP", typeof(TBEN_S1_4DXP)),
                 new NavigationViewItem("TBEN-S1-8DXP", typeof(TBEN_S1_8DXP)),
             }
             },

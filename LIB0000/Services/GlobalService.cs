@@ -391,17 +391,17 @@ namespace LIB0000
                 }
             }
 
-            //if (BasicService.TurckService[0] != null)
-            //{
-            //    if (BasicService.TurckService[0].IsConnected)
-            //    {
-            //        BasicService.MessagesService.Reset("Turck", "001");
-            //    }
-            //    else
-            //    {
-            //        BasicService.MessagesService.Set("Turck", "001");
-            //    }
-            //}
+            if (BasicService.TurckService != null && BasicService.TurckService.Count > 0 && BasicService.TurckService[0] != null)
+            {
+                if (BasicService.TurckService[0].IsConnected)
+                {
+                    BasicService.MessagesService.Reset("Turck", "001");
+                }
+                else
+                {
+                    BasicService.MessagesService.Set("Turck", "001");
+                }
+            }
 
         }
         /// <summary>

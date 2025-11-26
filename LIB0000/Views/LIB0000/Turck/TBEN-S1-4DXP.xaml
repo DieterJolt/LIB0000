@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      DataContext = "{Binding RelativeSource={RelativeSource Self}}"
       xmlns:local="clr-namespace:LIB0000"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -33,6 +34,8 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
+            <TextBlock FontSize="18" Grid.Row="0" Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding BasicService.TurckService[0].IsConnected, Converter={StaticResource ConverterBoolToString}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
 
             <Grid Grid.Row="1" Grid.Column="1">
 
@@ -57,9 +60,14 @@
                 <Border Grid.Row="0" Grid.Column="3" BorderBrush="Gray" BorderThickness="1"/>
 
                 <TextBlock Text="C0" FontSize="18" Grid.Row="0" Grid.Column="0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <!--<TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="0" Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+                <Grid Grid.Row="0" Grid.Column="1" Background="{Binding BasicService.TurckService[0].InputStates[0], Converter={StaticResource ConverterBoolToColor0Transparent1Green}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    <TextBlock Text="Input 1" FontSize="18" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+
                 <TextBlock Text="C1" FontSize="18" Grid.Row="0" Grid.Column="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <!--<TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="0" Grid.Column="3" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+                <Grid Grid.Row="0" Grid.Column="3" Background="{Binding BasicService.TurckService[0].InputStates[1], Converter={StaticResource ConverterBoolToColor0Transparent1Green}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    <TextBlock Text="Input 2" FontSize="18" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
 
 
                 <!-- Rij 1 -->
@@ -69,9 +77,14 @@
                 <Border Grid.Row="1" Grid.Column="3" BorderBrush="Gray" BorderThickness="1"/>
 
                 <TextBlock Text="C2" FontSize="18" Grid.Row="1" Grid.Column="0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <!--<TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="1" Grid.Column="1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+                <Grid Grid.Row="1" Grid.Column="1" Background="{Binding BasicService.TurckService[0].OutputStates[0], Converter={StaticResource ConverterBoolToColor0Transparent1Green}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    <TextBlock Text="Output 1" FontSize="18" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+
                 <TextBlock Text="C3" FontSize="18" Grid.Row="1" Grid.Column="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <!--<TextBlock Text="" Background="{Binding , Converter={StaticResource ConverterBoolToColor0Transparent1Green}}" FontSize="18" Grid.Row="1" Grid.Column="3" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+                <Grid Grid.Row="1" Grid.Column="3" Background="{Binding BasicService.TurckService[0].OutputStates[1], Converter={StaticResource ConverterBoolToColor0Transparent1Green}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    <TextBlock Text="Output 2" FontSize="18" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
 
             </Grid>
 
