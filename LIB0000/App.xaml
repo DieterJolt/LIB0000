@@ -22,6 +22,7 @@
             <local:ConverterBoolToColor0Transparent1Green x:Key="ConverterBoolToColor0Transparent1Green"/>
             <local:ConverterBoolToColor0Transparent1Yellow x:Key="ConverterBoolToColor0Transparent1Yellow"/>
             <local:CanvasRatioMultiBoolToVisibilityConverterConverter x:Key="CanvasRatioMultiBoolToVisibilityConverterConverter"/>
+            <local:ConverterBoolToString x:Key="ConverterBoolToString"/>
             <!--Converters Enum-->
             <local:ConverterEnumToBoolean x:Key="ConverterEnumToBoolean" />
             <local:ConverterEnumToVisibilityConverter x:Key="ConverterEnumToVisibilityConverter" />

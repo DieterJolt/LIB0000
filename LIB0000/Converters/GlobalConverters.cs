@@ -10,6 +10,32 @@ using Wpf.Ui.Controls;
 
 namespace LIB0000
 {
+
+    public class ConverterBoolToString : IValueConverter
+    {
+        public string TrueString { get; set; } = "Turck connected";   // default waarde
+        public string FalseString { get; set; } = "Turck not connected "; // default waarde
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool boolValue)
+                return boolValue ? TrueString : FalseString;
+
+            return FalseString; // fallback als value geen bool is
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string stringValue)
+            {
+                if (stringValue == TrueString) return true;
+                if (stringValue == FalseString) return false;
+            }
+
+            throw new NotImplementedException();
+        }
+    }
+
     public class CanvasRatioMultiBoolToVisibilityConverterConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)

@@ -55,11 +55,5 @@ namespace LIB0000
             BasicService.TurckService[0].ClearOutput(3);
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-           C0.Content = BasicService.TurckService[0].GetInput(0);
-
-
-        }
     }
 }

@@ -391,7 +391,7 @@ namespace LIB0000
                 }
             }
 
-            if (BasicService.TurckService[0] != null)
+            if (BasicService.TurckService != null && BasicService.TurckService.Count > 0 && BasicService.TurckService[0] != null)
             {
                 if (BasicService.TurckService[0].IsConnected)
                 {

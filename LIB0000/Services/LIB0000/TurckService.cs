@@ -2,11 +2,13 @@
 using Sres.Net.EEIP;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using Windows.Media.Protection.PlayReady;
 
@@ -104,15 +106,19 @@ namespace LIB0000
 
         private void CyclicTask(CancellationToken token)
         {
-            while (!token.IsCancellationRequested)
+            while (!token.IsCancellationRequested && !ClosingApplication)
             {
                 lock (eeip)
                 {
+                    //Get input & output values
+                    GetAllInputs();
+                    GetAllOuputs();
+
                     Array.Copy(eeip.T_O_IOData, Inputs, Inputs.Length);
-                    Debug.WriteLine($"Input byte 2: {Inputs[2]}");
+                    //Debug.WriteLine($"Input byte 2: {Inputs[2]}");
 
                     Array.Copy(Outputs, eeip.O_T_IOData, Outputs.Length);
-                    Debug.WriteLine($"Output byte 2: {Outputs[2]}");
+                    //Debug.WriteLine($"Output byte 2: {Outputs[2]}");
                 }
                 Thread.Sleep(10);
             }
@@ -149,19 +155,29 @@ namespace LIB0000
         //{
         //    lock (eeip)
         //    {
-        //        return (Inputs[0] & (1 << channel)) != 0;
+        //        return (Inputs[2] & (1 << channel)) != 0;
         //    }
         //}
 
-        public bool GetInput(int channel)
+        public void GetAllInputs()
         {
-            if (channel < 0 || channel > 7)
-                throw new ArgumentOutOfRangeException(nameof(channel), "Channel moet tussen 0 en 7 zijn.");
-
             lock (eeip)
             {
-                // Lees uit dezelfde byte als je SetOutput doet
-                return (Inputs[6] & (1 << channel)) != 0;
+
+                InputStates[0] = (Inputs[2] & (1 << 0)) != 0; // C0
+                InputStates[1] = (Inputs[2] & (1 << 1)) != 0; // C1
+
+            }
+        }
+
+        public void GetAllOuputs()
+        {
+            lock (eeip)
+            {
+
+                OutputStates[0] = (Outputs[6] & (1 << 2)) != 0; // C2
+                OutputStates[1] = (Outputs[6] & (1 << 3)) != 0; // C3
+
             }
         }
 
@@ -183,7 +199,7 @@ namespace LIB0000
 
         private void MonitorEthernet()
         {
-            while (true)
+            while (!ClosingApplication)
             {
                 bool canReach = false;
 
@@ -224,6 +240,13 @@ namespace LIB0000
         [ObservableProperty]
         private int _inputCount;
 
-        #endregion 
+        public ObservableCollection<bool> InputStates { get; } = new ObservableCollection<bool> { false, false };
+
+        public ObservableCollection<bool> OutputStates { get; } = new ObservableCollection<bool> { false, false };
+
+        [ObservableProperty]
+        private bool _closingApplication;
+
+        #endregion
     }
 }
