@@ -52,16 +52,22 @@ namespace LIB0000
 
         private void OperatorManualEvent(object sender, RoutedEventArgs e)
         {
-            string filePath = @"C:\FH\LIB1000MANUAL.pdf";
+            string tempFilePath = @"C:\FH\LIB1000MANUAL.pdf";
+
+            // Check of het bestand al geopend is
+            if (IsFileLocked(tempFilePath))
+            {
+                // Bestand is geopend → event overslaan
+                return;
+            }
 
             // Als het bestand bestaat verwijder het
-            if (File.Exists(filePath))
+            if (File.Exists(tempFilePath))
             {
-                File.Delete(filePath);
+                File.Delete(tempFilePath);
             }
 
             string pdfUri = "pack://application:,,,/Assets/Manuals/LIB1000MANUAL.pdf";
-            string tempFilePath = @"C:\FH\LIB1000MANUAL.pdf";// dubbele underscore
 
             // Laad de PDF als resource
             Uri uri = new Uri(pdfUri);
@@ -82,17 +88,22 @@ namespace LIB0000
 
         private void ElektrischPlanEvent(object sender, RoutedEventArgs e)
         {
-            string filePath = @"C:\FH\LIB1000EL.pdf";
+            string tempFilePath = @"C:\FH\LIB1000EL.pdf";
+
+            // Check of het bestand al geopend is
+            if (IsFileLocked(tempFilePath))
+            {
+                // Bestand is geopend → event overslaan
+                return;
+            }
 
             // Als het bestand bestaat verwijder het
-            if (File.Exists(filePath))
+            if (File.Exists(tempFilePath))
             {
-                File.Delete(filePath);
+                File.Delete(tempFilePath);
             }
 
             string pdfUri = "pack://application:,,,/Assets/Manuals/LIB1000EL.pdf";
-            string tempFilePath = @"C:\FH\LIB1000EL.pdf";
-
 
             // Laad de PDF als resource
             Uri uri = new Uri(pdfUri);
@@ -137,7 +148,25 @@ namespace LIB0000
             }
         }
 
+        private bool IsFileLocked(string path)
+        {
+            if (!File.Exists(path))
+                return false;
 
+            try
+            {
+                using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
+                {
+                    // Als dit lukt is het bestand NIET vergrendeld
+                    return false;
+                }
+            }
+            catch (IOException)
+            {
+                // Bestand is vergrendeld → waarschijnlijk geopend
+                return true;
+            }
+        }
 
 
 

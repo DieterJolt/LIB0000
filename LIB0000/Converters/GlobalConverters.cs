@@ -11,6 +11,7 @@ using Wpf.Ui.Controls;
 namespace LIB0000
 {
 
+
     public class ConverterBoolToString : IValueConverter
     {
         public string TrueString { get; set; } = "Turck connected";   // default waarde
